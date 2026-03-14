@@ -25,6 +25,9 @@ export default function DayDetailScreen() {
   const [showRawDetails, setShowRawDetails] = useState(false);
   const { location, locationId, isLoading: locationLoading, error: locationError } = useSelectedLocation();
   const { data, error, isLoading } = useDayDetails(date, locationId);
+  const highlightedWindowTypes = ["braahmi-kaala", "morning-sandhya", "evening-sandhya"];
+  const primaryWindows = data?.timeWindows.filter((window) => highlightedWindowTypes.includes(window.type)) ?? [];
+  const secondaryWindows = data?.timeWindows.filter((window) => !highlightedWindowTypes.includes(window.type)) ?? [];
 
   return (
     <ScreenContainer>
@@ -40,7 +43,7 @@ export default function DayDetailScreen() {
       ) : (
         <>
           <PanchangaSummaryCard day={data.day} />
-          <SunCard day={data.day} />
+          <SunCard day={data.day} timeWindows={primaryWindows} />
           <SectionHeader title="Intraday transitions" subtitle="Tithi, nakshatra, yoga, and karana changes." />
           {data.transitions.length > 0 ? (
             <TransitionTimeline transitions={data.transitions} />
@@ -54,9 +57,9 @@ export default function DayDetailScreen() {
             <EmptyState title="No special tithis found" message="No special tithis are stored for this date." />
           )}
           <SectionHeader title="Muhurtha and windows" />
-          {data.timeWindows.length > 0 ? data.timeWindows.map((window) => <WindowCard key={window.id} window={window} />) : null}
+          {secondaryWindows.length > 0 ? secondaryWindows.map((window) => <WindowCard key={window.id} window={window} />) : null}
           {data.muhurthas.length > 0 ? data.muhurthas.map((muhurtha) => <MuhurthaCard key={muhurtha.id} muhurtha={muhurtha} />) : null}
-          {data.timeWindows.length === 0 && data.muhurthas.length === 0 ? (
+          {secondaryWindows.length === 0 && data.muhurthas.length === 0 ? (
             <EmptyState title="No windows found" message="No muhurtha or daily window data is stored for this date." />
           ) : null}
           <Pressable onPress={() => setShowRawDetails((current) => !current)} style={styles.debugButton}>
