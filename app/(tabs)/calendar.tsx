@@ -1,0 +1,101 @@
+import { router } from "expo-router";
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import { useMemo, useState } from "react";
+
+import { MonthGrid } from "@/components/calendar/MonthGrid";
+import { EmptyState } from "@/components/common/EmptyState";
+import { ErrorState } from "@/components/common/ErrorState";
+import { LoadingState } from "@/components/common/LoadingState";
+import { ScreenContainer } from "@/components/common/ScreenContainer";
+import { addMonths, getDisplayMonth } from "@/domain/dates";
+import { useMonthSummary } from "@/hooks/usePanchangaQueries";
+import { useSelectedLocation } from "@/hooks/useSelectedLocation";
+import { useAppTheme } from "@/theme";
+import { dayRoute } from "@/types/navigation";
+
+const now = new Date();
+
+export default function CalendarScreen() {
+  const theme = useAppTheme();
+  const styles = createStyles(theme);
+  const { location, locationId, isLoading: locationLoading, error: locationError } = useSelectedLocation();
+  const [visibleMonth, setVisibleMonth] = useState({
+    year: now.getUTCFullYear(),
+    month: now.getUTCMonth() + 1
+  });
+  const { data, error, isLoading } = useMonthSummary(
+    visibleMonth.year,
+    visibleMonth.month,
+    locationId,
+    location?.timezone ?? "America/Vancouver"
+  );
+  const monthLabel = useMemo(
+    () => getDisplayMonth(visibleMonth.year, visibleMonth.month),
+    [visibleMonth.month, visibleMonth.year]
+  );
+
+  return (
+    <ScreenContainer>
+      <View style={styles.header}>
+        <Pressable
+          onPress={() => setVisibleMonth((current) => addMonths(current.year, current.month, -1))}
+          style={styles.navButton}
+        >
+          <Text style={styles.navButtonText}>Prev</Text>
+        </Pressable>
+        <Text style={styles.headerTitle}>{monthLabel}</Text>
+        <Pressable
+          onPress={() => setVisibleMonth((current) => addMonths(current.year, current.month, 1))}
+          style={styles.navButton}
+        >
+          <Text style={styles.navButtonText}>Next</Text>
+        </Pressable>
+      </View>
+      {locationError || error ? <ErrorState message={(locationError ?? error)?.message ?? "Unable to load calendar."} /> : null}
+      {locationLoading || isLoading ? (
+        <LoadingState title="Loading month" message="Building the Panchanga calendar grid for this month." />
+      ) : !data || data.length === 0 ? (
+        <EmptyState
+          title="No dates in this month"
+          message="The calendar will fill in automatically after Panchanga data is imported for the selected location."
+        />
+      ) : (
+        <MonthGrid
+          year={visibleMonth.year}
+          month={visibleMonth.month}
+          items={data}
+          onSelectDate={(date) => router.push(dayRoute(date))}
+        />
+      )}
+    </ScreenContainer>
+  );
+}
+
+const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
+  StyleSheet.create({
+    header: {
+      marginTop: theme.spacing.md,
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between"
+    },
+    headerTitle: {
+      color: theme.colors.ink,
+      fontSize: 24,
+      fontWeight: "700",
+      fontFamily: theme.typography.headingFamily
+    },
+    navButton: {
+      backgroundColor: theme.colors.card,
+      borderColor: theme.colors.border,
+      borderRadius: theme.radii.pill,
+      borderWidth: 1,
+      paddingHorizontal: 14,
+      paddingVertical: 10
+    },
+    navButtonText: {
+      color: theme.colors.maroon,
+      fontWeight: "700",
+      fontFamily: theme.typography.bodyFamily
+    }
+  });

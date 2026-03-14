@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": ".test-dist",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "rootDir": ".",
+    "types": ["node"],
+    "paths": {}
+  },
+  "include": [
+    "tests/run.ts",
+    "src/domain/dates/index.ts",
+    "data/generated/panchanga-seed.json"
+  ]
+}

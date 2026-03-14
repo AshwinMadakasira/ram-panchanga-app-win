@@ -1,0 +1,90 @@
+openapi: 3.1.0
+info:
+  title: Panchanga App Local API Contract
+  version: 1.0.0
+paths:
+  /month-summary:
+    get:
+      summary: Get month summary for calendar grid
+      parameters:
+      - name: year
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: month
+        in: query
+        required: true
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 12
+      - name: locationId
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Month summary
+  /day-detail:
+    get:
+      summary: Get full Panchanga detail for a date
+      parameters:
+      - name: date
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+      - name: locationId
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Day detail
+  /special-tithis:
+    get:
+      summary: List special tithis
+      parameters:
+      - name: startDate
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date
+      - name: endDate
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date
+      - name: category
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Special tithis
+  /muhurthas:
+    get:
+      summary: List muhurthas
+      parameters:
+      - name: type
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: month
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 12
+      responses:
+        '200':
+          description: Muhurthas

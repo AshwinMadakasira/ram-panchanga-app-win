@@ -1,0 +1,10 @@
+{
+  "name": "panchanga-codex-pack",
+  "version": "1.0.0",
+  "recommended_stack": "expo-react-native-typescript",
+  "entry_prompt": "prompts/CODEX_MASTER_PROMPT.md",
+  "included_dataset": [
+    "data/panchanga_los_angeles_2026_2027.sqlite",
+    "data/panchanga_los_angeles_2026_2027.xlsx"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "expo": {
+    "name": "RAM Panchanga",
+    "slug": "ram-panchanga",
+    "scheme": "ram-panchanga",
+    "description": "This is the panchanga followed by Rayara Astottatra Mandali Vancouver, based on Uttaradi Mutt Panchanga for PST timezone.",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "experiments": {
+      "typedRoutes": true
+    },
+    "plugins": [
+      "expo-router",
+      "expo-sqlite",
+      "expo-notifications"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.rayaraastottatramandali.rampanchanga",
+      "buildNumber": "1",
+      "infoPlist": {
+        "NSUserNotificationsUsageDescription": "RAM Panchanga uses notifications to remind you to check today's Panchanga and upcoming special tithis."
+      }
+    },
+    "android": {
+      "package": "com.rayaraastottatramandali.rampanchanga",
+      "versionCode": 1
+    }
+  }
+}
