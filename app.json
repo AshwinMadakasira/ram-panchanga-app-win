@@ -25,7 +25,7 @@
     },
     "android": {
       "package": "com.rayaraastottatramandali.rampanchanga",
-      "versionCode": 2
+      "versionCode": 3
     },
     "extra": {
       "router": {},
