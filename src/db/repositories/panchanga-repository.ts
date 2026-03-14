@@ -456,6 +456,28 @@ export const panchangaRepository = {
     limit = 8
   ): Promise<UpcomingSpecialTithiRow[]> {
     const db = await getDatabase();
+    if (category === "ekadashi") {
+      return db.getAllAsync<UpcomingSpecialTithiRow>(
+        `SELECT e.date, e.display_name AS name, 'ekadashi' AS category
+         FROM ekadashi e
+         WHERE e.location_id = ? AND e.date >= ?
+         ORDER BY e.date ASC, e.display_name ASC
+         LIMIT ?`,
+        [locationId, fromDate, limit]
+      );
+    }
+
+    if (category === "punyadina") {
+      return db.getAllAsync<UpcomingSpecialTithiRow>(
+        `SELECT p.date, p.display_name AS name, 'punyadina' AS category
+         FROM punyadina p
+         WHERE p.location_id = ? AND p.date >= ?
+         ORDER BY p.date ASC, p.display_name ASC
+         LIMIT ?`,
+        [locationId, fromDate, limit]
+      );
+    }
+
     return db.getAllAsync<UpcomingSpecialTithiRow>(
       `SELECT cd.date, MIN(st.name) AS name, st.category
        FROM special_tithi st

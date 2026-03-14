@@ -1,38 +1,42 @@
 import { router } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { MonthGrid } from "@/components/calendar/MonthGrid";
 import { EmptyState } from "@/components/common/EmptyState";
 import { ErrorState } from "@/components/common/ErrorState";
 import { LoadingState } from "@/components/common/LoadingState";
 import { ScreenContainer } from "@/components/common/ScreenContainer";
-import { addMonths, getDisplayMonth } from "@/domain/dates";
+import { addMonths, getCurrentYearMonthForTimezone, getDisplayMonth } from "@/domain/dates";
 import { useMonthSummary } from "@/hooks/usePanchangaQueries";
 import { useSelectedLocation } from "@/hooks/useSelectedLocation";
 import { useAppTheme } from "@/theme";
 import { dayRoute } from "@/types/navigation";
 
-const now = new Date();
-
 export default function CalendarScreen() {
   const theme = useAppTheme();
   const styles = createStyles(theme);
   const { location, locationId, isLoading: locationLoading, error: locationError } = useSelectedLocation();
-  const [visibleMonth, setVisibleMonth] = useState({
-    year: now.getUTCFullYear(),
-    month: now.getUTCMonth() + 1
-  });
+  const activeTimezone = location?.timezone ?? "America/Vancouver";
+  const [visibleMonth, setVisibleMonth] = useState(() => getCurrentYearMonthForTimezone(activeTimezone));
   const { data, error, isLoading } = useMonthSummary(
     visibleMonth.year,
     visibleMonth.month,
     locationId,
-    location?.timezone ?? "America/Vancouver"
+    activeTimezone
   );
+  useEffect(() => {
+    setVisibleMonth((current) => {
+      const nowInTimezone = getCurrentYearMonthForTimezone(activeTimezone);
+      return current.year === nowInTimezone.year && current.month === nowInTimezone.month ? current : nowInTimezone;
+    });
+  }, [activeTimezone]);
+
   const monthLabel = useMemo(
     () => getDisplayMonth(visibleMonth.year, visibleMonth.month),
     [visibleMonth.month, visibleMonth.year]
   );
+  const jumpToToday = () => setVisibleMonth(getCurrentYearMonthForTimezone(activeTimezone));
 
   return (
     <ScreenContainer>
@@ -49,6 +53,12 @@ export default function CalendarScreen() {
           style={styles.navButton}
         >
           <Text style={styles.navButtonText}>Next</Text>
+        </Pressable>
+      </View>
+      <View style={styles.subHeader}>
+        <Text style={styles.subHeaderText}>{location ? location.name : "Selected location"}</Text>
+        <Pressable onPress={jumpToToday} style={styles.todayButton}>
+          <Text style={styles.todayButtonText}>Go to current month</Text>
         </Pressable>
       </View>
       {locationError || error ? <ErrorState message={(locationError ?? error)?.message ?? "Unable to load calendar."} /> : null}
@@ -85,6 +95,16 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
       fontWeight: "700",
       fontFamily: theme.typography.headingFamily
     },
+    subHeader: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      gap: theme.spacing.sm
+    },
+    subHeaderText: {
+      color: theme.colors.muted,
+      fontFamily: theme.typography.bodyFamily
+    },
     navButton: {
       backgroundColor: theme.colors.card,
       borderColor: theme.colors.border,
@@ -92,6 +112,18 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
       borderWidth: 1,
       paddingHorizontal: 14,
       paddingVertical: 10
+    },
+    todayButton: {
+      backgroundColor: theme.colors.cardMuted,
+      borderRadius: theme.radii.pill,
+      paddingHorizontal: 12,
+      paddingVertical: 8
+    },
+    todayButtonText: {
+      color: theme.colors.maroon,
+      fontSize: 12,
+      fontWeight: "700",
+      fontFamily: theme.typography.bodyFamily
     },
     navButtonText: {
       color: theme.colors.maroon,
