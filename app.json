@@ -25,7 +25,14 @@
     },
     "android": {
       "package": "com.rayaraastottatramandali.rampanchanga",
-      "versionCode": 1
-    }
+      "versionCode": 2
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "4ad18d04-0053-446e-ac74-29057c8cc50d"
+      }
+    },
+    "owner": "amadakasira"
   }
 }
