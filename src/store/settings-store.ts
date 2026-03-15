@@ -13,6 +13,13 @@ import type {
 
 const defaultWeekdays: ReminderWeekday[] = ["monday", "tuesday", "wednesday", "thursday", "friday"];
 const defaultSpecialTithiCategories: UpcomingSpecialTithiCategory[] = ["ekadashi", "punyadina"];
+const normalizePersistedLocationId = (locationId: string | undefined) => {
+  if (!locationId || locationId === "vancouver-bc") {
+    return "vancouver-pst";
+  }
+
+  return locationId;
+};
 
 const createDefaultSpecialTithiReminder = (): UpcomingSpecialTithiReminderSettings => ({
   enabled: false,
@@ -57,7 +64,7 @@ type SettingsState = {
 };
 
 const createDefaultSettingsState = () => ({
-  locationId: "vancouver-bc",
+  locationId: "vancouver-pst",
   themePreference: "system" as ThemePreference,
   reminders: createDefaultReminderSettings()
 });
@@ -226,6 +233,7 @@ export const useSettingsStore = create<SettingsState>()(
         return {
           ...currentState,
           ...typedPersistedState,
+          locationId: normalizePersistedLocationId(typedPersistedState?.locationId),
           reminders: migratedReminders
         };
       },

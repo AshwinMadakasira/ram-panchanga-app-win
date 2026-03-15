@@ -186,7 +186,7 @@ export default function SettingsScreen() {
         <View style={styles.card}>
           <Text style={styles.title}>About</Text>
           <Text style={styles.body}>
-            This is the panchanga followed by Rayara Astottatra Mandali Vancouver, based on Uttaradi Mutt Panchanga for PST timezone.
+            This app bundles separate Panchanga datasets for Vancouver-PST, Chicago-CST, and NewYork-EST, based on Uttaradi Mutt Panchanga source data.
           </Text>
         </View>
 

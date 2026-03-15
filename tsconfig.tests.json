@@ -12,6 +12,8 @@
   "include": [
     "tests/run.ts",
     "src/domain/dates/index.ts",
-    "data/generated/panchanga-seed.json"
+    "data/generated/panchanga-seed-vancouver-pst.json",
+    "data/generated/panchanga-seed-chicago-cst.json",
+    "data/generated/panchanga-seed-newyork-est.json"
   ]
 }

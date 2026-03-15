@@ -3,7 +3,7 @@
     "name": "RAM Panchanga",
     "slug": "ram-panchanga",
     "scheme": "ram-panchanga",
-    "description": "This is the panchanga followed by Rayara Astottatra Mandali Vancouver, based on Uttaradi Mutt Panchanga for PST timezone.",
+    "description": "Offline Panchanga app with separate bundled datasets for Vancouver-PST, Chicago-CST, and NewYork-EST.",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",

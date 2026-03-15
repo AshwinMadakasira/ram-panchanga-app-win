@@ -12,9 +12,11 @@ It does not contain the raw data import pipeline.
 ## Data source
 
 The app reads bundled seed data from:
-- [data/generated/panchanga-seed.json](/E:/Source/UMPanchangaPST/ram-panchanga-app/data/generated/panchanga-seed.json)
+- [data/generated/panchanga-seed-vancouver-pst.json](/E:/Source/UMPanchangaPST/ram-panchanga-app/data/generated/panchanga-seed-vancouver-pst.json)
+- [data/generated/panchanga-seed-chicago-cst.json](/E:/Source/UMPanchangaPST/ram-panchanga-app/data/generated/panchanga-seed-chicago-cst.json)
+- [data/generated/panchanga-seed-newyork-est.json](/E:/Source/UMPanchangaPST/ram-panchanga-app/data/generated/panchanga-seed-newyork-est.json)
 
-That file should be generated in the separate `ram-panchanga-data` repo and copied here before a release.
+Those files should be generated in the separate `ram-panchanga-data` repo and copied here before a release.
 
 ## Install
 
@@ -46,6 +48,6 @@ npm run test
 ## Release flow
 
 1. Regenerate data in the data repo.
-2. Copy `generated/panchanga-seed.json` into this repo at `data/generated/panchanga-seed.json`.
+2. Copy the three generated seed files into this repo at `data/generated/`.
 3. Bump version and build numbers.
 4. Build Android/iOS and publish.

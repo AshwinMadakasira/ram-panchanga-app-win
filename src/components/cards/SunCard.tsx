@@ -25,6 +25,13 @@ export const SunCard = ({ day, timeWindows = [] }: { day: CalendarDay; timeWindo
   const highlightedWindows = highlightedWindowTypes
     .map((type) => timeWindows.find((window) => window.type === type))
     .filter(Boolean) as TimeWindow[];
+  const hasAstronomyData = Boolean(
+    day.sunrise || day.sunset || day.moonrise || day.moonset || highlightedWindows.some((window) => window.startTime || window.endTime)
+  );
+
+  if (!hasAstronomyData) {
+    return null;
+  }
 
   return (
     <View style={styles.container}>

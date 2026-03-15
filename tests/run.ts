@@ -1,7 +1,24 @@
 import assert from "node:assert/strict";
 
-import seed from "../data/generated/panchanga-seed.json";
+import seedChicago from "../data/generated/panchanga-seed-chicago-cst.json";
+import seedNewYork from "../data/generated/panchanga-seed-newyork-est.json";
+import seedVancouver from "../data/generated/panchanga-seed-vancouver-pst.json";
 import { addMonths, getCalendarWeeks, getMonthBounds } from "../src/domain/dates";
+
+const vancouverSeed = seedVancouver as any;
+const chicagoSeed = seedChicago as any;
+const newYorkSeed = seedNewYork as any;
+const seeds = [vancouverSeed, chicagoSeed, newYorkSeed];
+const combinedSeed = {
+  locations: seeds.flatMap((seed) => seed.locations),
+  calendarDays: seeds.flatMap((seed) => seed.calendarDays),
+  transitions: seeds.flatMap((seed) => seed.transitions),
+  specialTithis: seeds.flatMap((seed) => seed.specialTithis),
+  ekadashis: seeds.flatMap((seed) => seed.ekadashis),
+  punyadinas: seeds.flatMap((seed) => seed.punyadinas),
+  timeWindows: seeds.flatMap((seed) => seed.timeWindows),
+  muhurthas: seeds.flatMap((seed) => seed.muhurthas)
+};
 
 let failures = 0;
 
@@ -40,58 +57,76 @@ runCase("getCalendarWeeks uses Monday as the first weekday", () => {
   assert.equal(weeks[1][0]?.date, "2026-03-02");
 });
 
-runCase("seed is Vancouver-only and contains calendar data", () => {
-  assert.equal(seed.locations.length, 1);
-  assert.equal(seed.locations[0]?.id, "vancouver-bc");
-  assert.ok(seed.calendarDays.length > 300);
+runCase("all three location seeds contain calendar data", () => {
+  assert.deepEqual(
+    combinedSeed.locations.map((location) => location.id).sort(),
+    ["chicago-cst", "newyork-est", "vancouver-pst"]
+  );
+  seeds.forEach((seed) => {
+    assert.equal(seed.locations.length, 1);
+    assert.ok(seed.calendarDays.length > 300);
+  });
 });
 
-runCase("seed has no dangling foreign keys", () => {
-  const locationIds = new Set(seed.locations.map((location) => location.id));
-  const calendarDayIds = new Set(seed.calendarDays.map((day) => day.id));
+runCase("combined seed has no dangling foreign keys", () => {
+  const locationIds = new Set(combinedSeed.locations.map((location) => location.id));
+  const calendarDayIds = new Set(combinedSeed.calendarDays.map((day) => day.id));
 
-  seed.calendarDays.forEach((day) => assert.ok(locationIds.has(day.locationId), `missing location for ${day.id}`));
-  seed.transitions.forEach((transition) =>
+  combinedSeed.calendarDays.forEach((day) => assert.ok(locationIds.has(day.locationId), `missing location for ${day.id}`));
+  combinedSeed.transitions.forEach((transition) =>
     assert.ok(calendarDayIds.has(transition.calendarDayId), `missing day for ${transition.id}`)
   );
-  seed.specialTithis.forEach((specialTithi) =>
+  combinedSeed.specialTithis.forEach((specialTithi) =>
     assert.ok(calendarDayIds.has(specialTithi.calendarDayId), `missing day for ${specialTithi.id}`)
   );
-  seed.ekadashis.forEach((ekadashi) => {
+  combinedSeed.ekadashis.forEach((ekadashi) => {
     assert.ok(calendarDayIds.has(ekadashi.calendarDayId), `missing day for ${ekadashi.id}`);
     assert.ok(locationIds.has(ekadashi.locationId), `missing location for ${ekadashi.id}`);
   });
-  seed.punyadinas.forEach((punyadina) => {
+  combinedSeed.punyadinas.forEach((punyadina) => {
     assert.ok(calendarDayIds.has(punyadina.calendarDayId), `missing day for ${punyadina.id}`);
     assert.ok(locationIds.has(punyadina.locationId), `missing location for ${punyadina.id}`);
   });
-  seed.timeWindows.forEach((timeWindow) =>
+  combinedSeed.timeWindows.forEach((timeWindow) =>
     assert.ok(calendarDayIds.has(timeWindow.calendarDayId), `missing day for ${timeWindow.id}`)
   );
-  seed.muhurthas.forEach((muhurtha) =>
+  combinedSeed.muhurthas.forEach((muhurtha) =>
     assert.ok(locationIds.has(muhurtha.locationId), `missing location for ${muhurtha.id}`)
   );
 });
 
-runCase("July 4 correction remains applied", () => {
-  const day = seed.calendarDays.find((entry) => entry.id === "vancouver-bc-2026-07-04");
+runCase("Vancouver July 4 correction remains applied", () => {
+  const day = vancouverSeed.calendarDays.find((entry: any) => entry.id === "vancouver-pst-2026-07-04");
   assert.ok(day);
   assert.equal(day.specialTithiRawText, null);
-  assert.equal(seed.specialTithis.some((entry) => entry.calendarDayId === day.id), false);
-  assert.equal(seed.ekadashis.some((entry) => entry.calendarDayId === day.id), false);
+  assert.equal(vancouverSeed.specialTithis.some((entry: any) => entry.calendarDayId === day.id), false);
+  assert.equal(vancouverSeed.ekadashis.some((entry: any) => entry.calendarDayId === day.id), false);
 });
 
-runCase("astronomical windows exist when sunrise and sunset are present", () => {
-  const day = seed.calendarDays.find((entry) => entry.id === "vancouver-bc-2026-03-20");
+runCase("Vancouver has astronomical windows", () => {
+  const day = vancouverSeed.calendarDays.find((entry: any) => entry.id === "vancouver-pst-2026-03-20");
   assert.ok(day);
-  const dayWindows = seed.timeWindows.filter((entry) => entry.calendarDayId === day.id);
-  const windowTypes = dayWindows.map((entry) => entry.type);
+  const dayWindows = vancouverSeed.timeWindows.filter((entry: any) => entry.calendarDayId === day.id);
+  const windowTypes = dayWindows.map((entry: any) => entry.type);
 
   assert.deepEqual(windowTypes.slice(-3), ["braahmi-kaala", "morning-sandhya", "evening-sandhya"]);
+  assert.ok(day.sunrise);
+  assert.ok(day.sunset);
 });
 
-runCase("shifted source rows are repaired in the seed", () => {
-  const day = seed.calendarDays.find((entry) => entry.id === "vancouver-bc-2026-04-13");
+runCase("Chicago and New York omit astronomy data", () => {
+  const chicagoDay = chicagoSeed.calendarDays.find((entry: any) => entry.id === "chicago-cst-2026-03-20");
+  const newYorkDay = newYorkSeed.calendarDays.find((entry: any) => entry.id === "newyork-est-2026-03-20");
+  assert.ok(chicagoDay);
+  assert.ok(newYorkDay);
+  assert.equal(chicagoDay.sunrise, null);
+  assert.equal(chicagoDay.sunset, null);
+  assert.equal(newYorkDay.sunrise, null);
+  assert.equal(newYorkDay.sunset, null);
+});
+
+runCase("Vancouver shifted source rows are repaired in the seed", () => {
+  const day = vancouverSeed.calendarDays.find((entry: any) => entry.id === "vancouver-pst-2026-04-13");
   assert.ok(day);
   assert.equal(day.primaryTithiAtSunrise, "Ekadashi 9:25");
   assert.equal(day.primaryNakshatraAtSunrise, "Shatabhisha 25:21 +");
