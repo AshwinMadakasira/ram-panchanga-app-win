@@ -166,8 +166,7 @@ export type SeedBundle = {
 
 export type SearchResult =
   | { id: string; kind: "date"; title: string; subtitle: string; date: string }
-  | { id: string; kind: "special_tithi"; title: string; subtitle: string; date: string }
-  | { id: string; kind: "muhurtha"; title: string; subtitle: string; date: string };
+  | { id: string; kind: "special_tithi"; title: string; subtitle: string; date: string };
 
 export type DailyReminderSettings = {
   enabled: boolean;

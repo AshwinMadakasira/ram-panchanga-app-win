@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { DateHero } from "@/components/cards/DateHero";
-import { MuhurthaCard } from "@/components/cards/MuhurthaCard";
 import { PanchangaSummaryCard } from "@/components/cards/PanchangaSummaryCard";
 import { SunCard } from "@/components/cards/SunCard";
 import { WindowCard } from "@/components/cards/WindowCard";
@@ -56,11 +55,10 @@ export default function DayDetailScreen() {
           ) : (
             <EmptyState title="No special tithis found" message="No special tithis are stored for this date." />
           )}
-          <SectionHeader title="Muhurtha and windows" />
+          <SectionHeader title="Daily windows" />
           {secondaryWindows.length > 0 ? secondaryWindows.map((window) => <WindowCard key={window.id} window={window} />) : null}
-          {data.muhurthas.length > 0 ? data.muhurthas.map((muhurtha) => <MuhurthaCard key={muhurtha.id} muhurtha={muhurtha} />) : null}
-          {secondaryWindows.length === 0 && data.muhurthas.length === 0 ? (
-            <EmptyState title="No windows found" message="No muhurtha or daily window data is stored for this date." />
+          {secondaryWindows.length === 0 ? (
+            <EmptyState title="No windows found" message="No daily window data is stored for this date." />
           ) : null}
           <Pressable onPress={() => setShowRawDetails((current) => !current)} style={styles.debugButton}>
             <Text style={styles.debugButtonText}>{showRawDetails ? "Hide raw details" : "Show raw details"}</Text>
@@ -74,12 +72,6 @@ export default function DayDetailScreen() {
                 {data.transitions.length > 0
                   ? data.transitions.map((transition) => `${transition.type}: ${transition.rawSourceText || transition.name}`).join("\n")
                   : "No raw transition details stored."}
-              </Text>
-              <Text style={styles.debugTitle}>Muhurthas</Text>
-              <Text style={styles.debugText}>
-                {data.muhurthas.length > 0
-                  ? data.muhurthas.map((muhurtha) => muhurtha.rawFields || muhurtha.type).join("\n\n")
-                  : "No raw muhurtha details stored."}
               </Text>
             </View>
           ) : null}

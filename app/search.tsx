@@ -14,8 +14,7 @@ import { dayRoute } from "@/types/navigation";
 
 const kindLabels = {
   date: "Date",
-  special_tithi: "Special Tithi",
-  muhurtha: "Muhurtha"
+  special_tithi: "Special Tithi"
 } as const;
 
 export default function SearchScreen() {
@@ -28,7 +27,7 @@ export default function SearchScreen() {
 
   return (
     <ScreenContainer>
-      <SectionHeader title="Search" subtitle="Search dates, special tithis, tithi, nakshatra, and muhurthas." />
+      <SectionHeader title="Search" subtitle="Search dates, special tithis, tithi, and nakshatra." />
       <TextInput
         autoCapitalize="none"
         autoCorrect={false}
@@ -40,7 +39,7 @@ export default function SearchScreen() {
       />
       {locationError || error ? <ErrorState message={(locationError ?? error)?.message ?? "Unable to search Panchanga."} /> : null}
       {query.trim().length === 0 ? (
-        <EmptyState title="Start typing" message="Search by date, special tithi, tithi, nakshatra, or muhurtha type." />
+        <EmptyState title="Start typing" message="Search by date, special tithi, tithi, or nakshatra." />
       ) : locationLoading || isFetching ? (
         <LoadingState title="Searching" message="Looking through locally stored Panchanga data." />
       ) : !data || data.length === 0 ? (
