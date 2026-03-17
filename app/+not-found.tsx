@@ -30,7 +30,6 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
   StyleSheet.create({
     link: {
       color: theme.colors.maroon,
-      fontWeight: "700",
-      fontFamily: theme.typography.bodyFamily
+      fontFamily: theme.typography.bodyStrongFamily
     }
   });

@@ -6,7 +6,7 @@
 import { StyleSheet, Text, View } from "react-native";
 
 // Formatting logic lives in the domain layer rather than inside the JSX.
-import { formatDisplayDate } from "@/domain/dates";
+import { localizeDisplayDate, useAppLocalization } from "@/i18n";
 import { useAppTheme } from "@/theme";
 
 type DateHeroProps = {
@@ -17,11 +17,12 @@ type DateHeroProps = {
 /** Render the prominent date banner used near the top of date-based screens. */
 export const DateHero = ({ date, subtitle }: DateHeroProps) => {
   const theme = useAppTheme();
+  const { language, text } = useAppLocalization();
   const styles = createStyles(theme);
   return (
     <View style={styles.container}>
-      <Text style={styles.kicker}>Panchanga</Text>
-      <Text style={styles.title}>{formatDisplayDate(date)}</Text>
+      <Text style={styles.kicker}>{text.panchanga}</Text>
+      <Text style={styles.title}>{localizeDisplayDate(date, language)}</Text>
       {subtitle ? <Text style={styles.subtitle}>{subtitle}</Text> : null}
     </View>
   );
@@ -41,23 +42,21 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
     },
     kicker: {
       color: theme.colors.saffron,
-      fontSize: 13,
-      fontWeight: "700",
+      fontSize: Math.round(13 * theme.typography.compactScale),
       letterSpacing: 1.2,
       textTransform: "uppercase",
-      fontFamily: theme.typography.bodyFamily
+      fontFamily: theme.typography.bodyStrongFamily
     },
     title: {
       color: theme.colors.ink,
-      fontSize: 30,
-      fontWeight: "700",
-      lineHeight: 38,
+      fontSize: Math.round(30 * theme.typography.headingScale),
+      lineHeight: Math.round(38 * theme.typography.headingScale),
       fontFamily: theme.typography.headingFamily
     },
     subtitle: {
       color: theme.colors.muted,
-      fontSize: 15,
-      lineHeight: 22,
+      fontSize: Math.round(16 * theme.typography.fontScale),
+      lineHeight: Math.round(22 * theme.typography.fontScale),
       fontFamily: theme.typography.bodyFamily
     }
   });

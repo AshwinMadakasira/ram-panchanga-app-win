@@ -12,6 +12,7 @@ import { createJSONStorage, persist } from "zustand/middleware";
 
 // The store imports only types, not UI code, because it represents app state rather than presentation.
 import type {
+  AppLanguage,
   ReminderPermissionState,
   ReminderSettings,
   ReminderWeekday,
@@ -59,10 +60,12 @@ type LegacyReminderSettings = {
 
 type SettingsState = {
   locationId: string;
+  appLanguage: AppLanguage;
   themePreference: ThemePreference;
   reminders: ReminderSettings;
   isHydrated: boolean;
   setLocationId: (locationId: string) => void;
+  setAppLanguage: (appLanguage: AppLanguage) => void;
   setThemePreference: (themePreference: ThemePreference) => void;
   setReminderPermission: (permission: ReminderPermissionState) => void;
   setDailyReminderEnabled: (enabled: boolean) => void;
@@ -78,6 +81,7 @@ type SettingsState = {
 /** Build the default top-level settings state. */
 const createDefaultSettingsState = () => ({
   locationId: "vancouver-pst",
+  appLanguage: "en" as AppLanguage,
   themePreference: "system" as ThemePreference,
   reminders: createDefaultReminderSettings()
 });
@@ -132,6 +136,7 @@ export const useSettingsStore = create<SettingsState>()(
       ...createDefaultSettingsState(),
       isHydrated: false,
       setLocationId: (locationId) => set({ locationId }),
+      setAppLanguage: (appLanguage) => set({ appLanguage }),
       setThemePreference: (themePreference) => set({ themePreference }),
       setReminderPermission: (permission) =>
         set((state) => ({

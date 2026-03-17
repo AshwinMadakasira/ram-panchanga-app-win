@@ -8,6 +8,7 @@ import { memo } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 // Types describe the expected data shape, while hooks provide shared theme values.
+import { useAppLocalization } from "@/i18n";
 import type { MonthSummaryDay } from "@/types/domain";
 import { useAppTheme } from "@/theme";
 
@@ -16,9 +17,20 @@ type CalendarDayCellProps = {
   onPress: (date: string) => void;
 };
 
+/** Month cells only need the sunrise tithi label, not the time/detail suffix. */
+const formatMonthCellTithi = (value: string | null) => {
+  if (!value) {
+    return "No tithi";
+  }
+
+  const sunriseLabel = value.split("/")[0] ?? value;
+  return sunriseLabel.replace(/\s+\d{1,2}:\d{1,2}.*$/, "").trim();
+};
+
 /** Render one calendar tile. `null` days become empty spacer cells so the grid stays aligned. */
 const CalendarDayCellComponent = ({ day, onPress }: CalendarDayCellProps) => {
   const theme = useAppTheme();
+  const { dynamic } = useAppLocalization();
   const styles = createStyles(theme);
   if (!day) {
     return <View style={[styles.container, styles.empty]} />;
@@ -33,17 +45,9 @@ const CalendarDayCellComponent = ({ day, onPress }: CalendarDayCellProps) => {
         <Text style={styles.dayNumber}>{day.gregorianDay}</Text>
         {day.isToday ? <View style={styles.todayDot} /> : null}
       </View>
-      <Text numberOfLines={1} style={styles.tithi}>
-        {day.primaryTithiAtSunrise || "No tithi"}
+      <Text numberOfLines={2} style={styles.tithi}>
+        {dynamic(formatMonthCellTithi(day.primaryTithiAtSunrise))}
       </Text>
-      <View style={styles.markers}>
-        {day.specialTithis.slice(0, 3).map((specialTithi) => (
-          <Text key={specialTithi.id} numberOfLines={1} style={styles.marker}>
-            {specialTithi.name}
-          </Text>
-        ))}
-        {day.specialTithis.length > 3 ? <Text style={styles.moreMarker}>+{day.specialTithis.length - 3} more</Text> : null}
-      </View>
     </Pressable>
   );
 };
@@ -54,22 +58,25 @@ export const CalendarDayCell = memo(CalendarDayCellComponent);
 const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
   StyleSheet.create({
     container: {
-      minHeight: 110,
       flex: 1,
-      backgroundColor: theme.colors.card,
-      borderColor: theme.colors.border,
-      borderRadius: theme.radii.sm,
-      borderWidth: 1,
-      padding: 8,
+      minHeight: 74,
+      backgroundColor: "transparent",
+      borderBottomColor: theme.colors.border,
+      borderBottomWidth: 1,
+      borderRightColor: theme.colors.border,
+      borderRightWidth: 1,
+      paddingHorizontal: 6,
+      paddingVertical: 10,
       gap: 6
     },
     empty: {
       backgroundColor: "transparent",
-      borderColor: "transparent"
+      borderBottomColor: "transparent",
+      borderRightColor: "transparent"
     },
     today: {
-      borderColor: theme.colors.maroon,
-      backgroundColor: theme.colors.surfaceAccent
+      borderBottomColor: theme.colors.maroon,
+      borderBottomWidth: 2
     },
     headerRow: {
       flexDirection: "row",
@@ -79,7 +86,6 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
     dayNumber: {
       color: theme.colors.ink,
       fontSize: 18,
-      fontWeight: "700",
       fontFamily: theme.typography.headingFamily
     },
     todayDot: {
@@ -90,23 +96,9 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
     },
     tithi: {
       color: theme.colors.muted,
-      fontSize: 12,
-      fontFamily: theme.typography.bodyFamily
-    },
-    markers: {
-      gap: 4,
-      marginTop: 2
-    },
-    marker: {
-      color: theme.colors.saffron,
       fontSize: 11,
-      fontWeight: "600",
-      fontFamily: theme.typography.bodyFamily
-    },
-    moreMarker: {
-      color: theme.colors.muted,
-      fontSize: 11,
-      fontWeight: "600",
+      lineHeight: 14,
+      textAlign: "left",
       fontFamily: theme.typography.bodyFamily
     }
   });

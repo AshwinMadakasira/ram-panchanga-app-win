@@ -55,16 +55,16 @@ export const getCalendarWeeks = <T extends { date: string }>(year: number, month
 };
 
 /** Format a month label such as "March 2026". */
-export const getDisplayMonth = (year: number, month: number) =>
-  new Intl.DateTimeFormat("en-US", {
+export const getDisplayMonth = (year: number, month: number, locale = "en-US") =>
+  new Intl.DateTimeFormat(locale, {
     month: "long",
     year: "numeric",
     timeZone: "UTC"
   }).format(new Date(Date.UTC(year, month - 1, 1)));
 
 /** Format a full ISO date into a long human-readable label. */
-export const formatDisplayDate = (date: string) =>
-  new Intl.DateTimeFormat("en-US", {
+export const formatDisplayDate = (date: string, locale = "en-US") =>
+  new Intl.DateTimeFormat(locale, {
     weekday: "long",
     month: "long",
     day: "numeric",

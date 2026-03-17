@@ -6,29 +6,25 @@
 import { StyleSheet, Text, View } from "react-native";
 
 // Domain types keep the component explicit about which data it needs.
+import { useAppLocalization } from "@/i18n";
 import type { CalendarDay, TimeWindow } from "@/types/domain";
 import { useAppTheme } from "@/theme";
 
 const highlightedWindowTypes = ["braahmi-kaala", "morning-sandhya", "evening-sandhya"] as const;
 
-const windowLabels: Record<(typeof highlightedWindowTypes)[number], string> = {
-  "braahmi-kaala": "Braahmi Kaala",
-  "morning-sandhya": "Morning Sandhya",
-  "evening-sandhya": "Evening Sandhya"
-};
-
 /** Convert an optional window into a human-readable time range. */
 const formatRange = (window?: TimeWindow) => {
   if (!window) {
-    return "Unavailable";
+    return null;
   }
 
-  return `${window.startTime || "Unavailable"} - ${window.endTime || "Unavailable"}`;
+  return `${window.startTime || ""} - ${window.endTime || ""}`.trim();
 };
 
 /** Render sun/moon rise-set data and the highlighted sacred windows when available. */
 export const SunCard = ({ day, timeWindows = [] }: { day: CalendarDay; timeWindows?: TimeWindow[] }) => {
   const theme = useAppTheme();
+  const { text } = useAppLocalization();
   const styles = createStyles(theme);
   const highlightedWindows = highlightedWindowTypes
     .map((type) => timeWindows.find((window) => window.type === type))
@@ -43,38 +39,44 @@ export const SunCard = ({ day, timeWindows = [] }: { day: CalendarDay; timeWindo
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Sun and moon</Text>
+      <Text style={styles.title}>{text.sunAndMoon}</Text>
       <View style={styles.celestialBlock}>
-        <Text style={styles.sectionLabel}>Sun</Text>
+        <Text style={styles.sectionLabel}>{text.sun}</Text>
         <View style={styles.row}>
-          <Text style={styles.label}>Rise</Text>
-          <Text style={styles.value}>{day.sunrise || "Unavailable"}</Text>
+          <Text style={styles.label}>{text.rise}</Text>
+          <Text style={styles.value}>{day.sunrise || text.unavailable}</Text>
         </View>
         <View style={styles.row}>
-          <Text style={styles.label}>Set</Text>
-          <Text style={styles.value}>{day.sunset || "Unavailable"}</Text>
+          <Text style={styles.label}>{text.set}</Text>
+          <Text style={styles.value}>{day.sunset || text.unavailable}</Text>
         </View>
       </View>
       <View style={styles.celestialBlock}>
-        <Text style={styles.sectionLabel}>Moon</Text>
+        <Text style={styles.sectionLabel}>{text.moon}</Text>
         <View style={styles.row}>
-          <Text style={styles.label}>Rise</Text>
-          <Text style={styles.value}>{day.moonrise || "Unavailable"}</Text>
+          <Text style={styles.label}>{text.rise}</Text>
+          <Text style={styles.value}>{day.moonrise || text.unavailable}</Text>
         </View>
         <View style={styles.row}>
-          <Text style={styles.label}>Set</Text>
-          <Text style={styles.value}>{day.moonset || "Unavailable"}</Text>
+          <Text style={styles.label}>{text.set}</Text>
+          <Text style={styles.value}>{day.moonset || text.unavailable}</Text>
         </View>
       </View>
       {highlightedWindows.length > 0 ? (
         <View style={styles.windowsBlock}>
-          <Text style={styles.sectionLabel}>Sacred times</Text>
+          <Text style={styles.sectionLabel}>{text.sacredTimes}</Text>
           {highlightedWindowTypes.map((type) => {
             const window = timeWindows.find((entry) => entry.type === type);
+            const label =
+              type === "braahmi-kaala"
+                ? text.braahmiKaala
+                : type === "morning-sandhya"
+                  ? text.morningSandhya
+                  : text.eveningSandhya;
             return (
               <View key={type} style={styles.row}>
-                <Text style={styles.label}>{windowLabels[type]}</Text>
-                <Text style={styles.value}>{formatRange(window)}</Text>
+                <Text style={styles.label}>{label}</Text>
+                <Text style={styles.value}>{formatRange(window) || text.unavailable}</Text>
               </View>
             );
           })}
@@ -98,7 +100,6 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
     title: {
       color: theme.colors.ink,
       fontSize: 18,
-      fontWeight: "700",
       fontFamily: theme.typography.headingFamily
     },
     celestialBlock: {
@@ -116,7 +117,7 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
     },
     sectionLabel: {
       color: theme.colors.maroon,
-      fontSize: 13,
+      fontSize: 14,
       fontFamily: theme.typography.bodyStrongFamily
     },
     row: {
@@ -126,10 +127,12 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
     },
     label: {
       color: theme.colors.muted,
+      fontSize: 15,
       fontFamily: theme.typography.bodyFamily
     },
     value: {
       color: theme.colors.ink,
+      fontSize: 15,
       fontFamily: theme.typography.bodyStrongFamily,
       textAlign: "right",
       flexShrink: 1

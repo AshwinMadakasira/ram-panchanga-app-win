@@ -20,6 +20,7 @@ import { StatusBar } from "expo-status-bar";
 import { ReminderCoordinator } from "@/components/app/ReminderCoordinator";
 import { ErrorState } from "@/components/common/ErrorState";
 import { useAppBootstrap } from "@/hooks/useAppBootstrap";
+import { useAppLocalization } from "@/i18n";
 import { useSettingsStore } from "@/store/settings-store";
 import { AppThemeProvider, createAppTheme, resolveThemeMode } from "@/theme";
 
@@ -37,8 +38,13 @@ export default function RootLayout() {
   );
   const { isReady, error } = useAppBootstrap();
   const systemScheme = useColorScheme();
+  const appLanguage = useSettingsStore((state) => state.appLanguage);
+  const { text } = useAppLocalization();
   const themePreference = useSettingsStore((state) => state.themePreference);
-  const theme = useMemo(() => createAppTheme(resolveThemeMode(themePreference, systemScheme)), [systemScheme, themePreference]);
+  const theme = useMemo(
+    () => createAppTheme(resolveThemeMode(themePreference, systemScheme), appLanguage),
+    [appLanguage, systemScheme, themePreference]
+  );
   const navigationTheme = useMemo(
     () => ({
       ...(theme.isDark ? DarkTheme : DefaultTheme),
@@ -65,7 +71,7 @@ export default function RootLayout() {
       <View style={styles.loading}>
         <StatusBar style={theme.isDark ? "light" : "dark"} />
         <ActivityIndicator color={theme.colors.maroon} size="large" />
-        <Text style={styles.loadingText}>Preparing Panchanga</Text>
+        <Text style={styles.loadingText}>{text.preparingPanchanga}</Text>
       </View>
     );
   }
@@ -97,9 +103,8 @@ export default function RootLayout() {
                 headerShown: false
               }}
             />
-            <Stack.Screen name="day/[date]" options={{ title: "Day Detail" }} />
-            <Stack.Screen name="search" options={{ title: "Search" }} />
-            <Stack.Screen name="+not-found" options={{ title: "Not Found" }} />
+            <Stack.Screen name="search" options={{ title: text.search }} />
+            <Stack.Screen name="+not-found" options={{ title: text.notFound }} />
           </Stack>
         </NavigationThemeProvider>
       </QueryClientProvider>

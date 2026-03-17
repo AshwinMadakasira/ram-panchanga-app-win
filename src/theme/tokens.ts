@@ -7,8 +7,12 @@
  * - Neuton fonts for a more editorial feel
  * - page background slightly darker than cards so interactive surfaces stand out
  */
+import type { AppLanguage } from "@/types/domain";
+
 const headingFont = "Neuton-Bold";
 const bodyFont = "Neuton-Regular";
+const kannadaHeadingFont = "NotoSerifKannada-Bold";
+const kannadaBodyFont = "NotoSerifKannada-Regular";
 
 export const lightPalette = {
   ivory: "#f2e8d8",
@@ -61,8 +65,21 @@ export const radii = {
   pill: 999
 } as const;
 
-export const typography = {
-  headingFamily: headingFont,
-  bodyFamily: bodyFont,
-  bodyStrongFamily: headingFont
-} as const;
+export const createTypography = (language: AppLanguage) =>
+  language === "kn"
+    ? {
+        headingFamily: kannadaHeadingFont,
+        bodyFamily: kannadaBodyFont,
+        bodyStrongFamily: kannadaHeadingFont,
+        fontScale: 1.08,
+        headingScale: 1.12,
+        compactScale: 1.06
+      }
+    : {
+        headingFamily: headingFont,
+        bodyFamily: bodyFont,
+        bodyStrongFamily: headingFont,
+        fontScale: 1,
+        headingScale: 1,
+        compactScale: 1
+      };

@@ -1,12 +1,12 @@
 {
-  "dataVersion": "newyork-est-v12-bcf7d3ca23b7",
+  "dataVersion": "newyork-est-v12-7d79632419aa",
   "importedAt": null,
-  "sourceFingerprint": "bcf7d3ca23b7ff3126da05609a7f6f8417919c0db41631d940799207cef521a1",
+  "sourceFingerprint": "7d79632419aa81758c58d6d0cdbba0f1ce4ecfa4a507a9ebea03fa807b33227d",
   "locations": [
     {
       "id": "newyork-est",
       "name": "NewYork-EST",
-      "region": "null",
+      "region": null,
       "country": "USA",
       "timezone": "America/New_York",
       "latitude": 40.7128,
@@ -150,7 +150,7 @@
       "gregorianYear": 2026,
       "lunarMonth": "Chaitra",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "apthami7:16/Ashtami28:5",
+      "primaryTithiAtSunrise": "Sapthami 7:16/Ashtami 28:05",
       "primaryNakshatraAtSunrise": "Mrugashira 10:51 –",
       "primaryYogaAtSunrise": "Saubhagya 20:16",
       "primaryKaranaAtSunrise": "Vanik 7:16",
@@ -444,7 +444,7 @@
       "gregorianYear": 2026,
       "lunarMonth": "Chaitra",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "Sapthami ☺",
+      "primaryTithiAtSunrise": "Sapthami",
       "primaryNakshatraAtSunrise": "Moola 20:22 –+",
       "primaryYogaAtSunrise": "Parigha 29:49",
       "primaryKaranaAtSunrise": "Bhadra 19:21",
@@ -633,7 +633,7 @@
       "gregorianYear": 2026,
       "lunarMonth": "Chaitra",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "avasya7:54/Prathama30:1",
+      "primaryTithiAtSunrise": "Amavasya 7:54/Prathama 30:01",
       "primaryNakshatraAtSunrise": "Ashwini 25:24 +",
       "primaryYogaAtSunrise": "Vishkambha 19:08",
       "primaryKaranaAtSunrise": "Nagavan 7:54",
@@ -1326,7 +1326,7 @@
       "gregorianYear": 2026,
       "lunarMonth": "Jyeshta",
       "adhikaMonthFlag": true,
-      "primaryTithiAtSunrise": "Chathurthi6:42/Panchami2",
+      "primaryTithiAtSunrise": "Chathurthi 6:42/Panchami",
       "primaryNakshatraAtSunrise": "Punarvasu 24:01 +",
       "primaryYogaAtSunrise": "Shoola 9:42",
       "primaryKaranaAtSunrise": "Bhadra 6:42",
@@ -1578,7 +1578,7 @@
       "gregorianYear": 2026,
       "lunarMonth": "Jyeshta",
       "adhikaMonthFlag": true,
-      "primaryTithiAtSunrise": "Dwitheeya ☺",
+      "primaryTithiAtSunrise": "Dwitheeya",
       "primaryNakshatraAtSunrise": "Jyeshta 8:08 –",
       "primaryYogaAtSunrise": "Sadhya 20:37",
       "primaryKaranaAtSunrise": "Theitila 18:05",
@@ -1809,7 +1809,7 @@
       "gregorianYear": 2026,
       "lunarMonth": "Jyeshta",
       "adhikaMonthFlag": true,
-      "primaryTithiAtSunrise": "adashi6:29/Thrayodashi2",
+      "primaryTithiAtSunrise": "Dwadashi 6:29/Thrayodashi",
       "primaryNakshatraAtSunrise": "Bharani 16:10 –",
       "primaryYogaAtSunrise": "Athiganda 9:43",
       "primaryKaranaAtSunrise": "Theitila 6:29",
@@ -2481,7 +2481,7 @@
       "gregorianYear": 2026,
       "lunarMonth": "Jyeshta",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "avasya6:10/Prathama27:4",
+      "primaryTithiAtSunrise": "Amavasya 6:10/Prathama 27:04",
       "primaryNakshatraAtSunrise": "Punarvasu 16:16 –",
       "primaryYogaAtSunrise": "Harshana 25:07",
       "primaryKaranaAtSunrise": "Nagavan 6:10",
@@ -2733,7 +2733,7 @@
       "gregorianYear": 2026,
       "lunarMonth": "Ashada",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "Thrayodashi ☺",
+      "primaryTithiAtSunrise": "Thrayodashi",
       "primaryNakshatraAtSunrise": "Moola 25:08 +",
       "primaryYogaAtSunrise": "Aindra 13:48",
       "primaryKaranaAtSunrise": "Kaulava 16:45",
@@ -3615,7 +3615,7 @@
       "gregorianYear": 2026,
       "lunarMonth": "Shravana",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "ashami8:39/Ekadashi30:1",
+      "primaryTithiAtSunrise": "Dashami 8:39/Ekadashi 30:01",
       "primaryNakshatraAtSunrise": "Ardra 10:10 –+",
       "primaryYogaAtSunrise": "Vyathipatha 21:58",
       "primaryKaranaAtSunrise": "Bhadra 8:39",
@@ -3909,7 +3909,7 @@
       "gregorianYear": 2026,
       "lunarMonth": "Bhadrapada",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "Dashami ☺",
+      "primaryTithiAtSunrise": "Dashami",
       "primaryNakshatraAtSunrise": "Poorvashada 18:08 +",
       "primaryYogaAtSunrise": "Shobhana ☺",
       "primaryKaranaAtSunrise": "Theitila 19:05",
@@ -4791,7 +4791,7 @@
       "gregorianYear": 2026,
       "lunarMonth": "Ashvina",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "apthami8:19/Ashtami30:0",
+      "primaryTithiAtSunrise": "Sapthami 8:19/Ashtami 30:00",
       "primaryNakshatraAtSunrise": "Pushya 22:16 +–",
       "primaryYogaAtSunrise": "Sadhya9:18/Shubha30:14",
       "primaryKaranaAtSunrise": "Bava 8:19",
@@ -5022,7 +5022,7 @@
       "gregorianYear": 2026,
       "lunarMonth": "Kartheeka",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "Chathurthi ☺",
+      "primaryTithiAtSunrise": "Chathurthi",
       "primaryNakshatraAtSunrise": "Moola 28:46 +",
       "primaryYogaAtSunrise": "Sukarman 17:16",
       "primaryKaranaAtSunrise": "Vanik 17:51",
@@ -5295,7 +5295,7 @@
       "gregorianYear": 2026,
       "lunarMonth": "Kartheeka",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "athama8:19/Dwitheeya30",
+      "primaryTithiAtSunrise": "Prathama 8:19/Dwitheeya",
       "primaryNakshatraAtSunrise": "Rohini 12:58 –",
       "primaryYogaAtSunrise": "Siddha 25:26",
       "primaryKaranaAtSunrise": "Kaulava 8:19",
@@ -5736,7 +5736,7 @@
       "gregorianYear": 2026,
       "lunarMonth": "Margashira",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "Ashtami ☺",
+      "primaryTithiAtSunrise": "Ashtami",
       "primaryNakshatraAtSunrise": "Poorvabhadra 24:22 –+",
       "primaryYogaAtSunrise": "Siddhi 23:12",
       "primaryKaranaAtSunrise": "Bhadra 18:51",
@@ -6009,7 +6009,7 @@
       "gregorianYear": 2026,
       "lunarMonth": "Margashira",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "hashti8:35/Sapthami31:0",
+      "primaryTithiAtSunrise": "Shashti 8:35/Sapthami 31:00",
       "primaryNakshatraAtSunrise": "Pubba 10:59 +",
       "primaryYogaAtSunrise": "Ayushman 10:53",
       "primaryKaranaAtSunrise": "Vanik 8:35",
@@ -6030,7 +6030,7 @@
       "gregorianYear": 2026,
       "lunarMonth": "Margashira",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "Ashtami30:09",
+      "primaryTithiAtSunrise": "Ashtami 30:09",
       "primaryNakshatraAtSunrise": "Uttara 10:24 +–",
       "primaryYogaAtSunrise": "aubhagya8:40/Shobhana30:2",
       "primaryKaranaAtSunrise": "Bava 7:21",
@@ -6114,7 +6114,7 @@
       "gregorianYear": 2027,
       "lunarMonth": "Margashira",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "Dwadashi ☺",
+      "primaryTithiAtSunrise": "Dwadashi",
       "primaryNakshatraAtSunrise": "Vishaka 12:44 –",
       "primaryYogaAtSunrise": "Shoola 26:56",
       "primaryKaranaAtSunrise": "Kaulava 19:28",
@@ -6513,7 +6513,7 @@
       "gregorianYear": 2027,
       "lunarMonth": "Pushya",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "ournami7:53/Prathama29",
+      "primaryTithiAtSunrise": "Pournami 7:53/Prathama",
       "primaryNakshatraAtSunrise": "Pushya 22:42 +",
       "primaryYogaAtSunrise": "Preethi 25:08",
       "primaryKaranaAtSunrise": "Bava 7:53",
@@ -6786,7 +6786,7 @@
       "gregorianYear": 2027,
       "lunarMonth": "Pushya",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "Chathurdashi ☺",
+      "primaryTithiAtSunrise": "Chathurdashi",
       "primaryNakshatraAtSunrise": "Uttharashada ☺ –",
       "primaryYogaAtSunrise": "Vajra 9:25",
       "primaryKaranaAtSunrise": "Bhadra 18:43",
@@ -7017,7 +7017,7 @@
       "gregorianYear": 2027,
       "lunarMonth": "Magha",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "Navami8:03/Dashami30:0",
+      "primaryTithiAtSunrise": "Navami 8:03/Dashami 30:00",
       "primaryNakshatraAtSunrise": "Rohini 13:20 +–",
       "primaryYogaAtSunrise": "Vaidhruthi 20:01",
       "primaryKaranaAtSunrise": "Kaulava 8:03",
@@ -7731,7 +7731,7 @@
       "gregorianYear": 2027,
       "lunarMonth": "Phalguna",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "thurdashi7:56/Pournami3",
+      "primaryTithiAtSunrise": "Chathurdashi 7:56/Pournami",
       "primaryNakshatraAtSunrise": "Pubba 11:57 +",
       "primaryYogaAtSunrise": "Shoola6:54/Ganda28:1",
       "primaryKaranaAtSunrise": "Vanik 7:56",
@@ -7878,7 +7878,7 @@
       "gregorianYear": 2027,
       "lunarMonth": "Phalguna",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "Sapthami ☺",
+      "primaryTithiAtSunrise": "Sapthami",
       "primaryNakshatraAtSunrise": "Jyeshta 15:32 –+",
       "primaryYogaAtSunrise": "Vyathipatha 21:06",
       "primaryKaranaAtSunrise": "Bhadra 18:52",
@@ -8355,21 +8355,21 @@
       "id": "newyork-est-2026-03-25-tithi-1",
       "calendarDayId": "newyork-est-2026-03-25",
       "type": "tithi",
-      "name": "apthami",
+      "name": "Sapthami",
       "startsAt": null,
       "endsAt": "7:16",
       "displayOrder": 0,
-      "rawSourceText": "apthami7:16/Ashtami28:5"
+      "rawSourceText": "Sapthami 7:16/Ashtami 28:05"
     },
     {
       "id": "newyork-est-2026-03-25-tithi-2",
       "calendarDayId": "newyork-est-2026-03-25",
       "type": "tithi",
-      "name": "Ashtami 28:5",
+      "name": "Ashtami",
       "startsAt": "7:16",
-      "endsAt": null,
+      "endsAt": "28:05",
       "displayOrder": 1,
-      "rawSourceText": "apthami7:16/Ashtami28:5"
+      "rawSourceText": "Sapthami 7:16/Ashtami 28:05"
     },
     {
       "id": "newyork-est-2026-03-25-nakshatra-1",
@@ -8955,11 +8955,11 @@
       "id": "newyork-est-2026-04-08-tithi-1",
       "calendarDayId": "newyork-est-2026-04-08",
       "type": "tithi",
-      "name": "Sapthami ☺",
+      "name": "Sapthami",
       "startsAt": null,
       "endsAt": null,
       "displayOrder": 0,
-      "rawSourceText": "Sapthami ☺"
+      "rawSourceText": "Sapthami"
     },
     {
       "id": "newyork-est-2026-04-08-nakshatra-1",
@@ -9315,21 +9315,21 @@
       "id": "newyork-est-2026-04-17-tithi-1",
       "calendarDayId": "newyork-est-2026-04-17",
       "type": "tithi",
-      "name": "avasya",
+      "name": "Amavasya",
       "startsAt": null,
       "endsAt": "7:54",
       "displayOrder": 0,
-      "rawSourceText": "avasya7:54/Prathama30:1"
+      "rawSourceText": "Amavasya 7:54/Prathama 30:01"
     },
     {
       "id": "newyork-est-2026-04-17-tithi-2",
       "calendarDayId": "newyork-est-2026-04-17",
       "type": "tithi",
-      "name": "Prathama 30:1",
+      "name": "Prathama",
       "startsAt": "7:54",
-      "endsAt": null,
+      "endsAt": "30:01",
       "displayOrder": 1,
-      "rawSourceText": "avasya7:54/Prathama30:1"
+      "rawSourceText": "Amavasya 7:54/Prathama 30:01"
     },
     {
       "id": "newyork-est-2026-04-17-nakshatra-1",
@@ -10679,17 +10679,17 @@
       "startsAt": null,
       "endsAt": "6:42",
       "displayOrder": 0,
-      "rawSourceText": "Chathurthi6:42/Panchami2"
+      "rawSourceText": "Chathurthi 6:42/Panchami"
     },
     {
       "id": "newyork-est-2026-05-20-tithi-2",
       "calendarDayId": "newyork-est-2026-05-20",
       "type": "tithi",
-      "name": "Panchami 2",
+      "name": "Panchami",
       "startsAt": "6:42",
       "endsAt": null,
       "displayOrder": 1,
-      "rawSourceText": "Chathurthi6:42/Panchami2"
+      "rawSourceText": "Chathurthi 6:42/Panchami"
     },
     {
       "id": "newyork-est-2026-05-20-nakshatra-1",
@@ -11175,11 +11175,11 @@
       "id": "newyork-est-2026-06-01-tithi-1",
       "calendarDayId": "newyork-est-2026-06-01",
       "type": "tithi",
-      "name": "Dwitheeya ☺",
+      "name": "Dwitheeya",
       "startsAt": null,
       "endsAt": null,
       "displayOrder": 0,
-      "rawSourceText": "Dwitheeya ☺"
+      "rawSourceText": "Dwitheeya"
     },
     {
       "id": "newyork-est-2026-06-01-nakshatra-1",
@@ -11615,21 +11615,21 @@
       "id": "newyork-est-2026-06-12-tithi-1",
       "calendarDayId": "newyork-est-2026-06-12",
       "type": "tithi",
-      "name": "adashi",
+      "name": "Dwadashi",
       "startsAt": null,
       "endsAt": "6:29",
       "displayOrder": 0,
-      "rawSourceText": "adashi6:29/Thrayodashi2"
+      "rawSourceText": "Dwadashi 6:29/Thrayodashi"
     },
     {
       "id": "newyork-est-2026-06-12-tithi-2",
       "calendarDayId": "newyork-est-2026-06-12",
       "type": "tithi",
-      "name": "Thrayodashi 2",
+      "name": "Thrayodashi",
       "startsAt": "6:29",
       "endsAt": null,
       "displayOrder": 1,
-      "rawSourceText": "adashi6:29/Thrayodashi2"
+      "rawSourceText": "Dwadashi 6:29/Thrayodashi"
     },
     {
       "id": "newyork-est-2026-06-12-nakshatra-1",
@@ -12955,21 +12955,21 @@
       "id": "newyork-est-2026-07-14-tithi-1",
       "calendarDayId": "newyork-est-2026-07-14",
       "type": "tithi",
-      "name": "avasya",
+      "name": "Amavasya",
       "startsAt": null,
       "endsAt": "6:10",
       "displayOrder": 0,
-      "rawSourceText": "avasya6:10/Prathama27:4"
+      "rawSourceText": "Amavasya 6:10/Prathama 27:04"
     },
     {
       "id": "newyork-est-2026-07-14-tithi-2",
       "calendarDayId": "newyork-est-2026-07-14",
       "type": "tithi",
-      "name": "Prathama 27:4",
+      "name": "Prathama",
       "startsAt": "6:10",
-      "endsAt": null,
+      "endsAt": "27:04",
       "displayOrder": 1,
-      "rawSourceText": "avasya6:10/Prathama27:4"
+      "rawSourceText": "Amavasya 6:10/Prathama 27:04"
     },
     {
       "id": "newyork-est-2026-07-14-nakshatra-1",
@@ -13445,11 +13445,11 @@
       "id": "newyork-est-2026-07-26-tithi-1",
       "calendarDayId": "newyork-est-2026-07-26",
       "type": "tithi",
-      "name": "Thrayodashi ☺",
+      "name": "Thrayodashi",
       "startsAt": null,
       "endsAt": null,
       "displayOrder": 0,
-      "rawSourceText": "Thrayodashi ☺"
+      "rawSourceText": "Thrayodashi"
     },
     {
       "id": "newyork-est-2026-07-26-nakshatra-1",
@@ -15165,21 +15165,21 @@
       "id": "newyork-est-2026-09-06-tithi-1",
       "calendarDayId": "newyork-est-2026-09-06",
       "type": "tithi",
-      "name": "ashami",
+      "name": "Dashami",
       "startsAt": null,
       "endsAt": "8:39",
       "displayOrder": 0,
-      "rawSourceText": "ashami8:39/Ekadashi30:1"
+      "rawSourceText": "Dashami 8:39/Ekadashi 30:01"
     },
     {
       "id": "newyork-est-2026-09-06-tithi-2",
       "calendarDayId": "newyork-est-2026-09-06",
       "type": "tithi",
-      "name": "Ekadashi 30:1",
+      "name": "Ekadashi",
       "startsAt": "8:39",
-      "endsAt": null,
+      "endsAt": "30:01",
       "displayOrder": 1,
-      "rawSourceText": "ashami8:39/Ekadashi30:1"
+      "rawSourceText": "Dashami 8:39/Ekadashi 30:01"
     },
     {
       "id": "newyork-est-2026-09-06-nakshatra-1",
@@ -15755,11 +15755,11 @@
       "id": "newyork-est-2026-09-20-tithi-1",
       "calendarDayId": "newyork-est-2026-09-20",
       "type": "tithi",
-      "name": "Dashami ☺",
+      "name": "Dashami",
       "startsAt": null,
       "endsAt": null,
       "displayOrder": 0,
-      "rawSourceText": "Dashami ☺"
+      "rawSourceText": "Dashami"
     },
     {
       "id": "newyork-est-2026-09-20-nakshatra-1",
@@ -17465,21 +17465,21 @@
       "id": "newyork-est-2026-11-01-tithi-1",
       "calendarDayId": "newyork-est-2026-11-01",
       "type": "tithi",
-      "name": "apthami",
+      "name": "Sapthami",
       "startsAt": null,
       "endsAt": "8:19",
       "displayOrder": 0,
-      "rawSourceText": "apthami8:19/Ashtami30:0"
+      "rawSourceText": "Sapthami 8:19/Ashtami 30:00"
     },
     {
       "id": "newyork-est-2026-11-01-tithi-2",
       "calendarDayId": "newyork-est-2026-11-01",
       "type": "tithi",
-      "name": "Ashtami 30:0",
+      "name": "Ashtami",
       "startsAt": "8:19",
-      "endsAt": null,
+      "endsAt": "30:00",
       "displayOrder": 1,
-      "rawSourceText": "apthami8:19/Ashtami30:0"
+      "rawSourceText": "Sapthami 8:19/Ashtami 30:00"
     },
     {
       "id": "newyork-est-2026-11-01-nakshatra-1",
@@ -17925,11 +17925,11 @@
       "id": "newyork-est-2026-11-12-tithi-1",
       "calendarDayId": "newyork-est-2026-11-12",
       "type": "tithi",
-      "name": "Chathurthi ☺",
+      "name": "Chathurthi",
       "startsAt": null,
       "endsAt": null,
       "displayOrder": 0,
-      "rawSourceText": "Chathurthi ☺"
+      "rawSourceText": "Chathurthi"
     },
     {
       "id": "newyork-est-2026-11-12-nakshatra-1",
@@ -18455,21 +18455,21 @@
       "id": "newyork-est-2026-11-25-tithi-1",
       "calendarDayId": "newyork-est-2026-11-25",
       "type": "tithi",
-      "name": "athama",
+      "name": "Prathama",
       "startsAt": null,
       "endsAt": "8:19",
       "displayOrder": 0,
-      "rawSourceText": "athama8:19/Dwitheeya30"
+      "rawSourceText": "Prathama 8:19/Dwitheeya"
     },
     {
       "id": "newyork-est-2026-11-25-tithi-2",
       "calendarDayId": "newyork-est-2026-11-25",
       "type": "tithi",
-      "name": "Dwitheeya 30",
+      "name": "Dwitheeya",
       "startsAt": "8:19",
       "endsAt": null,
       "displayOrder": 1,
-      "rawSourceText": "athama8:19/Dwitheeya30"
+      "rawSourceText": "Prathama 8:19/Dwitheeya"
     },
     {
       "id": "newyork-est-2026-11-25-nakshatra-1",
@@ -19325,11 +19325,11 @@
       "id": "newyork-est-2026-12-16-tithi-1",
       "calendarDayId": "newyork-est-2026-12-16",
       "type": "tithi",
-      "name": "Ashtami ☺",
+      "name": "Ashtami",
       "startsAt": null,
       "endsAt": null,
       "displayOrder": 0,
-      "rawSourceText": "Ashtami ☺"
+      "rawSourceText": "Ashtami"
     },
     {
       "id": "newyork-est-2026-12-16-nakshatra-1",
@@ -19855,21 +19855,21 @@
       "id": "newyork-est-2026-12-29-tithi-1",
       "calendarDayId": "newyork-est-2026-12-29",
       "type": "tithi",
-      "name": "hashti",
+      "name": "Shashti",
       "startsAt": null,
       "endsAt": "8:35",
       "displayOrder": 0,
-      "rawSourceText": "hashti8:35/Sapthami31:0"
+      "rawSourceText": "Shashti 8:35/Sapthami 31:00"
     },
     {
       "id": "newyork-est-2026-12-29-tithi-2",
       "calendarDayId": "newyork-est-2026-12-29",
       "type": "tithi",
-      "name": "Sapthami 31:0",
+      "name": "Sapthami",
       "startsAt": "8:35",
-      "endsAt": null,
+      "endsAt": "31:00",
       "displayOrder": 1,
-      "rawSourceText": "hashti8:35/Sapthami31:0"
+      "rawSourceText": "Shashti 8:35/Sapthami 31:00"
     },
     {
       "id": "newyork-est-2026-12-29-nakshatra-1",
@@ -19909,7 +19909,7 @@
       "startsAt": null,
       "endsAt": "30:09",
       "displayOrder": 0,
-      "rawSourceText": "Ashtami30:09"
+      "rawSourceText": "Ashtami 30:09"
     },
     {
       "id": "newyork-est-2026-12-30-nakshatra-1",
@@ -20075,11 +20075,11 @@
       "id": "newyork-est-2027-01-03-tithi-1",
       "calendarDayId": "newyork-est-2027-01-03",
       "type": "tithi",
-      "name": "Dwadashi ☺",
+      "name": "Dwadashi",
       "startsAt": null,
       "endsAt": null,
       "displayOrder": 0,
-      "rawSourceText": "Dwadashi ☺"
+      "rawSourceText": "Dwadashi"
     },
     {
       "id": "newyork-est-2027-01-03-nakshatra-1",
@@ -20855,21 +20855,21 @@
       "id": "newyork-est-2027-01-22-tithi-1",
       "calendarDayId": "newyork-est-2027-01-22",
       "type": "tithi",
-      "name": "ournami",
+      "name": "Pournami",
       "startsAt": null,
       "endsAt": "7:53",
       "displayOrder": 0,
-      "rawSourceText": "ournami7:53/Prathama29"
+      "rawSourceText": "Pournami 7:53/Prathama"
     },
     {
       "id": "newyork-est-2027-01-22-tithi-2",
       "calendarDayId": "newyork-est-2027-01-22",
       "type": "tithi",
-      "name": "Prathama 29",
+      "name": "Prathama",
       "startsAt": "7:53",
       "endsAt": null,
       "displayOrder": 1,
-      "rawSourceText": "ournami7:53/Prathama29"
+      "rawSourceText": "Pournami 7:53/Prathama"
     },
     {
       "id": "newyork-est-2027-01-22-nakshatra-1",
@@ -21385,11 +21385,11 @@
       "id": "newyork-est-2027-02-04-tithi-1",
       "calendarDayId": "newyork-est-2027-02-04",
       "type": "tithi",
-      "name": "Chathurdashi ☺",
+      "name": "Chathurdashi",
       "startsAt": null,
       "endsAt": null,
       "displayOrder": 0,
-      "rawSourceText": "Chathurdashi ☺"
+      "rawSourceText": "Chathurdashi"
     },
     {
       "id": "newyork-est-2027-02-04-nakshatra-1",
@@ -21839,17 +21839,17 @@
       "startsAt": null,
       "endsAt": "8:03",
       "displayOrder": 0,
-      "rawSourceText": "Navami8:03/Dashami30:0"
+      "rawSourceText": "Navami 8:03/Dashami 30:00"
     },
     {
       "id": "newyork-est-2027-02-15-tithi-2",
       "calendarDayId": "newyork-est-2027-02-15",
       "type": "tithi",
-      "name": "Dashami 30:0",
+      "name": "Dashami",
       "startsAt": "8:03",
-      "endsAt": null,
+      "endsAt": "30:00",
       "displayOrder": 1,
-      "rawSourceText": "Navami8:03/Dashami30:0"
+      "rawSourceText": "Navami 8:03/Dashami 30:00"
     },
     {
       "id": "newyork-est-2027-02-15-nakshatra-1",
@@ -23245,21 +23245,21 @@
       "id": "newyork-est-2027-03-21-tithi-1",
       "calendarDayId": "newyork-est-2027-03-21",
       "type": "tithi",
-      "name": "thurdashi",
+      "name": "Chathurdashi",
       "startsAt": null,
       "endsAt": "7:56",
       "displayOrder": 0,
-      "rawSourceText": "thurdashi7:56/Pournami3"
+      "rawSourceText": "Chathurdashi 7:56/Pournami"
     },
     {
       "id": "newyork-est-2027-03-21-tithi-2",
       "calendarDayId": "newyork-est-2027-03-21",
       "type": "tithi",
-      "name": "Pournami 3",
+      "name": "Pournami",
       "startsAt": "7:56",
       "endsAt": null,
       "displayOrder": 1,
-      "rawSourceText": "thurdashi7:56/Pournami3"
+      "rawSourceText": "Chathurdashi 7:56/Pournami"
     },
     {
       "id": "newyork-est-2027-03-21-nakshatra-1",
@@ -23545,11 +23545,11 @@
       "id": "newyork-est-2027-03-28-tithi-1",
       "calendarDayId": "newyork-est-2027-03-28",
       "type": "tithi",
-      "name": "Sapthami ☺",
+      "name": "Sapthami",
       "startsAt": null,
       "endsAt": null,
       "displayOrder": 0,
-      "rawSourceText": "Sapthami ☺"
+      "rawSourceText": "Sapthami"
     },
     {
       "id": "newyork-est-2027-03-28-nakshatra-1",

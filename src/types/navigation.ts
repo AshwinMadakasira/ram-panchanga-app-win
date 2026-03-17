@@ -6,7 +6,7 @@ import type { Href } from "expo-router";
 
 /** Build the typed route object for a day-detail screen. */
 export const dayRoute = (date: string): Href => ({
-  pathname: "/day/[date]",
+  pathname: "/(tabs)/day/[date]",
   params: { date }
 });
 

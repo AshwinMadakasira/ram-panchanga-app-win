@@ -37,7 +37,7 @@ Generated files, lockfiles, fonts, images, and copied seed data are not the main
   Curated special-tithi browser
 - [app/(tabs)/settings.tsx](../app/(tabs)/settings.tsx)
   Theme, location, and reminder settings
-- [app/day/[date].tsx](../app/day/[date].tsx)
+- [app/(tabs)/day/[date].tsx](../app/(tabs)/day/[date].tsx)
   Full day-detail screen
 - [app/search.tsx](../app/search.tsx)
   Search screen
@@ -79,7 +79,6 @@ Generated files, lockfiles, fonts, images, and copied seed data are not the main
 - [src/components/day/SpecialTithiList.tsx](../src/components/day/SpecialTithiList.tsx)
 - [src/components/day/TransitionTimeline.tsx](../src/components/day/TransitionTimeline.tsx)
 - [src/components/special-tithis/SpecialTithiCollection.tsx](../src/components/special-tithis/SpecialTithiCollection.tsx)
-- [src/components/special-tithis/SpecialTithiSummaryStrip.tsx](../src/components/special-tithis/SpecialTithiSummaryStrip.tsx)
 
 ### Settings controls
 
@@ -110,6 +109,8 @@ Generated files, lockfiles, fonts, images, and copied seed data are not the main
   React Query wrappers
 - [src/hooks/useSelectedLocation.ts](../src/hooks/useSelectedLocation.ts)
   Active-location helper
+- [src/i18n/index.ts](../src/i18n/index.ts)
+  Shared static and dynamic localization layer
 - [src/services/reminders.ts](../src/services/reminders.ts)
   Notification scheduling logic
 - [src/store/settings-store.ts](../src/store/settings-store.ts)

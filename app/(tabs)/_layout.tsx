@@ -10,10 +10,12 @@ import { useMemo } from "react";
 
 // Shared UI and theme helpers from the app codebase.
 import { SearchHeaderButton } from "@/components/common/SearchHeaderButton";
+import { useAppLocalization } from "@/i18n";
 import { useAppTheme } from "@/theme";
 
 export default function TabLayout() {
   const theme = useAppTheme();
+  const { text } = useAppLocalization();
   const screenOptions = useMemo(
     () => ({
       tabBarActiveTintColor: theme.colors.maroon,
@@ -22,11 +24,19 @@ export default function TabLayout() {
         backgroundColor: theme.colors.card,
         borderTopColor: theme.colors.border
       },
+      tabBarLabelStyle: {
+        fontFamily: theme.typography.bodyStrongFamily,
+        fontSize: Math.round(11 * theme.typography.compactScale)
+      },
       headerStyle: {
         backgroundColor: theme.colors.ivory
       },
       headerShadowVisible: false,
       headerTintColor: theme.colors.ink,
+      headerTitleStyle: {
+        fontFamily: theme.typography.headingFamily,
+        fontSize: Math.round(18 * theme.typography.headingScale)
+      },
       headerRight: SearchHeaderButton
     }),
     [theme]
@@ -38,29 +48,36 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Today",
+          title: text.today,
           tabBarIcon: ({ color, size }) => <Ionicons color={color} name="sunny-outline" size={size} />
         }}
       />
       <Tabs.Screen
         name="calendar"
         options={{
-          title: "Calendar",
+          title: text.calendar,
           tabBarIcon: ({ color, size }) => <Ionicons color={color} name="calendar-outline" size={size} />
         }}
       />
       <Tabs.Screen
         name="special-tithis"
         options={{
-          title: "Special Tithis",
+          title: text.specialTithis,
           tabBarIcon: ({ color, size }) => <Ionicons color={color} name="flower-outline" size={size} />
         }}
       />
       <Tabs.Screen
         name="settings"
         options={{
-          title: "Settings",
+          title: text.settings,
           tabBarIcon: ({ color, size }) => <Ionicons color={color} name="settings-outline" size={size} />
+        }}
+      />
+      <Tabs.Screen
+        name="day/[date]"
+        options={{
+          href: null,
+          title: text.dayDetail
         }}
       />
     </Tabs>

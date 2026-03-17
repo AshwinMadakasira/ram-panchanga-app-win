@@ -16,16 +16,13 @@ import { ScreenContainer } from "@/components/common/ScreenContainer";
 import { SectionHeader } from "@/components/common/SectionHeader";
 import { useSearch } from "@/hooks/usePanchangaQueries";
 import { useSelectedLocation } from "@/hooks/useSelectedLocation";
+import { useAppLocalization } from "@/i18n";
 import { useAppTheme } from "@/theme";
 import { dayRoute } from "@/types/navigation";
 
-const kindLabels = {
-  date: "Date",
-  special_tithi: "Special Tithi"
-} as const;
-
 export default function SearchScreen() {
   const theme = useAppTheme();
+  const { language, text, dynamic } = useAppLocalization();
   const styles = createStyles(theme);
   const { locationId, isLoading: locationLoading, error: locationError } = useSelectedLocation();
   const [query, setQuery] = useState("");
@@ -34,30 +31,42 @@ export default function SearchScreen() {
 
   return (
     <ScreenContainer>
-      <SectionHeader title="Search" subtitle="Search dates, special tithis, tithi, and nakshatra." />
+      <SectionHeader
+        title={text.search}
+        subtitle={language === "kn" ? "ದಿನಾಂಕ, ವಿಶೇಷ ತಿಥಿ, ತಿಥಿ ಮತ್ತು ನಕ್ಷತ್ರವನ್ನು ಹುಡುಕಿ." : "Search dates, special tithis, tithi, and nakshatra."}
+      />
       <TextInput
         autoCapitalize="none"
         autoCorrect={false}
         onChangeText={setQuery}
-        placeholder="Search Panchanga"
+        placeholder={language === "kn" ? "ಪಂಚಾಂಗದಲ್ಲಿ ಹುಡುಕಿ" : "Search Panchanga"}
         placeholderTextColor={theme.colors.muted}
         style={styles.input}
         value={query}
       />
-      {locationError || error ? <ErrorState message={(locationError ?? error)?.message ?? "Unable to search Panchanga."} /> : null}
+      {locationError || error ? <ErrorState message={(locationError ?? error)?.message ?? (language === "kn" ? "ಪಂಚಾಂಗ ಹುಡುಕಲು ಆಗಲಿಲ್ಲ." : "Unable to search Panchanga.")} /> : null}
       {query.trim().length === 0 ? (
-        <EmptyState title="Start typing" message="Search by date, special tithi, tithi, or nakshatra." />
+        <EmptyState
+          title={language === "kn" ? "ಟೈಪ್ ಮಾಡಲು ಆರಂಭಿಸಿ" : "Start typing"}
+          message={language === "kn" ? "ದಿನಾಂಕ, ವಿಶೇಷ ತಿಥಿ, ತಿಥಿ ಅಥವಾ ನಕ್ಷತ್ರದ ಮೂಲಕ ಹುಡುಕಿ." : "Search by date, special tithi, tithi, or nakshatra."}
+        />
       ) : locationLoading || isFetching ? (
-        <LoadingState title="Searching" message="Looking through locally stored Panchanga data." />
+        <LoadingState
+          title={language === "kn" ? "ಹುಡುಕುತ್ತಿದೆ" : "Searching"}
+          message={language === "kn" ? "ಸ್ಥಳೀಯವಾಗಿ ಸಂಗ್ರಹಿಸಿದ ಪಂಚಾಂಗ ದತ್ತಾಂಶದಲ್ಲಿ ಹುಡುಕಲಾಗುತ್ತಿದೆ." : "Looking through locally stored Panchanga data."}
+        />
       ) : !data || data.length === 0 ? (
-        <EmptyState title="No matches" message="No local results matched the current search query." />
+        <EmptyState
+          title={language === "kn" ? "ಫಲಿತಾಂಶಗಳಿಲ್ಲ" : "No matches"}
+          message={language === "kn" ? "ಈ ಹುಡುಕಾಟಕ್ಕೆ ಹೊಂದುವ ಸ್ಥಳೀಯ ಫಲಿತಾಂಶಗಳಿಲ್ಲ." : "No local results matched the current search query."}
+        />
       ) : (
         <View style={styles.results}>
           {data.map((result) => (
             <Pressable key={`${result.kind}-${result.id}`} onPress={() => router.push(dayRoute(result.date))} style={styles.card}>
-              <Text style={styles.kind}>{kindLabels[result.kind]}</Text>
-              <Text style={styles.title}>{result.title}</Text>
-              <Text style={styles.subtitle}>{result.subtitle || result.date}</Text>
+              <Text style={styles.kind}>{result.kind === "date" ? text.date : text.specialTithi}</Text>
+              <Text style={styles.title}>{dynamic(result.title) || result.title}</Text>
+              <Text style={styles.subtitle}>{dynamic(result.subtitle) || result.subtitle || result.date}</Text>
             </Pressable>
           ))}
         </View>
@@ -94,18 +103,17 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
     kind: {
       color: theme.colors.saffron,
       fontSize: 12,
-      fontWeight: "700",
       textTransform: "uppercase",
-      fontFamily: theme.typography.bodyFamily
+      fontFamily: theme.typography.bodyStrongFamily
     },
     title: {
       color: theme.colors.ink,
-      fontSize: 16,
-      fontWeight: "700",
+      fontSize: 17,
       fontFamily: theme.typography.headingFamily
     },
     subtitle: {
       color: theme.colors.muted,
+      fontSize: 15,
       fontFamily: theme.typography.bodyFamily
     }
   });

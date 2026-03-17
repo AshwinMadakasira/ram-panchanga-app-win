@@ -41,11 +41,11 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
     title: {
       color: theme.colors.ink,
       fontSize: 17,
-      fontWeight: "700",
       fontFamily: theme.typography.headingFamily
     },
     message: {
       color: theme.colors.muted,
+      fontSize: 15,
       textAlign: "center",
       lineHeight: 22,
       fontFamily: theme.typography.bodyFamily

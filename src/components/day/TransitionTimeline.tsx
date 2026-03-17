@@ -1,46 +1,32 @@
 /*
  * Component teaching note:
- * Timelines turn ordered events into an easy-to-scan visual sequence.
- * Here the ordered events are Panchanga transitions during a day.
+ * This component presents intraday details in a compact grid instead of a long vertical list.
+ * That tradeoff favors scanability: users can see sun, moon, sacred times, and transitions at once.
  */
 import { StyleSheet, Text, View } from "react-native";
 
-// The component receives ready-to-render transition objects from the repository layer.
-import type { DayTransition } from "@/types/domain";
+// The component receives ready-to-render timeline entries from the screen layer.
 import { useAppTheme } from "@/theme";
 
-/** Render a vertical timeline of day transitions. */
-export const TransitionTimeline = ({ transitions }: { transitions: DayTransition[] }) => {
+export type TransitionTimelineEntry = {
+  id: string;
+  type: string;
+  name: string;
+  detail: string;
+};
+
+/** Render intraday entries in a compact card grid. */
+export const TransitionTimeline = ({ items }: { items: TransitionTimelineEntry[] }) => {
   const theme = useAppTheme();
   const styles = createStyles(theme);
 
-  /** Convert optional start/end timestamps into a friendly label. */
-  const getTimeLabel = (transition: DayTransition) => {
-    if (transition.startsAt && transition.endsAt) {
-      return `${transition.startsAt} to ${transition.endsAt}`;
-    }
-
-    if (transition.endsAt) {
-      return `Until ${transition.endsAt}`;
-    }
-
-    if (transition.startsAt) {
-      return `From ${transition.startsAt}`;
-    }
-
-    return "Time not listed";
-  };
-
   return (
     <View style={styles.container}>
-      {transitions.map((transition) => (
-        <View key={transition.id} style={styles.item}>
-          <View style={styles.dot} />
-          <View style={styles.content}>
-            <Text style={styles.type}>{transition.type}</Text>
-            <Text style={styles.name}>{transition.name}</Text>
-            <Text style={styles.time}>{getTimeLabel(transition)}</Text>
-          </View>
+      {items.map((item) => (
+        <View key={item.id} style={styles.item}>
+          <Text style={styles.type}>{item.type}</Text>
+          <Text style={styles.name}>{item.name}</Text>
+          <Text style={styles.time}>{item.detail}</Text>
         </View>
       ))}
     </View>
@@ -51,43 +37,38 @@ export const TransitionTimeline = ({ transitions }: { transitions: DayTransition
 const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
   StyleSheet.create({
     container: {
-      gap: theme.spacing.sm
+      flexDirection: "row",
+      flexWrap: "wrap",
+      gap: theme.spacing.xs
     },
     item: {
-      flexDirection: "row",
-      gap: theme.spacing.sm
-    },
-    dot: {
-      width: 10,
-      height: 10,
-      borderRadius: 999,
-      backgroundColor: theme.colors.saffron,
-      marginTop: 8
-    },
-    content: {
-      flex: 1,
+      flexBasis: "49%",
+      minWidth: 0,
       backgroundColor: theme.colors.card,
       borderColor: theme.colors.border,
-      borderRadius: theme.radii.md,
+      borderRadius: theme.radii.sm,
       borderWidth: 1,
-      padding: theme.spacing.md,
+      paddingHorizontal: 14,
+      paddingVertical: 12,
       gap: 2
     },
     type: {
       color: theme.colors.saffron,
       fontSize: 12,
-      fontWeight: "700",
       textTransform: "uppercase",
-      fontFamily: theme.typography.bodyFamily
+      fontFamily: theme.typography.bodyStrongFamily
     },
     name: {
       color: theme.colors.ink,
-      fontSize: 16,
-      fontWeight: "700",
-      fontFamily: theme.typography.headingFamily
+      fontSize: 13,
+      lineHeight: 18,
+      fontFamily: theme.typography.bodyStrongFamily
     },
     time: {
       color: theme.colors.muted,
-      fontFamily: theme.typography.bodyFamily
+      marginTop: 2,
+      fontSize: 18,
+      lineHeight: 22,
+      fontFamily: theme.typography.headingFamily
     }
   });

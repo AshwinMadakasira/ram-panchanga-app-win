@@ -26,7 +26,6 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
     link: {
       color: theme.colors.maroon,
       fontSize: 15,
-      fontWeight: "700",
-      fontFamily: theme.typography.bodyFamily
+      fontFamily: theme.typography.bodyStrongFamily
     }
   });

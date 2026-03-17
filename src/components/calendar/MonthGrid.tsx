@@ -7,11 +7,10 @@ import { StyleSheet, Text, View } from "react-native";
 
 // `getCalendarWeeks` performs the date math so this component can stay focused on rendering.
 import { getCalendarWeeks } from "@/domain/dates";
+import { useAppLocalization } from "@/i18n";
 import type { MonthSummaryDay } from "@/types/domain";
 import { useAppTheme } from "@/theme";
 import { CalendarDayCell } from "@/components/calendar/CalendarDayCell";
-
-const weekDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] as const;
 
 type MonthGridProps = {
   year: number;
@@ -22,8 +21,12 @@ type MonthGridProps = {
 
 export const MonthGrid = ({ year, month, items, onSelectDate }: MonthGridProps) => {
   const theme = useAppTheme();
+  const { locale } = useAppLocalization();
   const styles = createStyles(theme);
   const weeks = getCalendarWeeks(year, month, items);
+  const weekDays = Array.from({ length: 7 }, (_, index) =>
+    new Intl.DateTimeFormat(locale, { weekday: "short", timeZone: "UTC" }).format(new Date(Date.UTC(2024, 0, index + 1)))
+  );
 
   return (
     <View style={styles.container}>
@@ -54,22 +57,19 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
       gap: theme.spacing.sm
     },
     headerRow: {
-      flexDirection: "row",
-      gap: 8
+      flexDirection: "row"
     },
     weekLabel: {
       flex: 1,
       color: theme.colors.muted,
       fontSize: 12,
-      fontWeight: "700",
       textAlign: "center",
-      fontFamily: theme.typography.bodyFamily
+      fontFamily: theme.typography.bodyStrongFamily
     },
     weeks: {
-      gap: 8
+      gap: 0
     },
     weekRow: {
-      flexDirection: "row",
-      gap: 8
+      flexDirection: "row"
     }
   });

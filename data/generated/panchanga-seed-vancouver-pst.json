@@ -1,12 +1,12 @@
 {
-  "dataVersion": "vancouver-pst-v12-0ab1dbf04c0d",
+  "dataVersion": "vancouver-pst-v12-32cc39f2f494",
   "importedAt": null,
-  "sourceFingerprint": "0ab1dbf04c0da6d0f28a2087d74c969e7025aee7fc752c46b25883e3cc171e36",
+  "sourceFingerprint": "32cc39f2f4949e5275daa99893969ee115fde283a1ced67ef7f36970b6ff6a42",
   "locations": [
     {
       "id": "vancouver-pst",
       "name": "Vancouver-PST",
-      "region": "null",
+      "region": null,
       "country": "Canada",
       "timezone": "America/Vancouver",
       "latitude": 49.2485,
@@ -129,7 +129,7 @@
       "gregorianYear": 2026,
       "lunarMonth": "Chaitra",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "Shashti7:10/Sapthami28:4",
+      "primaryTithiAtSunrise": "Shashti 7:10/Sapthami 28:04",
       "primaryNakshatraAtSunrise": "Rohini 10:01 +",
       "primaryYogaAtSunrise": "Ayushman 20:52",
       "primaryKaranaAtSunrise": "Theitila 7:10",
@@ -465,7 +465,7 @@
       "gregorianYear": 2026,
       "lunarMonth": "Chaitra",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "Ashtami ☺",
+      "primaryTithiAtSunrise": "Ashtami",
       "primaryNakshatraAtSunrise": "Poorvashada 20:12 +–",
       "primaryYogaAtSunrise": "Shiva 27:37",
       "primaryKaranaAtSunrise": "Balava 18:39",
@@ -612,7 +612,7 @@
       "gregorianYear": 2026,
       "lunarMonth": "Chaitra",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "rdashi7:03/Amavasya29:4",
+      "primaryTithiAtSunrise": "Chathurdashi 7:03/Amavasya 29:04",
       "primaryNakshatraAtSunrise": "Revathi 24:09 –",
       "primaryYogaAtSunrise": "Vaidhruthi 19:17",
       "primaryKaranaAtSunrise": "Shakuni 7:03",
@@ -1305,7 +1305,7 @@
       "gregorianYear": 2026,
       "lunarMonth": "Jyeshta",
       "adhikaMonthFlag": true,
-      "primaryTithiAtSunrise": "hrutheeya6:36/Chathurth",
+      "primaryTithiAtSunrise": "Thrutheeya 6:36/Chathurthi",
       "primaryNakshatraAtSunrise": "Ardra 23:01 +–",
       "primaryYogaAtSunrise": "Dhruthi 10:10",
       "primaryKaranaAtSunrise": "Garaja 6:36",
@@ -1452,7 +1452,7 @@
       "gregorianYear": 2026,
       "lunarMonth": "Jyeshta",
       "adhikaMonthFlag": true,
-      "primaryTithiAtSunrise": "08 Ekadashi 19:32",
+      "primaryTithiAtSunrise": "Ekadashi 19:32",
       "primaryNakshatraAtSunrise": "Hastha 19:23 +–",
       "primaryYogaAtSunrise": "Siddhi 16:58",
       "primaryKaranaAtSunrise": "Vanik 7:34",
@@ -1599,7 +1599,7 @@
       "gregorianYear": 2026,
       "lunarMonth": "Jyeshta",
       "adhikaMonthFlag": true,
-      "primaryTithiAtSunrise": "Thrutheeya ☺",
+      "primaryTithiAtSunrise": "Thrutheeya",
       "primaryNakshatraAtSunrise": "Moola 8:15 +",
       "primaryYogaAtSunrise": "Shubha 18:46",
       "primaryKaranaAtSunrise": "Vanik 17:35",
@@ -1767,7 +1767,7 @@
       "gregorianYear": 2026,
       "lunarMonth": "Jyeshta",
       "adhikaMonthFlag": true,
-      "primaryTithiAtSunrise": "Dashami7:37/Ekadashi29:",
+      "primaryTithiAtSunrise": "Dashami 7:37/Ekadashi",
       "primaryNakshatraAtSunrise": "Revathi 15:59 +",
       "primaryYogaAtSunrise": "Saubhagya 12:18",
       "primaryKaranaAtSunrise": "Bhadra 7:37",
@@ -2460,7 +2460,7 @@
       "gregorianYear": 2026,
       "lunarMonth": "Jyeshta",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "hurdashi6:05/Amavasya27:3",
+      "primaryTithiAtSunrise": "Chathurdashi 6:05/Amavasya 27:03",
       "primaryNakshatraAtSunrise": "Ardra 15:21 –+",
       "primaryYogaAtSunrise": "Vyaghatha 25:33",
       "primaryKaranaAtSunrise": "Shakuni 6:05",
@@ -2775,7 +2775,7 @@
       "gregorianYear": 2026,
       "lunarMonth": "Ashada",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "Pournami ☺",
+      "primaryTithiAtSunrise": "Pournami",
       "primaryNakshatraAtSunrise": "Uttharashada 27:37 +",
       "primaryYogaAtSunrise": "Vishkambha 12:28",
       "primaryKaranaAtSunrise": "Bhadra 18:04",
@@ -2922,7 +2922,7 @@
       "gregorianYear": 2026,
       "lunarMonth": "Ashada",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "hashti6:45/Sapthami29:2",
+      "primaryTithiAtSunrise": "Shashti 6:45/Sapthami 29:02",
       "primaryNakshatraAtSunrise": "Revathi 7:49 +–",
       "primaryYogaAtSunrise": "Dhruthi6:32/Shoola28:26",
       "primaryKaranaAtSunrise": "Vanik 6:45",
@@ -3153,7 +3153,7 @@
       "gregorianYear": 2026,
       "lunarMonth": "Shravana",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "hrutheeya6:54/Chathurthi",
+      "primaryTithiAtSunrise": "Thrutheeya 6:54/Chathurthi",
       "primaryNakshatraAtSunrise": "Uttara 17:46 +–",
       "primaryYogaAtSunrise": "Siddha 20:31",
       "primaryKaranaAtSunrise": "Garaja 6:54",
@@ -3195,7 +3195,7 @@
       "gregorianYear": 2026,
       "lunarMonth": "Shravana",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "Shashti ☺",
+      "primaryTithiAtSunrise": "Shashti",
       "primaryNakshatraAtSunrise": "Chitra 19:04 –+",
       "primaryYogaAtSunrise": "Shubha 18:31",
       "primaryKaranaAtSunrise": "Kaulava 18:23",
@@ -3300,7 +3300,7 @@
       "gregorianYear": 2026,
       "lunarMonth": "Shravana",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "9 Dashami 12:56",
+      "primaryTithiAtSunrise": "Dashami 12:56",
       "primaryNakshatraAtSunrise": "Moola 29:48 –",
       "primaryYogaAtSunrise": "Vishkambha 19:33",
       "primaryKaranaAtSunrise": "Garaja 12:56",
@@ -3594,7 +3594,7 @@
       "gregorianYear": 2026,
       "lunarMonth": "Shravana",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "Navami8:37/Dashami30:11",
+      "primaryTithiAtSunrise": "Navami 8:37/Dashami 30:11",
       "primaryNakshatraAtSunrise": "Mrugashira 9:21 +–",
       "primaryYogaAtSunrise": "Siddhi 22:35",
       "primaryKaranaAtSunrise": "Garaja 8:37",
@@ -3930,7 +3930,7 @@
       "gregorianYear": 2026,
       "lunarMonth": "Bhadrapada",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "Ekadashi ☺",
+      "primaryTithiAtSunrise": "Ekadashi",
       "primaryNakshatraAtSunrise": "Uttharashada 18:04 –",
       "primaryYogaAtSunrise": "Athiganda 28:45",
       "primaryKaranaAtSunrise": "Vanik 18:27",
@@ -4077,7 +4077,7 @@
       "gregorianYear": 2026,
       "lunarMonth": "Bhadrapada",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "theeya7:47/Thrutheeya30",
+      "primaryTithiAtSunrise": "Dwitheeya 7:47/Thrutheeya",
       "primaryNakshatraAtSunrise": "Ashwini 23:11 +–",
       "primaryYogaAtSunrise": "Vyaghatha 21:07",
       "primaryKaranaAtSunrise": "Garaja 7:47",
@@ -4770,7 +4770,7 @@
       "gregorianYear": 2026,
       "lunarMonth": "Ashvina",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "Shashti9:09/Sapthami30:4",
+      "primaryTithiAtSunrise": "Shashti 9:09/Sapthami 30:04",
       "primaryNakshatraAtSunrise": "Punarvasu 22:21 –+",
       "primaryYogaAtSunrise": "Siddha10:52/Sadhya31:44",
       "primaryKaranaAtSunrise": "Vanik 9:09",
@@ -5064,7 +5064,7 @@
       "gregorianYear": 2026,
       "lunarMonth": "Kartheeka",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "Shashti ☺",
+      "primaryTithiAtSunrise": "Shashti",
       "primaryNakshatraAtSunrise": "Uttharashada ☺ –",
       "primaryYogaAtSunrise": "Shoola 15:55",
       "primaryKaranaAtSunrise": "Kaulava 19:42",
@@ -5274,7 +5274,7 @@
       "gregorianYear": 2026,
       "lunarMonth": "Kartheeka",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "ournami7:52/Prathama30",
+      "primaryTithiAtSunrise": "Pournami 7:52/Prathama",
       "primaryNakshatraAtSunrise": "Kruttika 11:53 +",
       "primaryYogaAtSunrise": "Shiva 26:00",
       "primaryKaranaAtSunrise": "Bava 7:52",
@@ -5988,7 +5988,7 @@
       "gregorianYear": 2026,
       "lunarMonth": "Margashira",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "anchami7:41/Shashti29:4",
+      "primaryTithiAtSunrise": "Panchami 7:41/Shashti 29:04",
       "primaryNakshatraAtSunrise": "Makha 9:23 +–",
       "primaryYogaAtSunrise": "Preethi 10:51",
       "primaryKaranaAtSunrise": "Theitila 7:41",
@@ -6492,7 +6492,7 @@
       "gregorianYear": 2027,
       "lunarMonth": "Pushya",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "thurdashi7:46/Pournami2",
+      "primaryTithiAtSunrise": "Chathurdashi 7:46/Pournami",
       "primaryNakshatraAtSunrise": "Punarvasu 21:53 –+",
       "primaryYogaAtSunrise": "Vishkambha 25:47",
       "primaryKaranaAtSunrise": "Vanik 7:46",
@@ -6807,7 +6807,7 @@
       "gregorianYear": 2027,
       "lunarMonth": "Pushya",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "Amavasya ☺",
+      "primaryTithiAtSunrise": "Amavasya",
       "primaryNakshatraAtSunrise": "Shravana ☺ –",
       "primaryYogaAtSunrise": "Siddhi 7:27",
       "primaryKaranaAtSunrise": "Chatushpada 18:23",
@@ -6996,7 +6996,7 @@
       "gregorianYear": 2027,
       "lunarMonth": "Magha",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "Ashtami7:26/Navami29:46",
+      "primaryTithiAtSunrise": "Ashtami 7:26/Navami 29:46",
       "primaryNakshatraAtSunrise": "Kruttika 12:05 –+",
       "primaryYogaAtSunrise": "Aindra 20:23",
       "primaryKaranaAtSunrise": "Bava 7:26",
@@ -7710,7 +7710,7 @@
       "gregorianYear": 2027,
       "lunarMonth": "Phalguna",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "yodashi7:19/Chathurdashi2",
+      "primaryTithiAtSunrise": "Thrayodashi 7:19/Chathurdashi",
       "primaryNakshatraAtSunrise": "Makha 10:35 –+",
       "primaryYogaAtSunrise": "Dhruthi7:06/Shoola28:13",
       "primaryKaranaAtSunrise": "Theitila 7:19",
@@ -7899,7 +7899,7 @@
       "gregorianYear": 2027,
       "lunarMonth": "Phalguna",
       "adhikaMonthFlag": false,
-      "primaryTithiAtSunrise": "Ashtami ☺",
+      "primaryTithiAtSunrise": "Ashtami",
       "primaryNakshatraAtSunrise": "Moola 15:18 –+",
       "primaryYogaAtSunrise": "Variyan 18:57",
       "primaryKaranaAtSunrise": "Balava 18:08",
@@ -8319,17 +8319,17 @@
       "startsAt": null,
       "endsAt": "7:10",
       "displayOrder": 0,
-      "rawSourceText": "Shashti7:10/Sapthami28:4"
+      "rawSourceText": "Shashti 7:10/Sapthami 28:04"
     },
     {
       "id": "vancouver-pst-2026-03-24-tithi-2",
       "calendarDayId": "vancouver-pst-2026-03-24",
       "type": "tithi",
-      "name": "Sapthami 28:4",
+      "name": "Sapthami",
       "startsAt": "7:10",
-      "endsAt": null,
+      "endsAt": "28:04",
       "displayOrder": 1,
-      "rawSourceText": "Shashti7:10/Sapthami28:4"
+      "rawSourceText": "Shashti 7:10/Sapthami 28:04"
     },
     {
       "id": "vancouver-pst-2026-03-24-nakshatra-1",
@@ -8995,11 +8995,11 @@
       "id": "vancouver-pst-2026-04-09-tithi-1",
       "calendarDayId": "vancouver-pst-2026-04-09",
       "type": "tithi",
-      "name": "Ashtami ☺",
+      "name": "Ashtami",
       "startsAt": null,
       "endsAt": null,
       "displayOrder": 0,
-      "rawSourceText": "Ashtami ☺"
+      "rawSourceText": "Ashtami"
     },
     {
       "id": "vancouver-pst-2026-04-09-nakshatra-1",
@@ -9275,21 +9275,21 @@
       "id": "vancouver-pst-2026-04-16-tithi-1",
       "calendarDayId": "vancouver-pst-2026-04-16",
       "type": "tithi",
-      "name": "rdashi",
+      "name": "Chathurdashi",
       "startsAt": null,
       "endsAt": "7:03",
       "displayOrder": 0,
-      "rawSourceText": "rdashi7:03/Amavasya29:4"
+      "rawSourceText": "Chathurdashi 7:03/Amavasya 29:04"
     },
     {
       "id": "vancouver-pst-2026-04-16-tithi-2",
       "calendarDayId": "vancouver-pst-2026-04-16",
       "type": "tithi",
-      "name": "Amavasya 29:4",
+      "name": "Amavasya",
       "startsAt": "7:03",
-      "endsAt": null,
+      "endsAt": "29:04",
       "displayOrder": 1,
-      "rawSourceText": "rdashi7:03/Amavasya29:4"
+      "rawSourceText": "Chathurdashi 7:03/Amavasya 29:04"
     },
     {
       "id": "vancouver-pst-2026-04-16-nakshatra-1",
@@ -10635,21 +10635,21 @@
       "id": "vancouver-pst-2026-05-19-tithi-1",
       "calendarDayId": "vancouver-pst-2026-05-19",
       "type": "tithi",
-      "name": "hrutheeya",
+      "name": "Thrutheeya",
       "startsAt": null,
       "endsAt": "6:36",
       "displayOrder": 0,
-      "rawSourceText": "hrutheeya6:36/Chathurth"
+      "rawSourceText": "Thrutheeya 6:36/Chathurthi"
     },
     {
       "id": "vancouver-pst-2026-05-19-tithi-2",
       "calendarDayId": "vancouver-pst-2026-05-19",
       "type": "tithi",
-      "name": "Chathurth",
+      "name": "Chathurthi",
       "startsAt": "6:36",
       "endsAt": null,
       "displayOrder": 1,
-      "rawSourceText": "hrutheeya6:36/Chathurth"
+      "rawSourceText": "Thrutheeya 6:36/Chathurthi"
     },
     {
       "id": "vancouver-pst-2026-05-19-nakshatra-1",
@@ -10935,11 +10935,11 @@
       "id": "vancouver-pst-2026-05-26-tithi-1",
       "calendarDayId": "vancouver-pst-2026-05-26",
       "type": "tithi",
-      "name": "08 Ekadashi",
+      "name": "Ekadashi",
       "startsAt": null,
       "endsAt": "19:32",
       "displayOrder": 0,
-      "rawSourceText": "08 Ekadashi 19:32"
+      "rawSourceText": "Ekadashi 19:32"
     },
     {
       "id": "vancouver-pst-2026-05-26-nakshatra-1",
@@ -11215,11 +11215,11 @@
       "id": "vancouver-pst-2026-06-02-tithi-1",
       "calendarDayId": "vancouver-pst-2026-06-02",
       "type": "tithi",
-      "name": "Thrutheeya ☺",
+      "name": "Thrutheeya",
       "startsAt": null,
       "endsAt": null,
       "displayOrder": 0,
-      "rawSourceText": "Thrutheeya ☺"
+      "rawSourceText": "Thrutheeya"
     },
     {
       "id": "vancouver-pst-2026-06-02-nakshatra-1",
@@ -11539,17 +11539,17 @@
       "startsAt": null,
       "endsAt": "7:37",
       "displayOrder": 0,
-      "rawSourceText": "Dashami7:37/Ekadashi29:"
+      "rawSourceText": "Dashami 7:37/Ekadashi"
     },
     {
       "id": "vancouver-pst-2026-06-10-tithi-2",
       "calendarDayId": "vancouver-pst-2026-06-10",
       "type": "tithi",
-      "name": "Ekadashi 29:",
+      "name": "Ekadashi",
       "startsAt": "7:37",
       "endsAt": null,
       "displayOrder": 1,
-      "rawSourceText": "Dashami7:37/Ekadashi29:"
+      "rawSourceText": "Dashami 7:37/Ekadashi"
     },
     {
       "id": "vancouver-pst-2026-06-10-nakshatra-1",
@@ -12905,21 +12905,21 @@
       "id": "vancouver-pst-2026-07-13-tithi-1",
       "calendarDayId": "vancouver-pst-2026-07-13",
       "type": "tithi",
-      "name": "hurdashi",
+      "name": "Chathurdashi",
       "startsAt": null,
       "endsAt": "6:05",
       "displayOrder": 0,
-      "rawSourceText": "hurdashi6:05/Amavasya27:3"
+      "rawSourceText": "Chathurdashi 6:05/Amavasya 27:03"
     },
     {
       "id": "vancouver-pst-2026-07-13-tithi-2",
       "calendarDayId": "vancouver-pst-2026-07-13",
       "type": "tithi",
-      "name": "Amavasya 27:3",
+      "name": "Amavasya",
       "startsAt": "6:05",
-      "endsAt": null,
+      "endsAt": "27:03",
       "displayOrder": 1,
-      "rawSourceText": "hurdashi6:05/Amavasya27:3"
+      "rawSourceText": "Chathurdashi 6:05/Amavasya 27:03"
     },
     {
       "id": "vancouver-pst-2026-07-13-nakshatra-1",
@@ -13515,11 +13515,11 @@
       "id": "vancouver-pst-2026-07-28-tithi-1",
       "calendarDayId": "vancouver-pst-2026-07-28",
       "type": "tithi",
-      "name": "Pournami ☺",
+      "name": "Pournami",
       "startsAt": null,
       "endsAt": null,
       "displayOrder": 0,
-      "rawSourceText": "Pournami ☺"
+      "rawSourceText": "Pournami"
     },
     {
       "id": "vancouver-pst-2026-07-28-nakshatra-1",
@@ -13795,21 +13795,21 @@
       "id": "vancouver-pst-2026-08-04-tithi-1",
       "calendarDayId": "vancouver-pst-2026-08-04",
       "type": "tithi",
-      "name": "hashti",
+      "name": "Shashti",
       "startsAt": null,
       "endsAt": "6:45",
       "displayOrder": 0,
-      "rawSourceText": "hashti6:45/Sapthami29:2"
+      "rawSourceText": "Shashti 6:45/Sapthami 29:02"
     },
     {
       "id": "vancouver-pst-2026-08-04-tithi-2",
       "calendarDayId": "vancouver-pst-2026-08-04",
       "type": "tithi",
-      "name": "Sapthami 29:2",
+      "name": "Sapthami",
       "startsAt": "6:45",
-      "endsAt": null,
+      "endsAt": "29:02",
       "displayOrder": 1,
-      "rawSourceText": "hashti6:45/Sapthami29:2"
+      "rawSourceText": "Shashti 6:45/Sapthami 29:02"
     },
     {
       "id": "vancouver-pst-2026-08-04-nakshatra-1",
@@ -14275,11 +14275,11 @@
       "id": "vancouver-pst-2026-08-15-tithi-1",
       "calendarDayId": "vancouver-pst-2026-08-15",
       "type": "tithi",
-      "name": "hrutheeya",
+      "name": "Thrutheeya",
       "startsAt": null,
       "endsAt": "6:54",
       "displayOrder": 0,
-      "rawSourceText": "hrutheeya6:54/Chathurthi"
+      "rawSourceText": "Thrutheeya 6:54/Chathurthi"
     },
     {
       "id": "vancouver-pst-2026-08-15-tithi-2",
@@ -14289,7 +14289,7 @@
       "startsAt": "6:54",
       "endsAt": null,
       "displayOrder": 1,
-      "rawSourceText": "hrutheeya6:54/Chathurthi"
+      "rawSourceText": "Thrutheeya 6:54/Chathurthi"
     },
     {
       "id": "vancouver-pst-2026-08-15-nakshatra-1",
@@ -14365,11 +14365,11 @@
       "id": "vancouver-pst-2026-08-17-tithi-1",
       "calendarDayId": "vancouver-pst-2026-08-17",
       "type": "tithi",
-      "name": "Shashti ☺",
+      "name": "Shashti",
       "startsAt": null,
       "endsAt": null,
       "displayOrder": 0,
-      "rawSourceText": "Shashti ☺"
+      "rawSourceText": "Shashti"
     },
     {
       "id": "vancouver-pst-2026-08-17-nakshatra-1",
@@ -14565,11 +14565,11 @@
       "id": "vancouver-pst-2026-08-22-tithi-1",
       "calendarDayId": "vancouver-pst-2026-08-22",
       "type": "tithi",
-      "name": "9 Dashami",
+      "name": "Dashami",
       "startsAt": null,
       "endsAt": "12:56",
       "displayOrder": 0,
-      "rawSourceText": "9 Dashami 12:56"
+      "rawSourceText": "Dashami 12:56"
     },
     {
       "id": "vancouver-pst-2026-08-22-nakshatra-1",
@@ -15139,7 +15139,7 @@
       "startsAt": null,
       "endsAt": "8:37",
       "displayOrder": 0,
-      "rawSourceText": "Navami8:37/Dashami30:11"
+      "rawSourceText": "Navami 8:37/Dashami 30:11"
     },
     {
       "id": "vancouver-pst-2026-09-05-tithi-2",
@@ -15149,7 +15149,7 @@
       "startsAt": "8:37",
       "endsAt": "30:11",
       "displayOrder": 1,
-      "rawSourceText": "Navami8:37/Dashami30:11"
+      "rawSourceText": "Navami 8:37/Dashami 30:11"
     },
     {
       "id": "vancouver-pst-2026-09-05-nakshatra-1",
@@ -15805,11 +15805,11 @@
       "id": "vancouver-pst-2026-09-21-tithi-1",
       "calendarDayId": "vancouver-pst-2026-09-21",
       "type": "tithi",
-      "name": "Ekadashi ☺",
+      "name": "Ekadashi",
       "startsAt": null,
       "endsAt": null,
       "displayOrder": 0,
-      "rawSourceText": "Ekadashi ☺"
+      "rawSourceText": "Ekadashi"
     },
     {
       "id": "vancouver-pst-2026-09-21-nakshatra-1",
@@ -16085,21 +16085,21 @@
       "id": "vancouver-pst-2026-09-28-tithi-1",
       "calendarDayId": "vancouver-pst-2026-09-28",
       "type": "tithi",
-      "name": "theeya",
+      "name": "Dwitheeya",
       "startsAt": null,
       "endsAt": "7:47",
       "displayOrder": 0,
-      "rawSourceText": "theeya7:47/Thrutheeya30"
+      "rawSourceText": "Dwitheeya 7:47/Thrutheeya"
     },
     {
       "id": "vancouver-pst-2026-09-28-tithi-2",
       "calendarDayId": "vancouver-pst-2026-09-28",
       "type": "tithi",
-      "name": "Thrutheeya 30",
+      "name": "Thrutheeya",
       "startsAt": "7:47",
       "endsAt": null,
       "displayOrder": 1,
-      "rawSourceText": "theeya7:47/Thrutheeya30"
+      "rawSourceText": "Dwitheeya 7:47/Thrutheeya"
     },
     {
       "id": "vancouver-pst-2026-09-28-nakshatra-1",
@@ -17439,17 +17439,17 @@
       "startsAt": null,
       "endsAt": "9:09",
       "displayOrder": 0,
-      "rawSourceText": "Shashti9:09/Sapthami30:4"
+      "rawSourceText": "Shashti 9:09/Sapthami 30:04"
     },
     {
       "id": "vancouver-pst-2026-10-31-tithi-2",
       "calendarDayId": "vancouver-pst-2026-10-31",
       "type": "tithi",
-      "name": "Sapthami 30:4",
+      "name": "Sapthami",
       "startsAt": "9:09",
-      "endsAt": null,
+      "endsAt": "30:04",
       "displayOrder": 1,
-      "rawSourceText": "Shashti9:09/Sapthami30:4"
+      "rawSourceText": "Shashti 9:09/Sapthami 30:04"
     },
     {
       "id": "vancouver-pst-2026-10-31-nakshatra-1",
@@ -18025,11 +18025,11 @@
       "id": "vancouver-pst-2026-11-14-tithi-1",
       "calendarDayId": "vancouver-pst-2026-11-14",
       "type": "tithi",
-      "name": "Shashti ☺",
+      "name": "Shashti",
       "startsAt": null,
       "endsAt": null,
       "displayOrder": 0,
-      "rawSourceText": "Shashti ☺"
+      "rawSourceText": "Shashti"
     },
     {
       "id": "vancouver-pst-2026-11-14-nakshatra-1",
@@ -18435,21 +18435,21 @@
       "id": "vancouver-pst-2026-11-24-tithi-1",
       "calendarDayId": "vancouver-pst-2026-11-24",
       "type": "tithi",
-      "name": "ournami",
+      "name": "Pournami",
       "startsAt": null,
       "endsAt": "7:52",
       "displayOrder": 0,
-      "rawSourceText": "ournami7:52/Prathama30"
+      "rawSourceText": "Pournami 7:52/Prathama"
     },
     {
       "id": "vancouver-pst-2026-11-24-tithi-2",
       "calendarDayId": "vancouver-pst-2026-11-24",
       "type": "tithi",
-      "name": "Prathama 30",
+      "name": "Prathama",
       "startsAt": "7:52",
       "endsAt": null,
       "displayOrder": 1,
-      "rawSourceText": "ournami7:52/Prathama30"
+      "rawSourceText": "Pournami 7:52/Prathama"
     },
     {
       "id": "vancouver-pst-2026-11-24-nakshatra-1",
@@ -19835,21 +19835,21 @@
       "id": "vancouver-pst-2026-12-28-tithi-1",
       "calendarDayId": "vancouver-pst-2026-12-28",
       "type": "tithi",
-      "name": "anchami",
+      "name": "Panchami",
       "startsAt": null,
       "endsAt": "7:41",
       "displayOrder": 0,
-      "rawSourceText": "anchami7:41/Shashti29:4"
+      "rawSourceText": "Panchami 7:41/Shashti 29:04"
     },
     {
       "id": "vancouver-pst-2026-12-28-tithi-2",
       "calendarDayId": "vancouver-pst-2026-12-28",
       "type": "tithi",
-      "name": "Shashti 29:4",
+      "name": "Shashti",
       "startsAt": "7:41",
-      "endsAt": null,
+      "endsAt": "29:04",
       "displayOrder": 1,
-      "rawSourceText": "anchami7:41/Shashti29:4"
+      "rawSourceText": "Panchami 7:41/Shashti 29:04"
     },
     {
       "id": "vancouver-pst-2026-12-28-nakshatra-1",
@@ -20825,21 +20825,21 @@
       "id": "vancouver-pst-2027-01-21-tithi-1",
       "calendarDayId": "vancouver-pst-2027-01-21",
       "type": "tithi",
-      "name": "thurdashi",
+      "name": "Chathurdashi",
       "startsAt": null,
       "endsAt": "7:46",
       "displayOrder": 0,
-      "rawSourceText": "thurdashi7:46/Pournami2"
+      "rawSourceText": "Chathurdashi 7:46/Pournami"
     },
     {
       "id": "vancouver-pst-2027-01-21-tithi-2",
       "calendarDayId": "vancouver-pst-2027-01-21",
       "type": "tithi",
-      "name": "Pournami 2",
+      "name": "Pournami",
       "startsAt": "7:46",
       "endsAt": null,
       "displayOrder": 1,
-      "rawSourceText": "thurdashi7:46/Pournami2"
+      "rawSourceText": "Chathurdashi 7:46/Pournami"
     },
     {
       "id": "vancouver-pst-2027-01-21-nakshatra-1",
@@ -21455,11 +21455,11 @@
       "id": "vancouver-pst-2027-02-05-tithi-1",
       "calendarDayId": "vancouver-pst-2027-02-05",
       "type": "tithi",
-      "name": "Amavasya ☺",
+      "name": "Amavasya",
       "startsAt": null,
       "endsAt": null,
       "displayOrder": 0,
-      "rawSourceText": "Amavasya ☺"
+      "rawSourceText": "Amavasya"
     },
     {
       "id": "vancouver-pst-2027-02-05-nakshatra-1",
@@ -21829,7 +21829,7 @@
       "startsAt": null,
       "endsAt": "7:26",
       "displayOrder": 0,
-      "rawSourceText": "Ashtami7:26/Navami29:46"
+      "rawSourceText": "Ashtami 7:26/Navami 29:46"
     },
     {
       "id": "vancouver-pst-2027-02-14-tithi-2",
@@ -21839,7 +21839,7 @@
       "startsAt": "7:26",
       "endsAt": "29:46",
       "displayOrder": 1,
-      "rawSourceText": "Ashtami7:26/Navami29:46"
+      "rawSourceText": "Ashtami 7:26/Navami 29:46"
     },
     {
       "id": "vancouver-pst-2027-02-14-nakshatra-1",
@@ -23235,21 +23235,21 @@
       "id": "vancouver-pst-2027-03-20-tithi-1",
       "calendarDayId": "vancouver-pst-2027-03-20",
       "type": "tithi",
-      "name": "yodashi",
+      "name": "Thrayodashi",
       "startsAt": null,
       "endsAt": "7:19",
       "displayOrder": 0,
-      "rawSourceText": "yodashi7:19/Chathurdashi2"
+      "rawSourceText": "Thrayodashi 7:19/Chathurdashi"
     },
     {
       "id": "vancouver-pst-2027-03-20-tithi-2",
       "calendarDayId": "vancouver-pst-2027-03-20",
       "type": "tithi",
-      "name": "Chathurdashi 2",
+      "name": "Chathurdashi",
       "startsAt": "7:19",
       "endsAt": null,
       "displayOrder": 1,
-      "rawSourceText": "yodashi7:19/Chathurdashi2"
+      "rawSourceText": "Thrayodashi 7:19/Chathurdashi"
     },
     {
       "id": "vancouver-pst-2027-03-20-nakshatra-1",
@@ -23615,11 +23615,11 @@
       "id": "vancouver-pst-2027-03-29-tithi-1",
       "calendarDayId": "vancouver-pst-2027-03-29",
       "type": "tithi",
-      "name": "Ashtami ☺",
+      "name": "Ashtami",
       "startsAt": null,
       "endsAt": null,
       "displayOrder": 0,
-      "rawSourceText": "Ashtami ☺"
+      "rawSourceText": "Ashtami"
     },
     {
       "id": "vancouver-pst-2027-03-29-nakshatra-1",

@@ -40,22 +40,23 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
     title: {
       color: theme.colors.ink,
       fontSize: 17,
-      fontWeight: "700",
       textTransform: "capitalize",
       fontFamily: theme.typography.headingFamily
     },
     date: {
       color: theme.colors.saffron,
-      fontWeight: "700",
-      fontFamily: theme.typography.bodyFamily
+      fontSize: 15,
+      fontFamily: theme.typography.bodyStrongFamily
     },
     meta: {
       color: theme.colors.muted,
+      fontSize: 15,
       lineHeight: 20,
       fontFamily: theme.typography.bodyFamily
     },
     notes: {
       color: theme.colors.ink,
+      fontSize: 15,
       fontFamily: theme.typography.bodyFamily
     }
   });

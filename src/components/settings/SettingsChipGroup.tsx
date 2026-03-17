@@ -19,13 +19,13 @@ type SettingsChipGroupProps = {
   onToggle: (value: string) => void;
 };
 
-/** Render a wrap-around group of selectable chips. */
+/** Render a single-row settings chip group that compresses chips to fit without scrolling. */
 export const SettingsChipGroup = ({ options, selectedValues, onToggle }: SettingsChipGroupProps) => {
   const theme = useAppTheme();
   const styles = createStyles(theme);
 
   return (
-    <View style={styles.container}>
+    <View style={styles.row}>
       {options.map((option) => {
         const active = selectedValues.includes(option.value);
         return (
@@ -33,6 +33,7 @@ export const SettingsChipGroup = ({ options, selectedValues, onToggle }: Setting
             key={option.value}
             label={option.label}
             active={active}
+            fit
             onPress={() => onToggle(option.value)}
           />
         );
@@ -44,9 +45,8 @@ export const SettingsChipGroup = ({ options, selectedValues, onToggle }: Setting
 /** Build this component's theme-aware styles. */
 const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
   StyleSheet.create({
-    container: {
+    row: {
       flexDirection: "row",
-      flexWrap: "wrap",
-      gap: theme.spacing.sm
+      gap: theme.spacing.xs
     }
   });

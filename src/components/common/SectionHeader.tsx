@@ -33,12 +33,11 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
     title: {
       color: theme.colors.ink,
       fontSize: 20,
-      fontWeight: "700",
       fontFamily: theme.typography.headingFamily
     },
     subtitle: {
       color: theme.colors.muted,
-      fontSize: 14,
+      fontSize: 15,
       fontFamily: theme.typography.bodyFamily
     }
   });

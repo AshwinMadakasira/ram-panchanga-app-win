@@ -4,6 +4,7 @@
  * Most other files either produce or consume these shapes.
  */
 export type ThemePreference = "system" | "light" | "dark";
+export type AppLanguage = "en" | "kn";
 export type ReminderWeekday = "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday";
 export type ReminderPermissionState = "unknown" | "granted" | "denied";
 

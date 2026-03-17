@@ -7,6 +7,7 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 // The theme supplies visual tokens; the rest of this file is pure UI state conversion logic.
+import { useAppLocalization } from "@/i18n";
 import { useAppTheme } from "@/theme";
 
 type ReminderTimeFieldProps = {
@@ -20,6 +21,7 @@ type ReminderTimeFieldProps = {
 /** Render a custom reminder-time control that stores time in the app's internal format. */
 export const ReminderTimeField = ({ label, value, onChangeText, helper, invalid = false }: ReminderTimeFieldProps) => {
   const theme = useAppTheme();
+  const { text } = useAppLocalization();
   const styles = createStyles(theme);
   const timeParts = parseStoredTime(value);
 
@@ -39,13 +41,15 @@ export const ReminderTimeField = ({ label, value, onChangeText, helper, invalid 
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
       <View style={[styles.clockCard, invalid && styles.clockCardInvalid]}>
-        <Text style={styles.clockLabel}>Selected time</Text>
-        <Text style={styles.clockValue}>
-          {timeParts.hour}:{String(timeParts.minute).padStart(2, "0")} {timeParts.period}
-        </Text>
+        <View style={styles.selectedTimeBlock}>
+          <Text style={styles.clockLabel}>{text.selectedTime}</Text>
+          <Text style={styles.clockValue}>
+            {timeParts.hour}:{String(timeParts.minute).padStart(2, "0")} {timeParts.period}
+          </Text>
+        </View>
         <View style={styles.controlsRow}>
           <View style={styles.controlBlock}>
-            <Text style={styles.controlLabel}>Hour</Text>
+            <Text style={styles.controlLabel}>{text.hour}</Text>
             <View style={styles.stepper}>
               <Pressable onPress={() => setHour(wrapHour(timeParts.hour - 1))} style={styles.stepperButton}>
                 <Text style={styles.stepperSymbol}>-</Text>
@@ -58,7 +62,7 @@ export const ReminderTimeField = ({ label, value, onChangeText, helper, invalid 
           </View>
 
           <View style={styles.controlBlock}>
-            <Text style={styles.controlLabel}>Minute</Text>
+            <Text style={styles.controlLabel}>{text.minute}</Text>
             <View style={styles.stepper}>
               <Pressable
                 onPress={() => setMinute(wrapMinute(timeParts.minute - 5))}
@@ -167,45 +171,65 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
     },
     label: {
       color: theme.colors.ink,
-      fontWeight: "600",
-      fontFamily: theme.typography.bodyFamily
+      fontFamily: theme.typography.bodyStrongFamily,
+      fontSize: Math.round(15 * theme.typography.fontScale)
     },
     clockCard: {
       borderWidth: 1,
       borderColor: theme.colors.border,
       borderRadius: theme.radii.md,
       backgroundColor: theme.colors.cardMuted,
-      padding: theme.spacing.md,
-      gap: theme.spacing.sm
+      paddingHorizontal: 12,
+      paddingVertical: 10,
+      gap: theme.spacing.xs
     },
     clockCardInvalid: {
       borderColor: theme.colors.danger
     },
+    selectedTimeBlock: {
+      alignSelf: "center",
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: theme.colors.card,
+      borderColor: theme.colors.border,
+      borderRadius: theme.radii.pill,
+      borderWidth: 1,
+      paddingHorizontal: 16,
+      paddingVertical: 8,
+      minWidth: 168
+    },
     clockLabel: {
       color: theme.colors.muted,
-      fontSize: 12,
+      fontSize: Math.round(11 * theme.typography.compactScale),
       fontFamily: theme.typography.bodyFamily,
       textTransform: "uppercase",
-      letterSpacing: 0.6
+      letterSpacing: 0.5,
+      textAlign: "center"
     },
     clockValue: {
       color: theme.colors.ink,
-      fontSize: 28,
-      fontWeight: "700",
-      fontFamily: theme.typography.headingFamily
+      fontSize: Math.round(24 * theme.typography.headingScale),
+      lineHeight: Math.round(30 * theme.typography.headingScale),
+      fontFamily: theme.typography.headingFamily,
+      textAlign: "center"
     },
     controlsRow: {
+      alignSelf: "center",
       flexDirection: "row",
-      gap: theme.spacing.sm
+      gap: theme.spacing.xs,
+      justifyContent: "center",
+      maxWidth: 280,
+      width: "100%"
     },
     controlBlock: {
       flex: 1,
-      gap: theme.spacing.xs
+      gap: 4
     },
     controlLabel: {
       color: theme.colors.ink,
-      fontWeight: "600",
-      fontFamily: theme.typography.bodyFamily
+      fontFamily: theme.typography.bodyStrongFamily,
+      fontSize: Math.round(15 * theme.typography.fontScale),
+      textAlign: "center"
     },
     stepper: {
       alignItems: "center",
@@ -215,32 +239,33 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
       borderWidth: 1,
       flexDirection: "row",
       justifyContent: "space-between",
-      paddingHorizontal: theme.spacing.xs,
-      paddingVertical: theme.spacing.xs
+      paddingHorizontal: 6,
+      paddingVertical: 6
     },
     stepperButton: {
       alignItems: "center",
       backgroundColor: theme.colors.cardMuted,
       borderRadius: theme.radii.pill,
-      height: 36,
+      height: 34,
       justifyContent: "center",
-      width: 36
+      width: 34
     },
     stepperSymbol: {
       color: theme.colors.ink,
-      fontSize: 18,
-      fontWeight: "700",
-      fontFamily: theme.typography.bodyFamily
+      fontSize: 22,
+      fontFamily: theme.typography.bodyStrongFamily
     },
     stepperValue: {
       color: theme.colors.ink,
-      fontSize: 22,
-      fontWeight: "700",
+      fontSize: Math.round(20 * theme.typography.headingScale),
       fontFamily: theme.typography.headingFamily
     },
     periodRow: {
+      alignSelf: "center",
       flexDirection: "row",
-      gap: theme.spacing.sm
+      gap: theme.spacing.xs,
+      maxWidth: 280,
+      width: "100%"
     },
     periodButton: {
       flex: 1,
@@ -248,7 +273,7 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
       borderWidth: 1,
       borderColor: theme.colors.border,
       borderRadius: theme.radii.pill,
-      paddingVertical: 12,
+      paddingVertical: 10,
       backgroundColor: theme.colors.card
     },
     periodButtonActive: {
@@ -257,15 +282,15 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
     },
     periodButtonLabel: {
       color: theme.colors.ink,
-      fontWeight: "700",
-      fontFamily: theme.typography.bodyFamily
+      fontFamily: theme.typography.bodyStrongFamily,
+      fontSize: Math.round(18 * theme.typography.fontScale)
     },
     periodButtonLabelActive: {
       color: "#fff7f0"
     },
     helper: {
       color: theme.colors.muted,
-      fontSize: 12,
+      fontSize: Math.round(13 * theme.typography.compactScale),
       fontFamily: theme.typography.bodyFamily
     },
     helperInvalid: {

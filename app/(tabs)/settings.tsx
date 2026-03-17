@@ -16,18 +16,19 @@ import { EmptyState } from "@/components/common/EmptyState";
 import { ErrorState } from "@/components/common/ErrorState";
 import { LoadingState } from "@/components/common/LoadingState";
 import { ScreenContainer } from "@/components/common/ScreenContainer";
-import { SectionHeader } from "@/components/common/SectionHeader";
 import { ReminderTimeField } from "@/components/settings/ReminderTimeField";
 import { SettingsChipGroup } from "@/components/settings/SettingsChipGroup";
-import { specialTithiCategoryLabels } from "@/domain/panchanga/labels";
+import { getSpecialTithiCategoryLabels } from "@/domain/panchanga/labels";
 import { useDataVersion } from "@/hooks/usePanchangaQueries";
 import { useSelectedLocation } from "@/hooks/useSelectedLocation";
+import { useAppLocalization } from "@/i18n";
 import { isValidReminderTime, reminderWeekdayOptions } from "@/services/reminders";
 import { useSettingsStore } from "@/store/settings-store";
 import { useAppTheme } from "@/theme";
-import type { ReminderWeekday, ThemePreference, UpcomingSpecialTithiCategory } from "@/types/domain";
+import type { AppLanguage, ReminderWeekday, ThemePreference, UpcomingSpecialTithiCategory } from "@/types/domain";
 
 const themeOptions: ThemePreference[] = ["system", "light", "dark"];
+const languageOptions: AppLanguage[] = ["en", "kn"];
 const leadDayOptions = [0, 1, 2, 3, 7];
 const weekdayLabelMap: Record<ReminderWeekday, string> = {
   monday: "Mon",
@@ -38,21 +39,26 @@ const weekdayLabelMap: Record<ReminderWeekday, string> = {
   saturday: "Sat",
   sunday: "Sun"
 };
-const specialTithiReminderCategories: UpcomingSpecialTithiCategory[] = [
-  "ekadashi",
-  "punyadina",
-  "sankramana",
-  "festival",
-  "vrata"
-];
+const weekdayKannadaLabelMap: Record<ReminderWeekday, string> = {
+  monday: "ಸೋಮ",
+  tuesday: "ಮಂಗಳ",
+  wednesday: "ಬುಧ",
+  thursday: "ಗುರು",
+  friday: "ಶುಕ್ರ",
+  saturday: "ಶನಿ",
+  sunday: "ಭಾನು"
+};
+const specialTithiReminderCategories: UpcomingSpecialTithiCategory[] = ["ekadashi", "punyadina"];
 
 export default function SettingsScreen() {
   const theme = useAppTheme();
+  const { language, text, dynamic } = useAppLocalization();
   const styles = createStyles(theme);
-  const locationId = useSettingsStore((state) => state.locationId);
+  const appLanguage = useSettingsStore((state) => state.appLanguage);
   const themePreference = useSettingsStore((state) => state.themePreference);
   const reminders = useSettingsStore((state) => state.reminders);
   const setLocationId = useSettingsStore((state) => state.setLocationId);
+  const setAppLanguage = useSettingsStore((state) => state.setAppLanguage);
   const setThemePreference = useSettingsStore((state) => state.setThemePreference);
   const setDailyReminderEnabled = useSettingsStore((state) => state.setDailyReminderEnabled);
   const setDailyReminderTime = useSettingsStore((state) => state.setDailyReminderTime);
@@ -63,122 +69,128 @@ export default function SettingsScreen() {
   const toggleSpecialTithiReminderCategory = useSettingsStore((state) => state.toggleSpecialTithiReminderCategory);
   const { data, isLoading: versionLoading, error: versionError } = useDataVersion();
   const { locations, location, isLoading: locationLoading, error: locationError } = useSelectedLocation();
+  const categoryLabels = getSpecialTithiCategoryLabels(language);
+  const themeOptionLabels: Record<ThemePreference, string> = {
+    system: text.system,
+    light: text.light,
+    dark: text.dark
+  };
 
   return (
     <ScreenContainer scroll={false}>
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-        <SectionHeader title="Settings" subtitle="Theme, reminders, location, and bundled data version." />
         {locationError || versionError ? (
-          <ErrorState message={(locationError ?? versionError)?.message ?? "Unable to load settings."} />
+          <ErrorState message={(locationError ?? versionError)?.message ?? text.unableToLoadSettings} />
         ) : null}
 
         <View style={styles.card}>
-          <Text style={styles.title}>Daily reminder</Text>
-          <Text style={styles.body}>
-            Send a recurring reminder that says Check Today&apos;s panchanga on your selected weekdays.
-          </Text>
+          <Text style={styles.title}>{text.language}</Text>
+          <SettingsChipGroup
+            onToggle={(value) => setAppLanguage(value as AppLanguage)}
+            options={languageOptions.map((option) => ({
+              value: option,
+              label: option === "en" ? text.english : text.kannada
+            }))}
+            selectedValues={[appLanguage]}
+          />
+        </View>
+
+        <View style={styles.card}>
+          <Text style={styles.title}>{text.dailyNotification}</Text>
+          <Text style={styles.body}>{text.dailyNotificationDescription}</Text>
           <View style={styles.inlineRow}>
-            <Text style={styles.body}>Status</Text>
+            <Text style={styles.label}>{text.status}</Text>
             <Pressable
               onPress={() => setDailyReminderEnabled(!reminders.daily.enabled)}
               style={[styles.option, reminders.daily.enabled && styles.optionActive]}
             >
               <Text style={[styles.optionLabel, reminders.daily.enabled && styles.optionLabelActive]}>
-                {reminders.daily.enabled ? "On" : "Off"}
+                {reminders.daily.enabled ? text.on : text.off}
               </Text>
             </Pressable>
           </View>
           <ReminderTimeField
-            helper="Pick the reminder time with the hour, minute, and AM or PM controls."
+            helper={text.notificationTimeHelp}
             invalid={!isValidReminderTime(reminders.daily.time)}
-            label="Reminder time"
+            label={text.notificationTime}
             onChangeText={setDailyReminderTime}
             value={reminders.daily.time}
           />
-          <Text style={styles.label}>Weekdays</Text>
+          <Text style={styles.label}>{text.weekdays}</Text>
           <SettingsChipGroup
             onToggle={(value) => toggleDailyReminderWeekday(value as ReminderWeekday)}
             options={reminderWeekdayOptions.map((weekday) => ({
               value: weekday,
-              label: weekdayLabelMap[weekday]
+              label: language === "kn" ? weekdayKannadaLabelMap[weekday] : weekdayLabelMap[weekday]
             }))}
             selectedValues={reminders.daily.weekdays}
           />
         </View>
 
         <View style={styles.card}>
-          <Text style={styles.title}>Upcoming special tithi reminder</Text>
+          <Text style={styles.title}>{text.upcomingSpecialTithiNotification}</Text>
+          <Text style={styles.body}>{text.upcomingSpecialTithiDescription}</Text>
           <Text style={styles.body}>
-            Pick the special tithi types you care about, then send one simpler advance reminder schedule for all of them.
+            {text.notificationPermission}: {dynamic(reminders.permission) || reminders.permission}
           </Text>
-          <Text style={styles.body}>Notification permission: {reminders.permission}</Text>
           <View style={styles.inlineRow}>
-            <Text style={styles.body}>Status</Text>
+            <Text style={styles.label}>{text.status}</Text>
             <Pressable
               onPress={() => setSpecialTithiReminderEnabled(!reminders.specialTithi.enabled)}
               style={[styles.option, reminders.specialTithi.enabled && styles.optionActive]}
             >
               <Text style={[styles.optionLabel, reminders.specialTithi.enabled && styles.optionLabelActive]}>
-                {reminders.specialTithi.enabled ? "On" : "Off"}
+                {reminders.specialTithi.enabled ? text.on : text.off}
               </Text>
             </Pressable>
           </View>
-          <Text style={styles.label}>Special tithi types</Text>
+          <Text style={styles.label}>{text.specialTithiTypes}</Text>
           <SettingsChipGroup
             onToggle={(value) => toggleSpecialTithiReminderCategory(value as UpcomingSpecialTithiCategory)}
             options={specialTithiReminderCategories.map((category) => ({
               value: category,
-              label: specialTithiCategoryLabels[category]
+              label: categoryLabels[category]
             }))}
-            selectedValues={reminders.specialTithi.categories}
+            selectedValues={reminders.specialTithi.categories.filter((category) =>
+              specialTithiReminderCategories.includes(category)
+            )}
           />
           <ReminderTimeField
-            helper="This time is used when the advance reminder is sent."
+            helper={text.advanceNotificationTimeHelp}
             invalid={!isValidReminderTime(reminders.specialTithi.time)}
-            label="Reminder time"
+            label={text.notificationTime}
             onChangeText={setSpecialTithiReminderTime}
             value={reminders.specialTithi.time}
           />
-          <Text style={styles.label}>Notify in advance</Text>
+          <Text style={styles.label}>{text.notifyInAdvance}</Text>
           <SettingsChipGroup
             onToggle={(value) => setSpecialTithiReminderLeadDays(Number(value))}
             options={leadDayOptions.map((days) => ({
               value: String(days),
-              label: days === 0 ? "Same day" : `${days}d before`
+              label: days === 0 ? text.sameDay : language === "kn" ? `${days} ದಿನ ಮೊದಲು` : `${days}d before`
             }))}
             selectedValues={[String(reminders.specialTithi.leadDays)]}
           />
         </View>
 
         <View style={styles.card}>
-          <Text style={styles.title}>Location</Text>
+          <Text style={styles.title}>{text.location}</Text>
           {locationLoading ? (
-            <LoadingState title="Loading locations" message="Preparing available Panchanga locations." />
+            <LoadingState title={text.loadingLocations} message={text.preparingLocations} />
           ) : (
-            <>
-              <Text style={styles.body}>
-                {location ? `${location.name}, ${location.region ?? location.country ?? ""} | ${location.timezone}` : "No location found"}
-              </Text>
-              <View style={styles.options}>
-                {locations.map((option) => {
-                  const active = option.id === locationId;
-                  return (
-                    <Pressable
-                      key={option.id}
-                      onPress={() => setLocationId(option.id)}
-                      style={[styles.option, active && styles.optionActive]}
-                    >
-                      <Text style={[styles.optionLabel, active && styles.optionLabelActive]}>{option.name}</Text>
-                    </Pressable>
-                  );
-                })}
-              </View>
-            </>
+            <SettingsChipGroup
+              onToggle={setLocationId}
+              options={locations.map((option) => ({
+                value: option.id,
+                label: dynamic(option.name) || option.name
+              }))}
+              selectedValues={location ? [location.id] : []}
+            />
           )}
         </View>
 
         <View style={styles.card}>
-          <Text style={styles.title}>Theme preference</Text>
+          <Text style={styles.title}>{text.themePreference}</Text>
           <View style={styles.options}>
             {themeOptions.map((option) => {
               const active = option === themePreference;
@@ -188,7 +200,7 @@ export default function SettingsScreen() {
                   onPress={() => setThemePreference(option)}
                   style={[styles.option, active && styles.optionActive]}
                 >
-                  <Text style={[styles.optionLabel, active && styles.optionLabelActive]}>{option}</Text>
+                  <Text style={[styles.optionLabel, active && styles.optionLabelActive]}>{themeOptionLabels[option]}</Text>
                 </Pressable>
               );
             })}
@@ -196,24 +208,22 @@ export default function SettingsScreen() {
         </View>
 
         <View style={styles.card}>
-          <Text style={styles.title}>About</Text>
-          <Text style={styles.body}>
-            This app bundles separate Panchanga datasets for Vancouver-PST, Chicago-CST, and NewYork-EST, based on Uttaradi Mutt Panchanga source data.
-          </Text>
+          <Text style={styles.title}>{text.about}</Text>
+          <Text style={styles.body}>{text.aboutDescription}</Text>
         </View>
 
         {versionLoading ? (
-          <LoadingState title="Loading data version" message="Reading bundled data metadata from the local database." />
+          <LoadingState title={text.loadingDataVersion} message={text.readingBundledDataMetadata} />
         ) : data ? (
           <View style={styles.card}>
-            <Text style={styles.title}>Data version</Text>
-            <Text style={styles.body}>Version: {data.dataVersion}</Text>
-            <Text style={styles.body}>Imported at: {data.importedAt || "Not imported yet"}</Text>
-            <Text style={styles.body}>Seeded at: {data.seededAt || "Not seeded yet"}</Text>
-            <Text style={styles.body}>Fingerprint: {data.sourceFingerprint || "No source fingerprint yet"}</Text>
+            <Text style={styles.title}>{text.dataVersion}</Text>
+            <Text style={styles.body}>{text.version}: {data.dataVersion}</Text>
+            <Text style={styles.body}>{text.importedAt}: {data.importedAt || text.notImportedYet}</Text>
+            <Text style={styles.body}>{text.seededAt}: {data.seededAt || text.notSeededYet}</Text>
+            <Text style={styles.body}>{text.fingerprint}: {data.sourceFingerprint || text.noSourceFingerprintYet}</Text>
           </View>
         ) : (
-          <EmptyState title="No version info yet" message="Data version details appear after the first database seed." />
+          <EmptyState title={text.noVersionInfoYet} message={text.versionInfoAppearsAfterFirstSeed} />
         )}
       </ScrollView>
     </ScreenContainer>
@@ -237,16 +247,18 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
     },
     title: {
       color: theme.colors.ink,
-      fontSize: 18,
+      fontSize: Math.round(18 * theme.typography.headingScale),
       fontFamily: theme.typography.headingFamily
     },
     label: {
       color: theme.colors.ink,
-      fontFamily: theme.typography.bodyStrongFamily
+      fontFamily: theme.typography.bodyStrongFamily,
+      fontSize: Math.round(15 * theme.typography.fontScale)
     },
     body: {
       color: theme.colors.muted,
-      lineHeight: 22,
+      fontSize: Math.round(16 * theme.typography.fontScale),
+      lineHeight: Math.round(22 * theme.typography.fontScale),
       fontFamily: theme.typography.bodyFamily
     },
     options: {
@@ -269,7 +281,8 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
     optionLabel: {
       color: theme.colors.ink,
       textTransform: "capitalize",
-      fontFamily: theme.typography.bodyStrongFamily
+      fontFamily: theme.typography.bodyStrongFamily,
+      fontSize: Math.round(15 * theme.typography.fontScale)
     },
     optionLabelActive: {
       color: "#fff7f0"

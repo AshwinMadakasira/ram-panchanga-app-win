@@ -17,7 +17,9 @@ import { ensureDatabaseReady } from "@/db/bootstrap";
 export const useAppBootstrap = () => {
   const [fontsLoaded, fontsError] = useFonts({
     "Neuton-Bold": require("../../assets/fonts/Neuton-Bold.ttf"),
-    "Neuton-Regular": require("../../assets/fonts/Neuton-Regular.ttf")
+    "Neuton-Regular": require("../../assets/fonts/Neuton-Regular.ttf"),
+    "NotoSerifKannada-Bold": require("../../assets/fonts/NotoSerifKannada-Bold.ttf"),
+    "NotoSerifKannada-Regular": require("../../assets/fonts/NotoSerifKannada-Regular.ttf")
   });
   const [isReady, setReady] = useState(false);
   const [error, setError] = useState<Error | null>(null);

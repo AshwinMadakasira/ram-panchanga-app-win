@@ -38,7 +38,6 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
     title: {
       color: theme.colors.ink,
       fontSize: 18,
-      fontWeight: "700",
       fontFamily: theme.typography.headingFamily
     },
     message: {

@@ -23,21 +23,24 @@ import { SpecialTithiList } from "@/components/day/SpecialTithiList";
 import { getTodayForTimezone } from "@/domain/dates";
 import { useDayDetails } from "@/hooks/usePanchangaQueries";
 import { useSelectedLocation } from "@/hooks/useSelectedLocation";
+import { useAppLocalization } from "@/i18n";
 import { dayRoute } from "@/types/navigation";
 
 const highlightedWindowTypes = new Set(["braahmi-kaala", "morning-sandhya", "evening-sandhya"]);
 
 export default function HomeScreen() {
+  const { language, dynamic } = useAppLocalization();
   const { location, locationId, isLoading: locationLoading, error: locationError } = useSelectedLocation();
   const today = useMemo(() => getTodayForTimezone(location?.timezone ?? "America/Vancouver"), [location?.timezone]);
   const { data, error, isLoading } = useDayDetails(today, locationId);
   const highlightedWindows = data?.timeWindows.filter((window) => highlightedWindowTypes.has(window.type)) ?? [];
   const secondaryWindows = data?.timeWindows.filter((window) => !highlightedWindowTypes.has(window.type)) ?? [];
+  const hasSecondaryWindows = secondaryWindows.length > 0;
 
   if (locationError || error) {
     return (
       <ScreenContainer>
-        <ErrorState message={(locationError ?? error)?.message ?? "Unable to load today."} />
+        <ErrorState message={(locationError ?? error)?.message ?? (language === "kn" ? "ಇಂದಿನ ಪಂಚಾಂಗವನ್ನು ಲೋಡ್ ಮಾಡಲು ಆಗಲಿಲ್ಲ." : "Unable to load today.")} />
       </ScreenContainer>
     );
   }
@@ -48,34 +51,47 @@ export default function HomeScreen() {
         date={today}
         subtitle={
           location
-            ? `${location.name}, ${location.region ?? location.country ?? ""}`
-            : "Today at sunrise, with special tithis and daily windows."
+            ? (dynamic(location.name) ?? location.name)
+            : language === "kn"
+              ? "ಸೂರ್ಯೋದಯ ಆಧಾರಿತ ಇಂದಿನ ಪಂಚಾಂಗ."
+              : "Today at sunrise, with special tithis and daily windows."
         }
       />
       {locationLoading || isLoading ? (
-        <LoadingState title="Loading today" message="Preparing today's Panchanga summary and daily windows." />
+        <LoadingState
+          title={language === "kn" ? "ಇಂದು ಲೋಡ್ ಆಗುತ್ತಿದೆ" : "Loading today"}
+          message={language === "kn" ? "ಇಂದಿನ ಪಂಚಾಂಗ ಸಾರಾಂಶ ಮತ್ತು ಕಾಲಗಳನ್ನು ಸಿದ್ಧಪಡಿಸಲಾಗುತ್ತಿದೆ." : "Preparing today's Panchanga summary and daily windows."}
+        />
       ) : !data ? (
         <EmptyState
-          title="No Panchanga data for today"
-          message="Import the extracted Panchanga source files to populate the local database. Until then the app stays fully navigable and shows empty states instead of placeholder values."
+          title={language === "kn" ? "ಇಂದಿನ ಪಂಚಾಂಗ ದತ್ತಾಂಶ ಲಭ್ಯವಿಲ್ಲ" : "No Panchanga data for today"}
+          message={
+            language === "kn"
+              ? "ಸ್ಥಳೀಯ ಡೇಟಾಬೇಸ್ ತುಂಬಲು ಪಂಚಾಂಗ ಮೂಲ ದತ್ತಾಂಶವನ್ನು ಇಂಪೋರ್ಟ್ ಮಾಡಿ. ಅಷ್ಟರವರೆಗೆ ಆಪ್ ಖಾಲಿ ಸ್ಥಿತಿಗಳನ್ನು ಮಾತ್ರ ತೋರಿಸುತ್ತದೆ."
+              : "Import the extracted Panchanga source files to populate the local database. Until then the app stays fully navigable and shows empty states instead of placeholder values."
+          }
         />
       ) : (
         <>
           <PanchangaSummaryCard day={data.day} />
           <SunCard day={data.day} timeWindows={highlightedWindows} />
-          <SectionHeader title="Today's special tithis" />
+          <SectionHeader title={language === "kn" ? "ಇಂದಿನ ವಿಶೇಷ ತಿಥಿಗಳು" : "Today's special tithis"} />
           {data.specialTithis.length > 0 ? (
             <SpecialTithiList specialTithis={data.specialTithis} />
           ) : (
-            <EmptyState title="No special tithis found" message="No special tithis are stored for this date." />
+            <EmptyState
+              title={language === "kn" ? "ವಿಶೇಷ ತಿಥಿಗಳು ಲಭ್ಯವಿಲ್ಲ" : "No special tithis found"}
+              message={language === "kn" ? "ಈ ದಿನಾಂಕಕ್ಕೆ ವಿಶೇಷ ತಿಥಿಗಳು ಸಂಗ್ರಹದಲ್ಲಿಲ್ಲ." : "No special tithis are stored for this date."}
+            />
           )}
-          <SectionHeader title="Important windows" subtitle="Rahukalam and other stored windows." />
-          {secondaryWindows.length > 0 ? (
-            secondaryWindows.map((window) => <WindowCard key={window.id} window={window} />)
-          ) : (
-            <EmptyState title="No windows found" message="No time windows are stored for this date." />
-          )}
-          <PrimaryTextLink href={dayRoute(today)} label="Open full day detail" />
+          {hasSecondaryWindows ? (
+            <SectionHeader
+              title={language === "kn" ? "ಪ್ರಮುಖ ಕಾಲಗಳು" : "Important windows"}
+              subtitle={language === "kn" ? "ರಾಹುಕಾಲ ಮತ್ತು ಇತರ ಸಂಗ್ರಹಿತ ಕಾಲಗಳು." : "Rahukalam and other stored windows."}
+            />
+          ) : null}
+          {hasSecondaryWindows ? secondaryWindows.map((window) => <WindowCard key={window.id} window={window} />) : null}
+          <PrimaryTextLink href={dayRoute(today)} label={language === "kn" ? "ಪೂರ್ಣ ದಿನದ ವಿವರ ತೆರೆ" : "Open full day detail"} />
         </>
       )}
     </ScreenContainer>

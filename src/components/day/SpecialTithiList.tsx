@@ -8,6 +8,7 @@ import { router } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 // Route helpers keep navigation targets typed, while the theme keeps styling consistent.
+import { useAppLocalization } from "@/i18n";
 import { useAppTheme } from "@/theme";
 import { dayRoute } from "@/types/navigation";
 import type { SpecialTithi } from "@/types/domain";
@@ -15,6 +16,7 @@ import type { SpecialTithi } from "@/types/domain";
 /** Render a tappable list of special tithi entries. */
 export const SpecialTithiList = ({ specialTithis }: { specialTithis: SpecialTithi[] }) => {
   const theme = useAppTheme();
+  const { dynamic } = useAppLocalization();
   const styles = createStyles(theme);
 
   return (
@@ -33,9 +35,9 @@ export const SpecialTithiList = ({ specialTithis }: { specialTithis: SpecialTith
             }}
             style={({ pressed }) => [styles.item, canNavigate && pressed && styles.itemPressed]}
           >
-            <Text style={styles.name}>{specialTithi.name}</Text>
-            <Text style={styles.meta}>{[specialTithi.category, specialTithi.date].filter(Boolean).join(" | ")}</Text>
-            {specialTithi.description ? <Text style={styles.description}>{specialTithi.description}</Text> : null}
+            <Text style={styles.name}>{dynamic(specialTithi.name)}</Text>
+            <Text style={styles.meta}>{[dynamic(specialTithi.category), specialTithi.date].filter(Boolean).join(" | ")}</Text>
+            {specialTithi.description ? <Text style={styles.description}>{dynamic(specialTithi.description)}</Text> : null}
           </Pressable>
         );
       })}
@@ -62,17 +64,18 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
     },
     name: {
       color: theme.colors.ink,
-      fontSize: 16,
-      fontWeight: "700",
+      fontSize: 17,
       fontFamily: theme.typography.headingFamily
     },
     meta: {
       color: theme.colors.saffron,
+      fontSize: 15,
       textTransform: "capitalize",
-      fontFamily: theme.typography.bodyFamily
+      fontFamily: theme.typography.bodyStrongFamily
     },
     description: {
       color: theme.colors.muted,
+      fontSize: 15,
       lineHeight: 20,
       fontFamily: theme.typography.bodyFamily
     }

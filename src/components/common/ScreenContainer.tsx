@@ -7,6 +7,7 @@ import type { PropsWithChildren, ReactNode } from "react";
 import { SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
 
 // Theme values are shared through React context, so this wrapper can style every screen consistently.
+import { getYearBannerLabel, useAppLanguage } from "@/i18n";
 import { useAppTheme } from "@/theme";
 
 type ScreenContainerProps = PropsWithChildren<{
@@ -14,16 +15,15 @@ type ScreenContainerProps = PropsWithChildren<{
   header?: ReactNode;
 }>;
 
-const PANCHANGA_YEAR_LABEL = "Sri ParaAbhava Nama Samvatsara Panchanga";
-
 /** Wrap a screen with safe-area handling, a shared banner, and optional scrolling. */
 export const ScreenContainer = ({ children, scroll = true, header }: ScreenContainerProps) => {
   const theme = useAppTheme();
+  const language = useAppLanguage();
   const styles = createStyles(theme);
   const content = (
-    <View style={styles.body}>
+    <View style={[styles.body, !scroll && styles.bodyFill]}>
       <View style={styles.yearBanner}>
-        <Text style={styles.yearBannerText}>{PANCHANGA_YEAR_LABEL}</Text>
+        <Text style={styles.yearBannerText}>{getYearBannerLabel(language)}</Text>
       </View>
       {children}
     </View>
@@ -52,6 +52,9 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
       paddingHorizontal: theme.spacing.md,
       gap: theme.spacing.md
     },
+    bodyFill: {
+      flex: 1
+    },
     yearBanner: {
       backgroundColor: theme.colors.card,
       borderColor: theme.colors.border,
@@ -63,8 +66,8 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
     yearBannerText: {
       color: theme.colors.maroon,
       fontFamily: theme.typography.headingFamily,
-      fontSize: 14,
-      fontWeight: "700",
+      fontSize: Math.round(17 * theme.typography.headingScale),
+      lineHeight: Math.round(24 * theme.typography.headingScale),
       textAlign: "center"
     }
   });

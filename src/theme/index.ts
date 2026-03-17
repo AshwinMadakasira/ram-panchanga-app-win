@@ -10,8 +10,8 @@ import { createContext, createElement, useContext } from "react";
 import type { PropsWithChildren } from "react";
 import { StyleSheet } from "react-native";
 
-import { darkPalette, lightPalette, radii, spacing, typography } from "@/theme/tokens";
-import type { ThemePreference } from "@/types/domain";
+import { createTypography, darkPalette, lightPalette, radii, spacing } from "@/theme/tokens";
+import type { AppLanguage, ThemePreference } from "@/types/domain";
 
 export type AppThemeMode = "light" | "dark";
 
@@ -23,17 +23,17 @@ export type AppTheme = {
   colors: Palette;
   spacing: typeof spacing;
   radii: typeof radii;
-  typography: typeof typography;
+  typography: ReturnType<typeof createTypography>;
 };
 
 /** Build the runtime theme object for the requested light/dark mode. */
-export const createAppTheme = (mode: AppThemeMode): AppTheme => ({
+export const createAppTheme = (mode: AppThemeMode, language: AppLanguage): AppTheme => ({
   mode,
   isDark: mode === "dark",
   colors: mode === "dark" ? darkPalette : lightPalette,
   spacing,
   radii,
-  typography
+  typography: createTypography(language)
 });
 
 /** Resolve whether the app should use light or dark mode right now. */
@@ -47,7 +47,7 @@ export const resolveThemeMode = (
   return systemScheme === "dark" ? "dark" : "light";
 };
 
-const defaultTheme = createAppTheme("light");
+const defaultTheme = createAppTheme("light", "en");
 const ThemeContext = createContext<AppTheme>(defaultTheme);
 
 /** Provide the current theme to the React component tree. */

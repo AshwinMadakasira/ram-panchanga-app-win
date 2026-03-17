@@ -8,8 +8,8 @@ import { memo, useMemo } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 // Formatting and labeling helpers are imported so the component can stay focused on grouping and rendering.
-import { formatDisplayDate } from "@/domain/dates";
-import { specialTithiCategoryLabels } from "@/domain/panchanga/labels";
+import { getSpecialTithiCategoryLabels } from "@/domain/panchanga/labels";
+import { localizeDisplayDate, useAppLocalization } from "@/i18n";
 import { useAppTheme } from "@/theme";
 import { dayRoute } from "@/types/navigation";
 import type { SpecialTithi } from "@/types/domain";
@@ -37,7 +37,9 @@ const categoryAccent = (category: SpecialTithi["category"], colors: ReturnType<t
 /** Group special tithi entries by date and render each date as a richer card section. */
 const SpecialTithiCollectionComponent = ({ specialTithis }: SpecialTithiCollectionProps) => {
   const theme = useAppTheme();
+  const { language, dynamic } = useAppLocalization();
   const styles = createStyles(theme);
+  const categoryLabels = getSpecialTithiCategoryLabels(language);
 
   const groupedEntries = useMemo(() => {
     const grouped = specialTithis.reduce<Record<string, SpecialTithi[]>>((accumulator, entry) => {
@@ -65,14 +67,14 @@ const SpecialTithiCollectionComponent = ({ specialTithis }: SpecialTithiCollecti
         <View key={date} style={styles.dayCard}>
           <View style={styles.dayHeader}>
             <View style={styles.dayHeaderText}>
-              <Text style={styles.dayTitle}>{date === "unknown" ? "Date unavailable" : formatDisplayDate(date)}</Text>
+              <Text style={styles.dayTitle}>{date === "unknown" ? (language === "kn" ? "ದಿನಾಂಕ ಲಭ್ಯವಿಲ್ಲ" : "Date unavailable") : localizeDisplayDate(date, language)}</Text>
               <Text style={styles.daySubtitle}>
-                {entries.length} {entries.length === 1 ? "entry" : "entries"}
+                {entries.length} {language === "kn" ? "ದಾಖಲೆಗಳು" : entries.length === 1 ? "entry" : "entries"}
               </Text>
             </View>
             {date !== "unknown" ? (
               <Pressable onPress={() => router.push(dayRoute(date))} style={styles.dayLink}>
-                <Text style={styles.dayLinkLabel}>Open day</Text>
+                <Text style={styles.dayLinkLabel}>{language === "kn" ? "ದಿನ ತೆರೆ" : "Open day"}</Text>
               </Pressable>
             ) : null}
           </View>
@@ -92,14 +94,14 @@ const SpecialTithiCollectionComponent = ({ specialTithis }: SpecialTithiCollecti
                   <View style={styles.entryHeader}>
                     <View style={[styles.badge, { backgroundColor: accent.backgroundColor }]}>
                       <Text style={[styles.badgeLabel, { color: accent.textColor }]}>
-                        {specialTithiCategoryLabels[entry.category ?? "festival"]}
+                        {categoryLabels[entry.category ?? "festival"]}
                       </Text>
                     </View>
                     <Text numberOfLines={3} style={styles.entryName}>
-                      {entry.name}
+                      {dynamic(entry.name)}
                     </Text>
                   </View>
-                  {entry.description ? <Text style={styles.entryDescription}>{entry.description}</Text> : null}
+                  {entry.description ? <Text style={styles.entryDescription}>{dynamic(entry.description)}</Text> : null}
                 </Pressable>
               );
             })}
@@ -144,11 +146,11 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
     dayTitle: {
       color: theme.colors.ink,
       fontSize: 19,
-      fontWeight: "700",
       fontFamily: theme.typography.headingFamily
     },
     daySubtitle: {
       color: theme.colors.muted,
+      fontSize: 15,
       fontFamily: theme.typography.bodyFamily
     },
     dayLink: {
@@ -160,8 +162,7 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
     dayLinkLabel: {
       color: theme.colors.maroon,
       fontSize: 13,
-      fontWeight: "700",
-      fontFamily: theme.typography.bodyFamily
+      fontFamily: theme.typography.bodyStrongFamily
     },
     entryList: {
       gap: theme.spacing.sm
@@ -188,20 +189,19 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
     },
     badgeLabel: {
       fontSize: 11,
-      fontWeight: "700",
       letterSpacing: 0.5,
       textTransform: "uppercase",
-      fontFamily: theme.typography.bodyFamily
+      fontFamily: theme.typography.bodyStrongFamily
     },
     entryName: {
       color: theme.colors.ink,
-      fontSize: 15,
+      fontSize: 16,
       lineHeight: 21,
-      fontWeight: "700",
       fontFamily: theme.typography.headingFamily
     },
     entryDescription: {
       color: theme.colors.muted,
+      fontSize: 15,
       lineHeight: 20,
       fontFamily: theme.typography.bodyFamily
     }
