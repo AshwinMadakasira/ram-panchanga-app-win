@@ -33,7 +33,7 @@
       "package": "com.rayaraastottatramandali.rampanchanga",
       "versionCode": 4,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/adaptive-icon-safe.png",
         "backgroundColor": "#ffffff"
       }
     },

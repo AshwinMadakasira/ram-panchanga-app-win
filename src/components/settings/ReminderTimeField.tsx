@@ -65,14 +65,14 @@ export const ReminderTimeField = ({ label, value, onChangeText, helper, invalid 
             <Text style={styles.controlLabel}>{text.minute}</Text>
             <View style={styles.stepper}>
               <Pressable
-                onPress={() => setMinute(wrapMinute(timeParts.minute - 5))}
+                onPress={() => setMinute(wrapMinute(timeParts.minute - 1))}
                 style={styles.stepperButton}
               >
                 <Text style={styles.stepperSymbol}>-</Text>
               </Pressable>
               <Text style={styles.stepperValue}>{String(timeParts.minute).padStart(2, "0")}</Text>
               <Pressable
-                onPress={() => setMinute(wrapMinute(timeParts.minute + 5))}
+                onPress={() => setMinute(wrapMinute(timeParts.minute + 1))}
                 style={styles.stepperButton}
               >
                 <Text style={styles.stepperSymbol}>+</Text>
@@ -150,17 +150,17 @@ const wrapHour = (value: number) => {
   return value;
 };
 
-/** Keep minute values inside the app's 5-minute stepping model. */
+/** Keep minute values inside the app's 0-59 range. */
 const wrapMinute = (value: number) => {
   if (value < 0) {
-    return 55;
+    return 59;
   }
 
-  if (value > 55) {
+  if (value > 59) {
     return 0;
   }
 
-  return Math.round(value / 5) * 5;
+  return value;
 };
 
 /** Build this component's theme-aware styles. */

@@ -481,17 +481,20 @@ export const panchangaRepository = {
     locationId: string,
     category: Exclude<SpecialTithi["category"], null>,
     fromDate: string,
-    limit = 8
+    limit?: number
   ): Promise<UpcomingSpecialTithiRow[]> {
     const db = await getDatabase();
+    const limitClause = typeof limit === "number" ? "LIMIT ?" : "";
+    const limitParams = typeof limit === "number" ? [limit] : [];
+
     if (category === "ekadashi") {
       return db.getAllAsync<UpcomingSpecialTithiRow>(
         `SELECT e.date, e.display_name AS name, 'ekadashi' AS category
          FROM ekadashi e
          WHERE e.location_id = ? AND e.date >= ?
          ORDER BY e.date ASC, e.display_name ASC
-         LIMIT ?`,
-        [locationId, fromDate, limit]
+         ${limitClause}`,
+        [locationId, fromDate, ...limitParams]
       );
     }
 
@@ -501,8 +504,8 @@ export const panchangaRepository = {
          FROM punyadina p
          WHERE p.location_id = ? AND p.date >= ?
          ORDER BY p.date ASC, p.display_name ASC
-         LIMIT ?`,
-        [locationId, fromDate, limit]
+         ${limitClause}`,
+        [locationId, fromDate, ...limitParams]
       );
     }
 
@@ -513,8 +516,21 @@ export const panchangaRepository = {
        WHERE cd.location_id = ? AND st.category = ? AND cd.date >= ?
        GROUP BY cd.date, st.category
        ORDER BY cd.date ASC
-       LIMIT ?`,
-      [locationId, category, fromDate, limit]
+       ${limitClause}`,
+      [locationId, category, fromDate, ...limitParams]
     );
+  },
+
+  /** Return future calendar-day rows used for bulk notification-copy generation. */
+  async getFutureCalendarDays(locationId: string, fromDate: string): Promise<CalendarDay[]> {
+    const db = await getDatabase();
+    const rows = await db.getAllAsync<CalendarDayRow>(
+      `SELECT *
+       FROM calendar_day
+       WHERE location_id = ? AND date >= ?
+       ORDER BY date ASC`,
+      [locationId, fromDate]
+    );
+    return rows.map(mapCalendarDay);
   }
 };

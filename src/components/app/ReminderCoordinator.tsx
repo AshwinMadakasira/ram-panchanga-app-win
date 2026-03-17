@@ -19,6 +19,7 @@ import { extractReminderNotificationData, requestReminderPermissionsAsync, syncR
 export const ReminderCoordinator = () => {
   const router = useRouter();
   const isHydrated = useSettingsStore((state) => state.isHydrated);
+  const appLanguage = useSettingsStore((state) => state.appLanguage);
   const reminders = useSettingsStore((state) => state.reminders);
   const setReminderPermission = useSettingsStore((state) => state.setReminderPermission);
   const { location, isLoading } = useSelectedLocation();
@@ -42,8 +43,8 @@ export const ReminderCoordinator = () => {
       return;
     }
 
-    syncReminderNotificationsAsync(reminders, location).catch(() => {});
-  }, [isHydrated, isLoading, location, reminders]);
+    syncReminderNotificationsAsync(reminders, location, appLanguage).catch(() => {});
+  }, [appLanguage, isHydrated, isLoading, location, reminders]);
 
   useEffect(() => {
     const subscription = Notifications.addNotificationResponseReceivedListener((response) => {
@@ -57,7 +58,7 @@ export const ReminderCoordinator = () => {
         return;
       }
 
-      router.push(dayRoute(getTodayForTimezone(location?.timezone ?? "America/Los_Angeles")));
+      router.push(dayRoute(data.date ?? getTodayForTimezone(location?.timezone ?? "America/Los_Angeles")));
     });
 
     return () => {

@@ -9,6 +9,11 @@ import seedChicago from "../data/generated/panchanga-seed-chicago-cst.json";
 import seedNewYork from "../data/generated/panchanga-seed-newyork-est.json";
 import seedVancouver from "../data/generated/panchanga-seed-vancouver-pst.json";
 import { addMonths, getCalendarWeeks, getMonthBounds } from "../src/domain/dates";
+import {
+  buildDailyNotificationContent,
+  buildSpecialTithiNotificationContent,
+  getIsoDateForTimezoneAtMoment
+} from "../src/services/reminder-copy";
 
 const vancouverSeed = seedVancouver as any;
 const chicagoSeed = seedChicago as any;
@@ -137,6 +142,61 @@ runCase("Vancouver shifted source rows are repaired in the seed", () => {
   assert.equal(day.primaryNakshatraAtSunrise, "Shatabhisha 25:21 +");
   assert.equal(day.primaryYogaAtSunrise, "Shukla 25:12");
   assert.equal(day.primaryKaranaAtSunrise, "Balava 9:25");
+});
+
+runCase("notification copy uses daily Panchanga context without null placeholders", () => {
+  const dayDetails = {
+    day: vancouverSeed.calendarDays.find((entry: any) => entry.id === "vancouver-pst-2026-04-09"),
+    transitions: [],
+    specialTithis: [],
+    timeWindows: [],
+    muhurthas: []
+  };
+  const location = vancouverSeed.locations[0];
+  const content = buildDailyNotificationContent({
+    language: "en",
+    location,
+    daySummary: dayDetails.day
+  });
+
+  assert.equal(content.title, "Today's Panchanga");
+  assert.ok(content.body.includes(location.name));
+  assert.ok(content.body.includes("Tithi:"));
+  assert.ok(content.body.includes("Nakshatra:"));
+  assert.equal(content.body.includes("null"), false);
+  assert.equal(content.body.includes("undefined"), false);
+});
+
+runCase("special-tithi notification copy localizes Kannada output and keeps useful context", () => {
+  const dayDetails = {
+    day: vancouverSeed.calendarDays.find((entry: any) => entry.id === "vancouver-pst-2026-04-01"),
+    transitions: [],
+    specialTithis: [],
+    timeWindows: [],
+    muhurthas: []
+  };
+  const location = vancouverSeed.locations[0];
+  const content = buildSpecialTithiNotificationContent({
+    language: "kn",
+    location,
+    name: "Pournami",
+    category: "pournami",
+    targetDate: "2026-04-01",
+    leadDays: 1,
+    daySummary: dayDetails.day
+  });
+
+  assert.ok(content.title.length > 0);
+  assert.ok(content.body.includes(location.name));
+  assert.equal(content.body.includes("null"), false);
+  assert.equal(content.body.includes("undefined"), false);
+  assert.notEqual(content.body.includes("Tomorrow"), true);
+});
+
+runCase("future reminder dates resolve against the selected timezone", () => {
+  const triggerMoment = new Date("2026-03-18T00:30:00.000Z");
+  assert.equal(getIsoDateForTimezoneAtMoment(triggerMoment, "America/Vancouver"), "2026-03-17");
+  assert.equal(getIsoDateForTimezoneAtMoment(triggerMoment, "America/New_York"), "2026-03-17");
 });
 
 if (failures > 0) {

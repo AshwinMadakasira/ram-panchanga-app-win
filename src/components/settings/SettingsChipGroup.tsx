@@ -18,10 +18,17 @@ type SettingsChipGroupProps = {
   selectedValues: string[];
   onToggle: (value: string) => void;
   multiline?: boolean;
+  shrinkToFit?: boolean;
 };
 
 /** Render a single-row settings chip group that compresses chips to fit without scrolling. */
-export const SettingsChipGroup = ({ options, selectedValues, onToggle, multiline = false }: SettingsChipGroupProps) => {
+export const SettingsChipGroup = ({
+  options,
+  selectedValues,
+  onToggle,
+  multiline = false,
+  shrinkToFit = true
+}: SettingsChipGroupProps) => {
   const theme = useAppTheme();
   const styles = createStyles(theme);
 
@@ -36,6 +43,7 @@ export const SettingsChipGroup = ({ options, selectedValues, onToggle, multiline
             active={active}
             fit
             multiline={multiline}
+            shrinkToFit={shrinkToFit}
             onPress={() => onToggle(option.value)}
           />
         );

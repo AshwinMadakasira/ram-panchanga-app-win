@@ -13,10 +13,18 @@ type SelectableChipProps = {
   onPress: () => void;
   fit?: boolean;
   multiline?: boolean;
+  shrinkToFit?: boolean;
 };
 
 /** Render one theme-aware selectable chip. */
-export const SelectableChip = ({ label, active, onPress, fit = false, multiline = false }: SelectableChipProps) => {
+export const SelectableChip = ({
+  label,
+  active,
+  onPress,
+  fit = false,
+  multiline = false,
+  shrinkToFit = true
+}: SelectableChipProps) => {
   const theme = useAppTheme();
   const styles = createStyles(theme);
 
@@ -26,7 +34,7 @@ export const SelectableChip = ({ label, active, onPress, fit = false, multiline 
       style={[styles.chip, fit && styles.chipFit, multiline && styles.chipMultiline, active && styles.chipActive]}
     >
       <Text
-        adjustsFontSizeToFit={fit && !multiline}
+        adjustsFontSizeToFit={fit && !multiline && shrinkToFit}
         minimumFontScale={0.72}
         numberOfLines={multiline ? 2 : 1}
         style={[styles.label, fit && styles.labelFit, multiline && styles.labelMultiline, active && styles.labelActive]}

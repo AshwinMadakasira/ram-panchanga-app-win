@@ -50,6 +50,30 @@ const weekdayKannadaLabelMap: Record<ReminderWeekday, string> = {
 };
 const specialTithiReminderCategories: UpcomingSpecialTithiCategory[] = ["ekadashi", "pournami", "punyadina"];
 
+/** Use short fixed Kannada weekday labels so all chips fit without per-chip font shrinking. */
+const getKannadaWeekdayChipLabel = (weekday: ReminderWeekday) => {
+  const fallbackLabel = weekdayKannadaLabelMap[weekday];
+
+  switch (weekday) {
+    case "monday":
+      return "ಸೋ";
+    case "tuesday":
+      return "ಮಂ";
+    case "wednesday":
+      return "ಬು";
+    case "thursday":
+      return "ಗು";
+    case "friday":
+      return "ಶು";
+    case "saturday":
+      return "ಶನಿ";
+    case "sunday":
+      return "ಭಾ";
+    default:
+      return fallbackLabel;
+  }
+};
+
 /** Format advance-notification labels as stacked chip text so they stay readable in one row. */
 const getLeadDayLabel = (days: number, language: AppLanguage) => {
   if (language === "kn") {
@@ -134,9 +158,10 @@ export default function SettingsScreen() {
             onToggle={(value) => toggleDailyReminderWeekday(value as ReminderWeekday)}
             options={reminderWeekdayOptions.map((weekday) => ({
               value: weekday,
-              label: language === "kn" ? weekdayKannadaLabelMap[weekday] : weekdayLabelMap[weekday]
+              label: language === "kn" ? getKannadaWeekdayChipLabel(weekday) : weekdayLabelMap[weekday]
             }))}
             selectedValues={reminders.daily.weekdays}
+            shrinkToFit={false}
           />
         </View>
 

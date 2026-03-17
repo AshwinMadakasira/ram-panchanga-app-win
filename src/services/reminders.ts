@@ -9,9 +9,15 @@ import { Platform } from "react-native";
 
 // Domain helpers, labels, repositories, and types are imported because reminder scheduling touches many app layers.
 import { getTodayForTimezone } from "@/domain/dates";
-import { specialTithiCategoryLabels } from "@/domain/panchanga/labels";
 import { panchangaRepository } from "@/db/repositories/panchanga-repository";
+import {
+  buildDailyNotificationContent,
+  buildSpecialTithiNotificationContent,
+  getIsoDateForTimezoneAtMoment
+} from "@/services/reminder-copy";
 import type {
+  AppLanguage,
+  CalendarDay,
   Location,
   ReminderPermissionState,
   ReminderSettings,
@@ -20,7 +26,7 @@ import type {
 } from "@/types/domain";
 
 const ANDROID_CHANNEL_ID = "ram-panchanga-reminders";
-const UPCOMING_SPECIAL_TITHI_LIMIT = 10;
+const IOS_PENDING_NOTIFICATION_LIMIT = 64;
 
 let notificationsConfigured = false;
 
@@ -34,19 +40,10 @@ export const reminderWeekdayOptions: ReminderWeekday[] = [
   "sunday"
 ];
 
-const reminderWeekdayToTrigger: Record<ReminderWeekday, number> = {
-  sunday: 1,
-  monday: 2,
-  tuesday: 3,
-  wednesday: 4,
-  thursday: 5,
-  friday: 6,
-  saturday: 7
-};
-
 type ReminderNotificationData =
   | {
       kind: "daily";
+      date?: string;
     }
   | {
       kind: "special_tithi";
@@ -78,20 +75,43 @@ const createSpecialTithiTriggerDate = (date: string, leadDays: number, time: str
   return new Date(year, month - 1, day - leadDays, parsedTime.hour, parsedTime.minute, 0, 0);
 };
 
-/** Format an ISO date into a human-friendly long date for notification text. */
-const formatSpecialTithiDate = (date: string) =>
-  new Intl.DateTimeFormat("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-    timeZone: "UTC"
-  }).format(new Date(`${date}T00:00:00Z`));
-
-/** Create the message body shown in a special-tithi notification. */
-const buildSpecialTithiBody = (category: UpcomingSpecialTithiCategory, date: string) =>
-  `Next ${specialTithiCategoryLabels[category]} special tithi is on ${formatSpecialTithiDate(date)}.`;
-
 const getChannelId = () => (Platform.OS === "android" ? ANDROID_CHANNEL_ID : undefined);
+
+/** Convert reminder weekdays into JavaScript's `Date#getDay` numbering. */
+const reminderWeekdayToJsDay: Record<ReminderWeekday, number> = {
+  sunday: 0,
+  monday: 1,
+  tuesday: 2,
+  wednesday: 3,
+  thursday: 4,
+  friday: 5,
+  saturday: 6
+};
+
+/** Build a concrete device-local trigger date for a target calendar day and stored `HH:MM` time. */
+const createDailyTriggerDate = (baseDate: Date, time: string) => {
+  const parsedTime = parseReminderTime(time);
+  if (!parsedTime) {
+    return null;
+  }
+
+  const triggerDate = new Date(baseDate);
+  triggerDate.setHours(parsedTime.hour, parsedTime.minute, 0, 0);
+  return triggerDate;
+};
+
+type PreparedNotificationRequest = {
+  content: Notifications.NotificationContentInput;
+  trigger: Notifications.DateTriggerInput;
+  date: Date;
+};
+
+const isPreparedNotificationRequest = (
+  request: PreparedNotificationRequest | null
+): request is PreparedNotificationRequest => Boolean(request);
+
+/** Create an in-memory lookup so reminder scheduling can reuse one bulk calendar query. */
+const createCalendarDayMap = (days: CalendarDay[]) => new Map(days.map((day) => [day.date, day]));
 
 /** Set notification behavior and Android channels before scheduling anything. */
 export const configureReminderNotificationsAsync = async () => {
@@ -136,59 +156,124 @@ export const requestReminderPermissionsAsync = async (): Promise<ReminderPermiss
   return requested.granted ? "granted" : "denied";
 };
 
-/** Schedule one weekly reminder for a particular weekday and time. */
-const scheduleWeeklyReminderAsync = async (weekday: ReminderWeekday, time: string) => {
-  const parsedTime = parseReminderTime(time);
-  if (!parsedTime) {
-    return;
+/** Keep only the device-safe subset of prepared requests where the OS may cap pending notifications. */
+const limitPreparedRequestsForPlatform = (requests: PreparedNotificationRequest[]) => {
+  if (Platform.OS !== "ios") {
+    return requests;
   }
 
-  await Notifications.scheduleNotificationAsync({
-    content: {
-      title: "RAM Panchanga",
-      body: "Check Today's panchanga.",
-      sound: "default",
-      data: {
-        kind: "daily"
-      } satisfies ReminderNotificationData
-    },
-    trigger: {
-      type: Notifications.SchedulableTriggerInputTypes.WEEKLY,
-      weekday: reminderWeekdayToTrigger[weekday],
-      hour: parsedTime.hour,
-      minute: parsedTime.minute,
-      channelId: getChannelId()
-    }
-  });
+  return [...requests]
+    .sort((left, right) => left.date.getTime() - right.date.getTime())
+    .slice(0, IOS_PENDING_NOTIFICATION_LIMIT);
 };
 
-/** Schedule advance reminders for a category of upcoming special tithis. */
-const scheduleUpcomingSpecialTithiRemindersAsync = async (
-  locationId: string,
+/** Schedule prepared dated notifications after applying any platform-specific pending-request cap. */
+const schedulePreparedRequestsAsync = async (requests: PreparedNotificationRequest[]) => {
+  const limitedRequests = limitPreparedRequestsForPlatform(requests);
+
+  await Promise.all(
+    limitedRequests.map((request) =>
+      Notifications.scheduleNotificationAsync({
+        content: request.content,
+        trigger: request.trigger
+      })
+    )
+  );
+};
+
+/** Build dated daily reminder requests for every matching future bundled calendar date. */
+const buildDailyReminderRequestsAsync = async (
+  location: Location,
+  time: string,
+  weekdays: ReminderWeekday[],
+  language: AppLanguage,
+  futureCalendarDays: CalendarDay[],
+  futureCalendarDayMap: Map<string, CalendarDay>
+) => {
+  const now = new Date();
+  const selectedJsDays = new Set(weekdays.map((weekday) => reminderWeekdayToJsDay[weekday]));
+  const requests: (PreparedNotificationRequest | null)[] = await Promise.all(
+    futureCalendarDays.map(async (calendarDay) => {
+      const calendarDate = calendarDay.date;
+      const [year, month, day] = calendarDate.split("-").map(Number);
+      const dayInDeviceTime = new Date(year, month - 1, day);
+
+      if (!selectedJsDays.has(dayInDeviceTime.getDay())) {
+        return null;
+      }
+
+      const triggerDate = createDailyTriggerDate(dayInDeviceTime, time);
+      if (!triggerDate || triggerDate <= now) {
+        return null;
+      }
+
+      const reminderDate = getIsoDateForTimezoneAtMoment(triggerDate, location.timezone);
+      const content = buildDailyNotificationContent({
+        language,
+        location,
+        daySummary: futureCalendarDayMap.get(reminderDate) ?? null
+      });
+
+      return {
+        date: triggerDate,
+        content: {
+          ...content,
+          sound: "default",
+          data: {
+            kind: "daily",
+            date: reminderDate
+          } satisfies ReminderNotificationData
+        },
+        trigger: {
+          type: Notifications.SchedulableTriggerInputTypes.DATE,
+          date: triggerDate,
+          channelId: getChannelId()
+        } satisfies Notifications.DateTriggerInput
+      } satisfies PreparedNotificationRequest;
+    })
+  );
+
+  return requests.filter(isPreparedNotificationRequest);
+};
+
+/** Build dated advance-reminder requests for all future special-tithi occurrences in the bundled data. */
+const buildUpcomingSpecialTithiReminderRequestsAsync = async (
+  location: Location,
   category: UpcomingSpecialTithiCategory,
   fromDate: string,
   time: string,
-  leadDays: number
+  leadDays: number,
+  language: AppLanguage,
+  futureCalendarDayMap: Map<string, CalendarDay>
 ) => {
   const specialTithis = await panchangaRepository.getUpcomingSpecialTithis(
-    locationId,
+    location.id,
     category,
-    fromDate,
-    UPCOMING_SPECIAL_TITHI_LIMIT
+    fromDate
   );
   const now = new Date();
 
-  await Promise.all(
+  const requests: (PreparedNotificationRequest | null)[] = await Promise.all(
     specialTithis.map(async (specialTithi) => {
       const triggerDate = createSpecialTithiTriggerDate(specialTithi.date, leadDays, time);
       if (!triggerDate || triggerDate <= now) {
-        return;
+        return null;
       }
 
-      await Notifications.scheduleNotificationAsync({
+      const content = buildSpecialTithiNotificationContent({
+        language,
+        location,
+        name: specialTithi.name,
+        category,
+        targetDate: specialTithi.date,
+        leadDays,
+        daySummary: futureCalendarDayMap.get(specialTithi.date) ?? null
+      });
+
+      return {
+        date: triggerDate,
         content: {
-          title: "RAM Panchanga",
-          body: buildSpecialTithiBody(category, specialTithi.date),
+          ...content,
           sound: "default",
           data: {
             kind: "special_tithi",
@@ -200,14 +285,20 @@ const scheduleUpcomingSpecialTithiRemindersAsync = async (
           type: Notifications.SchedulableTriggerInputTypes.DATE,
           date: triggerDate,
           channelId: getChannelId()
-        }
-      });
+        } satisfies Notifications.DateTriggerInput
+      } satisfies PreparedNotificationRequest;
     })
   );
+
+  return requests.filter(isPreparedNotificationRequest);
 };
 
 /** Rebuild all scheduled reminders from the current settings and selected location. */
-export const syncReminderNotificationsAsync = async (reminders: ReminderSettings, location: Location) => {
+export const syncReminderNotificationsAsync = async (
+  reminders: ReminderSettings,
+  location: Location,
+  language: AppLanguage
+) => {
   await configureReminderNotificationsAsync();
   await Notifications.cancelAllScheduledNotificationsAsync();
 
@@ -215,26 +306,46 @@ export const syncReminderNotificationsAsync = async (reminders: ReminderSettings
     return;
   }
 
-  if (reminders.daily.enabled && isValidReminderTime(reminders.daily.time)) {
-    await Promise.all(reminders.daily.weekdays.map((weekday) => scheduleWeeklyReminderAsync(weekday, reminders.daily.time)));
-  }
-
+  const preparedRequests: PreparedNotificationRequest[] = [];
   const today = getTodayForTimezone(location.timezone);
-  if (!reminders.specialTithi.enabled || !isValidReminderTime(reminders.specialTithi.time)) {
-    return;
+  const futureCalendarDayMap = createCalendarDayMap(
+    await panchangaRepository.getFutureCalendarDays(location.id, today)
+  );
+
+  if (reminders.daily.enabled && isValidReminderTime(reminders.daily.time)) {
+    preparedRequests.push(
+      ...(
+        await buildDailyReminderRequestsAsync(
+          location,
+          reminders.daily.time,
+          reminders.daily.weekdays,
+          language,
+          [...futureCalendarDayMap.values()],
+          futureCalendarDayMap
+        )
+      )
+    );
   }
 
-  await Promise.all(
-    reminders.specialTithi.categories.map((category) =>
-      scheduleUpcomingSpecialTithiRemindersAsync(
-        location.id,
-        category,
-        today,
-        reminders.specialTithi.time,
-        reminders.specialTithi.leadDays
+  if (reminders.specialTithi.enabled && isValidReminderTime(reminders.specialTithi.time)) {
+    const specialRequests = await Promise.all(
+      reminders.specialTithi.categories.map((category) =>
+        buildUpcomingSpecialTithiReminderRequestsAsync(
+          location,
+          category,
+          today,
+          reminders.specialTithi.time,
+          reminders.specialTithi.leadDays,
+          language,
+          futureCalendarDayMap
+        )
       )
-    )
-  );
+    );
+
+    preparedRequests.push(...specialRequests.flat());
+  }
+
+  await schedulePreparedRequestsAsync(preparedRequests);
 };
 
 /** Safely decode custom notification payload data back into app-specific types. */
@@ -245,7 +356,7 @@ export const extractReminderNotificationData = (data: unknown): ReminderNotifica
 
   const candidate = data as Partial<ReminderNotificationData>;
   if (candidate.kind === "daily") {
-    return { kind: "daily" };
+    return typeof candidate.date === "string" ? { kind: "daily", date: candidate.date } : { kind: "daily" };
   }
 
   if (

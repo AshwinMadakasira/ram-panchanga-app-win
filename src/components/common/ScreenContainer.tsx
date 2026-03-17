@@ -6,7 +6,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import type { PropsWithChildren } from "react";
-import { Pressable, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
+import { Platform, Pressable, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
 
 // Theme values are shared through React context, so this wrapper can style every screen consistently.
 import { getYearBannerLabel, useAppLanguage } from "@/i18n";
@@ -29,7 +29,7 @@ export const ScreenContainer = ({
 }: ScreenContainerProps) => {
   const theme = useAppTheme();
   const language = useAppLanguage();
-  const styles = createStyles(theme);
+  const styles = createStyles(theme, language);
   const hasHeaderRow = Boolean(title || showSearch || showBack);
   const content = (
     <View style={[styles.body, !scroll && styles.bodyFill]}>
@@ -68,7 +68,7 @@ export const ScreenContainer = ({
 };
 
 /** Build this component's theme-aware styles. */
-const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
+const createStyles = (theme: ReturnType<typeof useAppTheme>, language: ReturnType<typeof useAppLanguage>) =>
   StyleSheet.create({
     safeArea: {
       flex: 1,
@@ -80,7 +80,10 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
     body: {
       paddingHorizontal: theme.spacing.md,
       gap: theme.spacing.sm,
-      paddingTop: theme.spacing.xl
+      paddingTop:
+        Platform.OS === "android"
+          ? Math.max(theme.spacing.xl, (StatusBar.currentHeight ?? 0) + theme.spacing.md)
+          : theme.spacing.xl
     },
     bodyFill: {
       flex: 1
@@ -108,7 +111,7 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
       alignItems: "center",
       flexDirection: "row",
       justifyContent: "space-between",
-      minHeight: 40
+      minHeight: 52
     },
     headerTitleWrap: {
       alignItems: "center",
@@ -119,7 +122,10 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
     headerTitle: {
       color: theme.colors.ink,
       fontFamily: theme.typography.headingFamily,
-      fontSize: Math.round(22 * theme.typography.headingScale)
+      fontSize: Math.round((language === "kn" ? 18 : 21) * theme.typography.headingScale),
+      lineHeight: Math.round((language === "kn" ? 24 : 30) * theme.typography.headingScale),
+      includeFontPadding: false,
+      paddingTop: language === "kn" ? 1 : 0
     },
     iconButton: {
       alignItems: "center",
