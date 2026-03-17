@@ -1,3 +1,8 @@
+/*
+ * Test-file teaching note:
+ * These tests protect foundational assumptions: date math and the structure of the bundled seed data.
+ * They are not UI snapshot tests; they are sanity checks for the app's core inputs and helpers.
+ */
 import assert from "node:assert/strict";
 
 import seedChicago from "../data/generated/panchanga-seed-chicago-cst.json";

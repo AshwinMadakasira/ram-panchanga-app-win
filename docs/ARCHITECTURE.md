@@ -1,90 +1,134 @@
-# Architecture
+# App Architecture
 
-## Chosen stack
-- Expo + React Native + TypeScript
-- Expo Router for navigation
-- SQLite for local database
-- Zustand for client state
-- TanStack Query for async data abstraction
-- NativeWind for styling
-- Reanimated for transitions
+## Purpose
 
-## Why this stack
-- Single codebase for Android + iOS
-- Fast developer iteration
-- Clean store deployment path
-- Best fit for an offline-first data-heavy app
+The app repo is the offline-first mobile client for RAM Panchanga.
+
+Its responsibilities are:
+
+- present the Panchanga UI
+- store bundled data in local SQLite
+- expose day, month, search, and special-tithi views
+- persist user preferences such as location, theme, and reminders
+- schedule local notifications based on stored settings
+
+Its responsibilities do not include:
+
+- parsing raw spreadsheets
+- cleaning source SQLite extracts
+- generating seed bundles
+- generating analytics exports
+- generating ICS calendars
+
+Those belong in the separate data repo.
+
+## Stack
+
+- Expo
+- React Native
+- TypeScript
+- Expo Router
+- Expo SQLite
+- TanStack Query
+- Zustand
+- Expo Notifications
+- NativeWind
+
+## Core idea
+
+The app is designed around this flow:
+
+`screen -> hook -> repository -> SQLite -> bundled seed data`
+
+That separation keeps UI code understandable and keeps data access centralized.
 
 ## Layers
 
-### 1. App / presentation
-- routes
-- screens
-- components
-- themes
-- animation
-- UI state
+### 1. Routing and screens
 
-### 2. Domain
-- Panchanga date logic
-- formatting helpers
-- search/filter
-- calendar transformations
-- special tithi grouping
+Folder:
+- [app](../app)
 
-### 3. Data
-- SQLite
-- repository layer
-- import/migrations
-- query helpers
+Responsibilities:
+- define route structure
+- choose which sections each screen shows
+- decide how loading, empty, error, and content states are arranged
 
-## Suggested project structure
+### 2. Reusable UI components
 
-```txt
-app/
-  (tabs)/
-    index.tsx
-    calendar.tsx
-    special-tithis.tsx
-    muhurthas.tsx
-    settings.tsx
-  day/[date].tsx
-  search.tsx
+Folder:
+- [src/components](../src/components)
 
-src/
-  components/
-    cards/
-    calendar/
-    day/
-    common/
-  db/
-    client.ts
-    migrations/
-    seed.ts
-    queries/
-  domain/
-    panchanga/
-    dates/
-    special-tithis/
-    muhurthas/
-  hooks/
-  store/
-  theme/
-  types/
-  utils/
+Responsibilities:
+- render repeatable UI blocks such as cards, headers, lists, and controls
+- keep screens from becoming large and repetitive
 
-assets/
-data/
-```
+### 3. Hooks
 
-## Data access
-Use a repository pattern:
-- `getMonthSummary(year, month, locationId)`
-- `getDayDetails(date, locationId)`
-- `getSpecialTithisByRange(startDate, endDate, filters?)`
-- `getMuhurthas(eventType?, month?)`
+Folder:
+- [src/hooks](../src/hooks)
 
-## Offline-first approach
-- ship a seeded SQLite DB with the app
-- import on first run if DB absent
-- expose a future update mechanism through versioned data bundles
+Responsibilities:
+- expose screen-friendly data and startup logic
+- wrap repository calls with React Query
+- combine store data and query data where useful
+
+### 4. Local data layer
+
+Folder:
+- [src/db](../src/db)
+
+Responsibilities:
+- open the device-local SQLite database
+- create/update schema
+- import the bundled JSON seed into SQLite
+- query the database through repositories
+
+### 5. Domain helpers
+
+Folder:
+- [src/domain](../src/domain)
+
+Responsibilities:
+- timezone-aware date calculations
+- human-friendly labels
+- pure transformation logic reused across screens
+
+### 6. App state and services
+
+Folders:
+- [src/store](../src/store)
+- [src/services](../src/services)
+
+Responsibilities:
+- persist user settings
+- manage reminders and notifications
+- keep side effects out of UI components when possible
+
+### 7. Theme and types
+
+Folders:
+- [src/theme](../src/theme)
+- [src/types](../src/types)
+
+Responsibilities:
+- keep visual design consistent
+- define shared TypeScript vocabulary
+
+## Design principles
+
+- Offline-first: the app should remain useful without a server.
+- Predictable navigation: primary views stay in tabs; secondary tasks live in stack routes.
+- Reusable UI: repeated card/list patterns should be extracted.
+- Beginner-readable data flow: screens do not contain SQL.
+- Location-aware correctness: "today" depends on the selected timezone.
+
+## Suggested code reading order
+
+1. [app/_layout.tsx](../app/_layout.tsx)
+2. [src/types/domain.ts](../src/types/domain.ts)
+3. [src/theme/index.ts](../src/theme/index.ts)
+4. [src/db/bootstrap.ts](../src/db/bootstrap.ts)
+5. [src/db/repositories/panchanga-repository.ts](../src/db/repositories/panchanga-repository.ts)
+6. [src/hooks/usePanchangaQueries.ts](../src/hooks/usePanchangaQueries.ts)
+7. [app/(tabs)/index.tsx](../app/(tabs)/index.tsx)

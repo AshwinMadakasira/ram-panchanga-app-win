@@ -1,5 +1,17 @@
+/*
+ * Screen teaching note:
+ * Settings screens are often mostly state wiring. This file connects reusable controls to the
+ * persisted settings store and to reminder-related business rules.
+ *
+ * Product choices shown here:
+ * - user preferences stay local
+ * - reminders are optional
+ * - location changes switch which seed dataset is read
+ * - theme can follow the system or be overridden
+ */
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
+// These imports show a common pattern in React apps: UI pieces, domain labels, hooks, services, store, then types.
 import { EmptyState } from "@/components/common/EmptyState";
 import { ErrorState } from "@/components/common/ErrorState";
 import { LoadingState } from "@/components/common/LoadingState";
@@ -208,6 +220,7 @@ export default function SettingsScreen() {
   );
 }
 
+/** Create theme-aware styles for the settings screen. */
 const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
   StyleSheet.create({
     content: {

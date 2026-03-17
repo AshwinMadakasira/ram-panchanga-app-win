@@ -1,5 +1,11 @@
+/*
+ * Component teaching note:
+ * This card groups astronomy-like data (sun and moon rise/set) and the highlighted sacred windows.
+ * The layout was intentionally simplified so a beginner user can scan sections instead of decoding a dense grid.
+ */
 import { StyleSheet, Text, View } from "react-native";
 
+// Domain types keep the component explicit about which data it needs.
 import type { CalendarDay, TimeWindow } from "@/types/domain";
 import { useAppTheme } from "@/theme";
 
@@ -11,6 +17,7 @@ const windowLabels: Record<(typeof highlightedWindowTypes)[number], string> = {
   "evening-sandhya": "Evening Sandhya"
 };
 
+/** Convert an optional window into a human-readable time range. */
 const formatRange = (window?: TimeWindow) => {
   if (!window) {
     return "Unavailable";
@@ -19,6 +26,7 @@ const formatRange = (window?: TimeWindow) => {
   return `${window.startTime || "Unavailable"} - ${window.endTime || "Unavailable"}`;
 };
 
+/** Render sun/moon rise-set data and the highlighted sacred windows when available. */
 export const SunCard = ({ day, timeWindows = [] }: { day: CalendarDay; timeWindows?: TimeWindow[] }) => {
   const theme = useAppTheme();
   const styles = createStyles(theme);
@@ -76,6 +84,7 @@ export const SunCard = ({ day, timeWindows = [] }: { day: CalendarDay; timeWindo
   );
 };
 
+/** Build this component's theme-aware styles. */
 const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
   StyleSheet.create({
     container: {

@@ -1,3 +1,8 @@
+/*
+ * Repository teaching note:
+ * Repositories are the "translation layer" between SQL rows and app-friendly TypeScript objects.
+ * Screens do not know SQL, and SQLite does not know React. This file sits between them.
+ */
 import { getMonthBounds } from "@/domain/dates";
 import { getDatabase } from "@/db/client";
 import type {
@@ -127,6 +132,7 @@ type UpcomingSpecialTithiRow = {
   category: Exclude<SpecialTithi["category"], null>;
 };
 
+/** Convert a raw SQLite calendar-day row into the app's `CalendarDay` type. */
 const mapCalendarDay = (row: CalendarDayRow): CalendarDay => ({
   id: row.id,
   date: row.date,
@@ -149,6 +155,7 @@ const mapCalendarDay = (row: CalendarDayRow): CalendarDay => ({
   sourcePage: row.source_page
 });
 
+/** Convert a raw transition row into the app's `DayTransition` type. */
 const mapTransition = (row: DayTransitionRow): DayTransition => ({
   id: row.id,
   calendarDayId: row.calendar_day_id,
@@ -160,6 +167,7 @@ const mapTransition = (row: DayTransitionRow): DayTransition => ({
   rawSourceText: row.raw_source_text
 });
 
+/** Convert a raw special-tithi row into the app's `SpecialTithi` type. */
 const mapSpecialTithi = (row: SpecialTithiRow): SpecialTithi => ({
   id: row.id,
   calendarDayId: row.calendar_day_id,
@@ -171,6 +179,7 @@ const mapSpecialTithi = (row: SpecialTithiRow): SpecialTithi => ({
   date: row.date
 });
 
+/** Convert a raw time-window row into the app's `TimeWindow` type. */
 const mapTimeWindow = (row: TimeWindowRow): TimeWindow => ({
   id: row.id,
   calendarDayId: row.calendar_day_id,
@@ -180,6 +189,7 @@ const mapTimeWindow = (row: TimeWindowRow): TimeWindow => ({
   notes: row.notes
 });
 
+/** Treat an Ekadashi row as a special tithi so the UI can render curated observances uniformly. */
 const mapEkadashiToSpecialTithi = (row: EkadashiRow): SpecialTithi => ({
   id: row.id,
   calendarDayId: row.calendar_day_id,
@@ -191,6 +201,7 @@ const mapEkadashiToSpecialTithi = (row: EkadashiRow): SpecialTithi => ({
   date: row.date
 });
 
+/** Treat a Punyadina row as a special tithi for the same reason as Ekadashi rows above. */
 const mapPunyadinaToSpecialTithi = (row: PunyadinaRow): SpecialTithi => ({
   id: row.id,
   calendarDayId: row.calendar_day_id,
@@ -202,6 +213,7 @@ const mapPunyadinaToSpecialTithi = (row: PunyadinaRow): SpecialTithi => ({
   date: row.date
 });
 
+/** Convert a raw muhurtha row into the app's `Muhurtha` type. */
 const mapMuhurtha = (row: MuhurthaRow): Muhurtha => ({
   id: row.id,
   date: row.date,
@@ -218,6 +230,7 @@ const mapMuhurtha = (row: MuhurthaRow): Muhurtha => ({
   rawFields: row.raw_fields
 });
 
+/** Convert a raw location row into the app's `Location` type. */
 const mapLocation = (row: LocationRow): Location => ({
   id: row.id,
   name: row.name,
@@ -229,18 +242,21 @@ const mapLocation = (row: LocationRow): Location => ({
 });
 
 export const panchangaRepository = {
+  /** Return all configured locations from the local database. */
   async getLocations(): Promise<Location[]> {
     const db = await getDatabase();
     const rows = await db.getAllAsync<LocationRow>("SELECT * FROM location ORDER BY name ASC");
     return rows.map(mapLocation);
   },
 
+  /** Return one location by id, or `null` if it does not exist. */
   async getLocationById(locationId: string): Promise<Location | null> {
     const db = await getDatabase();
     const row = await db.getFirstAsync<LocationRow>("SELECT * FROM location WHERE id = ? LIMIT 1", [locationId]);
     return row ? mapLocation(row) : null;
   },
 
+  /** Return metadata about the currently seeded dataset. */
   async getDataVersion(): Promise<DataVersion> {
     const db = await getDatabase();
     const rows = await db.getAllAsync<AppMetaRow>("SELECT key, value FROM app_meta");
@@ -253,6 +269,7 @@ export const panchangaRepository = {
     };
   },
 
+  /** Return a month's day summaries plus small special-tithi markers for calendar cells. */
   async getMonthSummary(year: number, month: number, locationId: string, today: string): Promise<MonthSummaryDay[]> {
     const bounds = getMonthBounds(year, month);
     const db = await getDatabase();
@@ -291,6 +308,7 @@ export const panchangaRepository = {
     }));
   },
 
+  /** Return the full detail bundle for one day and one location. */
   async getDayDetails(date: string, locationId: string): Promise<DayDetails | null> {
     const db = await getDatabase();
     const day = await db.getFirstAsync<CalendarDayRow>(
@@ -327,6 +345,7 @@ export const panchangaRepository = {
     };
   },
 
+  /** Return special tithis filtered by date range and optional category. */
   async getSpecialTithisByRange(locationId: string, filters: SpecialTithiFilters = {}): Promise<SpecialTithi[]> {
     const db = await getDatabase();
     const clauses = ["cd.location_id = ?"];
@@ -424,6 +443,7 @@ export const panchangaRepository = {
     });
   },
 
+  /** Return muhurtha entries filtered by location plus optional type/month filters. */
   async getMuhurthas(locationId: string, filters: MuhurthaFilters = {}): Promise<Muhurtha[]> {
     const db = await getDatabase();
     const clauses = ["location_id = ?"];
@@ -449,6 +469,7 @@ export const panchangaRepository = {
     return rows.map(mapMuhurtha);
   },
 
+  /** Return upcoming special-tithi records used by the reminder scheduling service. */
   async getUpcomingSpecialTithis(
     locationId: string,
     category: Exclude<SpecialTithi["category"], null>,

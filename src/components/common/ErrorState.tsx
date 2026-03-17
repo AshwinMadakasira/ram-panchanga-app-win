@@ -1,5 +1,10 @@
+/*
+ * Component teaching note:
+ * This component standardizes how failures are shown so screens do not invent different error UIs.
+ */
 import { StyleSheet, Text, View } from "react-native";
 
+// Error styling is centralized so failures look and feel consistent.
 import { useAppTheme } from "@/theme";
 
 type ErrorStateProps = {
@@ -7,6 +12,7 @@ type ErrorStateProps = {
   message: string;
 };
 
+/** Show a standardized error message card. */
 export const ErrorState = ({ title = "Something went wrong", message }: ErrorStateProps) => {
   const theme = useAppTheme();
   const styles = createStyles(theme);
@@ -18,6 +24,7 @@ export const ErrorState = ({ title = "Something went wrong", message }: ErrorSta
   );
 };
 
+/** Build this component's theme-aware styles. */
 const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
   StyleSheet.create({
     container: {

@@ -1,8 +1,15 @@
+/*
+ * Component teaching note:
+ * This card is a formatter for one muhurtha record.
+ * It demonstrates a common UI pattern: render the fields that exist and quietly skip optional ones.
+ */
 import { StyleSheet, Text, View } from "react-native";
 
+// The card depends only on a typed data object and the shared theme.
 import type { Muhurtha } from "@/types/domain";
 import { useAppTheme } from "@/theme";
 
+/** Render one muhurtha entry as a compact detail card. */
 export const MuhurthaCard = ({ muhurtha }: { muhurtha: Muhurtha }) => {
   const theme = useAppTheme();
   const styles = createStyles(theme);
@@ -19,6 +26,7 @@ export const MuhurthaCard = ({ muhurtha }: { muhurtha: Muhurtha }) => {
   );
 };
 
+/** Build this component's theme-aware styles. */
 const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
   StyleSheet.create({
     container: {

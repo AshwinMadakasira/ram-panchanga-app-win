@@ -1,8 +1,15 @@
+/*
+ * Component teaching note:
+ * This card formats one named time window such as Rahukalam.
+ * Keeping it separate avoids repeating the same small layout pattern on multiple screens.
+ */
 import { StyleSheet, Text, View } from "react-native";
 
+// This component expects a single time-window record and formats it consistently.
 import type { TimeWindow } from "@/types/domain";
 import { useAppTheme } from "@/theme";
 
+/** Render one time window such as Rahukalam or Abhijit. */
 export const WindowCard = ({ window }: { window: TimeWindow }) => {
   const theme = useAppTheme();
   const styles = createStyles(theme);
@@ -17,6 +24,7 @@ export const WindowCard = ({ window }: { window: TimeWindow }) => {
   );
 };
 
+/** Build this component's theme-aware styles. */
 const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
   StyleSheet.create({
     container: {

@@ -1,3 +1,14 @@
+/*
+ * Architecture note for students:
+ * This is the root app shell. Expo Router loads this file first, and every screen in `app/`
+ * renders inside the providers created here.
+ *
+ * Main frontend design decisions:
+ * - offline-first startup: load fonts and seed the local SQLite database before showing screens
+ * - React Query for async data access
+ * - Zustand for persisted user preferences
+ * - a custom theme layer for consistent colors, spacing, and typography
+ */
 import { DarkTheme, DefaultTheme, ThemeProvider as NavigationThemeProvider } from "@react-navigation/native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
@@ -5,6 +16,7 @@ import { useMemo, useState } from "react";
 import { ActivityIndicator, StyleSheet, Text, View, useColorScheme } from "react-native";
 import { StatusBar } from "expo-status-bar";
 
+// App-specific imports come after library imports. This is a common way to make file dependencies easier to scan.
 import { ReminderCoordinator } from "@/components/app/ReminderCoordinator";
 import { ErrorState } from "@/components/common/ErrorState";
 import { useAppBootstrap } from "@/hooks/useAppBootstrap";
@@ -96,6 +108,7 @@ export default function RootLayout() {
 }
 
 const createStyles = (theme: ReturnType<typeof createAppTheme>) =>
+  // Helper functions like this keep styling code out of the main component body.
   StyleSheet.create({
     loading: {
       flex: 1,

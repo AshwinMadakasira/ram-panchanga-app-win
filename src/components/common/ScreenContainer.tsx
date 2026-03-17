@@ -1,6 +1,12 @@
+/*
+ * Component teaching note:
+ * Screen wrappers are useful because most screens need the same safe area, background, padding,
+ * and top banner. Centralizing that here keeps the actual screen files shorter and more readable.
+ */
 import type { PropsWithChildren, ReactNode } from "react";
 import { SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
 
+// Theme values are shared through React context, so this wrapper can style every screen consistently.
 import { useAppTheme } from "@/theme";
 
 type ScreenContainerProps = PropsWithChildren<{
@@ -10,6 +16,7 @@ type ScreenContainerProps = PropsWithChildren<{
 
 const PANCHANGA_YEAR_LABEL = "Sri ParaAbhava Nama Samvatsara Panchanga";
 
+/** Wrap a screen with safe-area handling, a shared banner, and optional scrolling. */
 export const ScreenContainer = ({ children, scroll = true, header }: ScreenContainerProps) => {
   const theme = useAppTheme();
   const styles = createStyles(theme);
@@ -31,6 +38,7 @@ export const ScreenContainer = ({ children, scroll = true, header }: ScreenConta
   );
 };
 
+/** Build this component's theme-aware styles. */
 const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
   StyleSheet.create({
     safeArea: {

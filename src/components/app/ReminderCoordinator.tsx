@@ -1,13 +1,21 @@
+/*
+ * Component teaching note:
+ * This is a non-visual coordination component. It renders nothing, but it still performs work.
+ * Its job is to connect app startup, stored reminder settings, notification permissions,
+ * and navigation when a user taps a notification.
+ */
 import * as Notifications from "expo-notifications";
 import { useRouter } from "expo-router";
 import { useEffect } from "react";
 
+// This component bridges notifications, settings, selected location, and navigation.
 import { getTodayForTimezone } from "@/domain/dates";
 import { useSelectedLocation } from "@/hooks/useSelectedLocation";
 import { useSettingsStore } from "@/store/settings-store";
 import { dayRoute } from "@/types/navigation";
 import { extractReminderNotificationData, requestReminderPermissionsAsync, syncReminderNotificationsAsync } from "@/services/reminders";
 
+/** Keep reminder permissions, scheduled notifications, and notification taps in sync with app state. */
 export const ReminderCoordinator = () => {
   const router = useRouter();
   const isHydrated = useSettingsStore((state) => state.isHydrated);

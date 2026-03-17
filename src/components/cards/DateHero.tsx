@@ -1,5 +1,11 @@
+/*
+ * Component teaching note:
+ * "Hero" components make a screen's main subject feel prominent.
+ * Here the subject is the selected date, which helps users stay oriented while scrolling.
+ */
 import { StyleSheet, Text, View } from "react-native";
 
+// Formatting logic lives in the domain layer rather than inside the JSX.
 import { formatDisplayDate } from "@/domain/dates";
 import { useAppTheme } from "@/theme";
 
@@ -8,6 +14,7 @@ type DateHeroProps = {
   subtitle?: string;
 };
 
+/** Render the prominent date banner used near the top of date-based screens. */
 export const DateHero = ({ date, subtitle }: DateHeroProps) => {
   const theme = useAppTheme();
   const styles = createStyles(theme);
@@ -20,6 +27,7 @@ export const DateHero = ({ date, subtitle }: DateHeroProps) => {
   );
 };
 
+/** Build this component's theme-aware styles. */
 const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
   StyleSheet.create({
     container: {

@@ -1,12 +1,20 @@
+/*
+ * Component teaching note:
+ * Timelines turn ordered events into an easy-to-scan visual sequence.
+ * Here the ordered events are Panchanga transitions during a day.
+ */
 import { StyleSheet, Text, View } from "react-native";
 
+// The component receives ready-to-render transition objects from the repository layer.
 import type { DayTransition } from "@/types/domain";
 import { useAppTheme } from "@/theme";
 
+/** Render a vertical timeline of day transitions. */
 export const TransitionTimeline = ({ transitions }: { transitions: DayTransition[] }) => {
   const theme = useAppTheme();
   const styles = createStyles(theme);
 
+  /** Convert optional start/end timestamps into a friendly label. */
   const getTimeLabel = (transition: DayTransition) => {
     if (transition.startsAt && transition.endsAt) {
       return `${transition.startsAt} to ${transition.endsAt}`;
@@ -39,6 +47,7 @@ export const TransitionTimeline = ({ transitions }: { transitions: DayTransition
   );
 };
 
+/** Build this component's theme-aware styles. */
 const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
   StyleSheet.create({
     container: {

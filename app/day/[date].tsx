@@ -1,7 +1,13 @@
+/*
+ * Screen teaching note:
+ * This is the detailed drill-down route for one exact date.
+ * The Today screen is optimized for speed; this screen is optimized for completeness.
+ */
 import { useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
+// The day-detail route is composed from smaller cards and lists, which keeps the main screen readable.
 import { DateHero } from "@/components/cards/DateHero";
 import { PanchangaSummaryCard } from "@/components/cards/PanchangaSummaryCard";
 import { SunCard } from "@/components/cards/SunCard";
@@ -81,6 +87,7 @@ export default function DayDetailScreen() {
   );
 }
 
+/** Create theme-aware styles for the day-detail screen. */
 const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
   StyleSheet.create({
     debugButton: {

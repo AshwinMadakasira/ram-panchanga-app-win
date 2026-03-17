@@ -1,5 +1,12 @@
-import { Pressable, ScrollView, StyleSheet, Text } from "react-native";
+/*
+ * Component teaching note:
+ * A filter bar is just a reusable row of selectable options.
+ * Making it generic lets many screens share the same interaction pattern.
+ */
+import { ScrollView, StyleSheet } from "react-native";
 
+// The generic `<T extends string>` type means this component can work with any string-based filter category.
+import { SelectableChip } from "@/components/common/SelectableChip";
 import { useAppTheme } from "@/theme";
 
 type FilterBarProps<T extends string> = {
@@ -9,6 +16,7 @@ type FilterBarProps<T extends string> = {
   onChange: (value: T) => void;
 };
 
+/** Render a horizontally scrollable row of selectable filter pills. */
 export const FilterBar = <T extends string>({ options, value, labelMap, onChange }: FilterBarProps<T>) => {
   const theme = useAppTheme();
   const styles = createStyles(theme);
@@ -17,39 +25,17 @@ export const FilterBar = <T extends string>({ options, value, labelMap, onChange
       {options.map((option) => {
         const active = option === value;
         return (
-          <Pressable key={option} onPress={() => onChange(option)} style={[styles.pill, active && styles.pillActive]}>
-            <Text style={[styles.label, active && styles.labelActive]}>{labelMap[option]}</Text>
-          </Pressable>
+          <SelectableChip key={option} label={labelMap[option]} active={active} onPress={() => onChange(option)} />
         );
       })}
     </ScrollView>
   );
 };
 
+/** Build this component's theme-aware styles. */
 const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
   StyleSheet.create({
     container: {
       gap: theme.spacing.sm
-    },
-    pill: {
-      backgroundColor: theme.colors.card,
-      borderColor: theme.colors.border,
-      borderRadius: theme.radii.pill,
-      borderWidth: 1,
-      paddingHorizontal: 14,
-      paddingVertical: 10
-    },
-    pillActive: {
-      backgroundColor: theme.colors.maroon,
-      borderColor: theme.colors.maroon
-    },
-    label: {
-      color: theme.colors.ink,
-      fontSize: 14,
-      fontWeight: "600",
-      fontFamily: theme.typography.bodyFamily
-    },
-    labelActive: {
-      color: "#fff9f2"
     }
   });

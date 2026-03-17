@@ -1,10 +1,17 @@
+/*
+ * Database-layer teaching note:
+ * The mobile app ships with generated JSON seed files. This module combines the three location-specific
+ * seeds into one bundle so bootstrap code can treat them as one source of truth.
+ */
 import seedChicago from "../../data/generated/panchanga-seed-chicago-cst.json";
 import seedNewYork from "../../data/generated/panchanga-seed-newyork-est.json";
 import seedVancouver from "../../data/generated/panchanga-seed-vancouver-pst.json";
 import type { SeedBundle } from "@/types/domain";
 
+// The frontend bundles one seed per location and merges them into one runtime dataset.
 const sourceSeeds = [seedVancouver, seedChicago, seedNewYork] as SeedBundle[];
 
+/** The single combined seed consumed by the mobile database bootstrap process. */
 export const bundledSeed: SeedBundle = {
   dataVersion: sourceSeeds.map((seed) => seed.dataVersion).join("|"),
   importedAt: null,

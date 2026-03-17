@@ -1,7 +1,14 @@
+/*
+ * Screen teaching note:
+ * Search is a compact example of reactive UI. User input is stored in React state,
+ * a deferred version of that state avoids overly eager searching, and results come from
+ * the local SQLite database through a repository and React Query.
+ */
 import { router } from "expo-router";
 import { useDeferredValue, useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 
+// Search pulls together shared states, a search hook, navigation, and theme styles.
 import { EmptyState } from "@/components/common/EmptyState";
 import { ErrorState } from "@/components/common/ErrorState";
 import { LoadingState } from "@/components/common/LoadingState";
@@ -59,6 +66,7 @@ export default function SearchScreen() {
   );
 }
 
+/** Create theme-aware styles for the search screen. */
 const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
   StyleSheet.create({
     input: {

@@ -1,8 +1,16 @@
+/*
+ * Hook teaching note:
+ * This hook combines persisted preference (`locationId`) with fetched location records.
+ * It prevents every screen from rewriting the same "find the selected location or fallback"
+ * logic over and over again.
+ */
 import { useEffect, useMemo } from "react";
 
+// This hook combines store state and query state into one simpler API for screens.
 import { useLocation, useLocations } from "@/hooks/usePanchangaQueries";
 import { useSettingsStore } from "@/store/settings-store";
 
+/** Resolve the active location, including a safe fallback when the stored location is missing. */
 export const useSelectedLocation = () => {
   const locationId = useSettingsStore((state) => state.locationId);
   const setLocationId = useSettingsStore((state) => state.setLocationId);

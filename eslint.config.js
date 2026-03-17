@@ -1,3 +1,7 @@
+/*
+ * Tooling teaching note:
+ * ESLint statically checks code for common mistakes and inconsistent patterns.
+ */
 const { defineConfig } = require("eslint/config");
 const expoConfig = require("eslint-config-expo/flat");
 

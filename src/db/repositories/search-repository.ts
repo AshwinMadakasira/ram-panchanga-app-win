@@ -1,3 +1,8 @@
+/*
+ * Repository teaching note:
+ * Search gets its own repository because search queries usually have different ranking and matching logic
+ * than ordinary "load this screen" queries.
+ */
 import { getDatabase } from "@/db/client";
 import type { SearchResult } from "@/types/domain";
 
@@ -15,6 +20,7 @@ type SpecialTithiSearchRow = {
   date: string;
 };
 
+/** Search calendar days and special tithis using simple SQL `LIKE` matching. */
 export const searchRepository = {
   async search(query: string, locationId: string): Promise<SearchResult[]> {
     const term = `%${query.trim()}%`;

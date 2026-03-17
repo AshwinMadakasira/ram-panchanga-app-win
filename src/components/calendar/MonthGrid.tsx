@@ -1,5 +1,11 @@
+/*
+ * Component teaching note:
+ * This component turns a flat list of month-summary rows into visible calendar weeks.
+ * It does not fetch data itself; it receives already-prepared items and focuses on layout.
+ */
 import { StyleSheet, Text, View } from "react-native";
 
+// `getCalendarWeeks` performs the date math so this component can stay focused on rendering.
 import { getCalendarWeeks } from "@/domain/dates";
 import type { MonthSummaryDay } from "@/types/domain";
 import { useAppTheme } from "@/theme";
@@ -41,6 +47,7 @@ export const MonthGrid = ({ year, month, items, onSelectDate }: MonthGridProps) 
   );
 };
 
+/** Build this component's theme-aware styles. */
 const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
   StyleSheet.create({
     container: {

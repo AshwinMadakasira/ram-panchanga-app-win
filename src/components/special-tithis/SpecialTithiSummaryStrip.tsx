@@ -1,6 +1,11 @@
+/*
+ * Component teaching note:
+ * Summary strips answer "what does this list look like at a glance?" before the user reads details.
+ */
 import { memo, useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
+// The strip is built from a small reusable stat-card subcomponent.
 import { useAppTheme } from "@/theme";
 import type { SpecialTithi } from "@/types/domain";
 
@@ -10,6 +15,7 @@ type StatCardProps = {
   accent?: boolean;
 };
 
+/** Render one small metric card inside the summary strip. */
 const StatCard = ({ label, value, accent = false }: StatCardProps) => {
   const theme = useAppTheme();
   const styles = createStyles(theme);
@@ -22,6 +28,7 @@ const StatCard = ({ label, value, accent = false }: StatCardProps) => {
   );
 };
 
+/** Summarize a special-tithi collection with quick counts. */
 const SpecialTithiSummaryStripComponent = ({ specialTithis }: { specialTithis: SpecialTithi[] }) => {
   const summary = useMemo(() => {
     const uniqueDates = new Set<string>();
@@ -67,6 +74,7 @@ const styles = StyleSheet.create({
   }
 });
 
+/** Build this component's theme-aware styles. */
 const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
   StyleSheet.create({
     statCard: {

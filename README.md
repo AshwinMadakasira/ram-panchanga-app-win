@@ -1,22 +1,48 @@
 # RAM Panchanga App
 
-This is the Expo mobile app for RAM Panchanga.
+This repo contains the frontend mobile app for RAM Panchanga.
 
-It contains:
-- the app UI and navigation
-- the local SQLite bootstrap and repositories
-- the bundled production seed used by the mobile client
+It is an Expo + React Native app that:
 
-It does not contain the raw data import pipeline.
+- renders the user interface
+- stores generated Panchanga data in local SQLite
+- works offline from bundled seed files
+- lets users browse today, the calendar, special tithis, and settings
 
-## Data source
+It does not contain the raw import pipeline. That lives in the separate `ram-panchanga-data` repo.
 
-The app reads bundled seed data from:
-- [data/generated/panchanga-seed-vancouver-pst.json](/E:/Source/UMPanchangaPST/ram-panchanga-app/data/generated/panchanga-seed-vancouver-pst.json)
-- [data/generated/panchanga-seed-chicago-cst.json](/E:/Source/UMPanchangaPST/ram-panchanga-app/data/generated/panchanga-seed-chicago-cst.json)
-- [data/generated/panchanga-seed-newyork-est.json](/E:/Source/UMPanchangaPST/ram-panchanga-app/data/generated/panchanga-seed-newyork-est.json)
+## How This Repo Fits The Overall System
 
-Those files should be generated in the separate `ram-panchanga-data` repo and copied here before a release.
+The project is split into two repos:
+
+1. `ram-panchanga-data`
+   Reads raw source files and generates clean seed outputs.
+2. `ram-panchanga-app`
+   Ships those generated seed files inside the mobile app and loads them into SQLite on device startup.
+
+The handoff between the two repos is:
+
+- generate `generated/panchanga-seed-vancouver-pst.json` in the `ram-panchanga-data` repo
+- generate `generated/panchanga-seed-chicago-cst.json` in the `ram-panchanga-data` repo
+- generate `generated/panchanga-seed-newyork-est.json` in the `ram-panchanga-data` repo
+- copy them into [data/generated](data/generated)
+
+## Repo Structure
+
+- [app](app)
+  Route files and screens
+- [src/components](src/components)
+  Reusable UI building blocks
+- [src/hooks](src/hooks)
+  Screen-facing data and startup hooks
+- [src/db](src/db)
+  Local SQLite bootstrap and repositories
+- [src/store](src/store)
+  Persisted user settings
+- [src/theme](src/theme)
+  Colors, spacing, typography, theme context
+- [docs](docs)
+  Architecture, codebase guides, release notes, teaching guides
 
 ## Install
 
@@ -24,30 +50,40 @@ Those files should be generated in the separate `ram-panchanga-data` repo and co
 npm install
 ```
 
-## Run
+## Run Locally
 
 ```bash
-npx expo start
+npm run start
 ```
 
-Optional native runs:
+Other useful commands:
 
 ```bash
 npm run android
 npm run ios
-```
-
-## Test
-
-```bash
+npm run web
 npm run typecheck
 npm run lint
 npm run test
 ```
 
-## Release flow
+## Learning / Read Order
 
-1. Regenerate data in the data repo.
-2. Copy the three generated seed files into this repo at `data/generated/`.
-3. Bump version and build numbers.
-4. Build Android/iOS and publish.
+For a new student or developer:
+
+1. Read [docs/FRONTEND_TEACHING_GUIDE.md](docs/FRONTEND_TEACHING_GUIDE.md)
+2. Read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
+3. Read [docs/CODEBASE_GUIDE.md](docs/CODEBASE_GUIDE.md)
+4. Read [app/_layout.tsx](app/_layout.tsx)
+5. Read [src/types/domain.ts](src/types/domain.ts)
+
+## Release Flow
+
+1. Regenerate seed files in the data repo.
+2. Copy the location-specific seed files into [data/generated](data/generated).
+3. Run local validation:
+   `npm run typecheck`, `npm run lint`, `npm run test`
+4. Bump app version/build numbers in Expo config.
+5. Build and publish with Expo/EAS.
+
+See [docs/RELEASE_GUIDE.md](docs/RELEASE_GUIDE.md) for release details.

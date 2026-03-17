@@ -1,3 +1,12 @@
+/*
+ * Design-token teaching note:
+ * This file is the app's visual toolbox: colors, spacing, radii, and font names.
+ *
+ * Current design direction:
+ * - warm traditional palette instead of default mobile blue/gray
+ * - Neuton fonts for a more editorial feel
+ * - page background slightly darker than cards so interactive surfaces stand out
+ */
 const headingFont = "Neuton-Bold";
 const bodyFont = "Neuton-Regular";
 

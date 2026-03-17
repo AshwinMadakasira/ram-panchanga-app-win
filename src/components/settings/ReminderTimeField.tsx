@@ -1,5 +1,12 @@
+/*
+ * Component teaching note:
+ * This control is a small custom time picker built from simple React Native pieces.
+ * It stores time in the app's internal 24-hour string format (`HH:MM`) even though the UI shows
+ * a friendlier 12-hour format with AM/PM.
+ */
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
+// The theme supplies visual tokens; the rest of this file is pure UI state conversion logic.
 import { useAppTheme } from "@/theme";
 
 type ReminderTimeFieldProps = {
@@ -10,6 +17,7 @@ type ReminderTimeFieldProps = {
   invalid?: boolean;
 };
 
+/** Render a custom reminder-time control that stores time in the app's internal format. */
 export const ReminderTimeField = ({ label, value, onChangeText, helper, invalid = false }: ReminderTimeFieldProps) => {
   const theme = useAppTheme();
   const styles = createStyles(theme);
@@ -91,6 +99,7 @@ export const ReminderTimeField = ({ label, value, onChangeText, helper, invalid 
 
 type Meridiem = "AM" | "PM";
 
+/** Convert the stored 24-hour string into a 12-hour display model. */
 const parseStoredTime = (value: string) => {
   const match = /^([01]\d|2[0-3]):([0-5]\d)$/.exec(value);
   const hour24 = match ? Number(match[1]) : 7;
@@ -111,6 +120,7 @@ const parseStoredTime = (value: string) => {
   return { hour: hour24, minute, period: "AM" as const };
 };
 
+/** Convert the UI's 12-hour parts back into the stored 24-hour string. */
 const toStoredTime = (hour12: number, minute: number, period: Meridiem) => {
   const safeHour = wrapHour(hour12);
   const safeMinute = wrapMinute(minute);
@@ -123,6 +133,7 @@ const toStoredTime = (hour12: number, minute: number, period: Meridiem) => {
   return `${String(hour24).padStart(2, "0")}:${String(safeMinute).padStart(2, "0")}`;
 };
 
+/** Keep hour values inside the 1-12 range used by the control. */
 const wrapHour = (value: number) => {
   if (value < 1) {
     return 12;
@@ -135,6 +146,7 @@ const wrapHour = (value: number) => {
   return value;
 };
 
+/** Keep minute values inside the app's 5-minute stepping model. */
 const wrapMinute = (value: number) => {
   if (value < 0) {
     return 55;
@@ -147,6 +159,7 @@ const wrapMinute = (value: number) => {
   return Math.round(value / 5) * 5;
 };
 
+/** Build this component's theme-aware styles. */
 const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
   StyleSheet.create({
     container: {

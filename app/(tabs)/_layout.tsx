@@ -1,7 +1,14 @@
+/*
+ * Architecture note for students:
+ * This `_layout.tsx` controls the tab navigator for every screen in the `(tabs)` folder.
+ * The app keeps the main journeys shallow on purpose: Today, Calendar, Special Tithis, and Settings.
+ * Search is a temporary task, so it appears in the header instead of taking a permanent tab slot.
+ */
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 import { useMemo } from "react";
 
+// Shared UI and theme helpers from the app codebase.
 import { SearchHeaderButton } from "@/components/common/SearchHeaderButton";
 import { useAppTheme } from "@/theme";
 
@@ -26,6 +33,7 @@ export default function TabLayout() {
   );
 
   return (
+    // Each `Tabs.Screen` registers one route from the folder as a visible tab.
     <Tabs screenOptions={screenOptions}>
       <Tabs.Screen
         name="index"

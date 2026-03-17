@@ -1,5 +1,14 @@
+/*
+ * Hook-layer teaching note:
+ * These functions are thin adapters around repository methods.
+ * Screens use them so UI code can stay focused on rendering instead of caching rules.
+ *
+ * Architecture rule:
+ * screens -> hooks -> repositories -> SQLite
+ */
 import { useQuery } from "@tanstack/react-query";
 
+// Query hooks translate "what data does this screen need?" into cacheable query definitions.
 import { getTodayForTimezone } from "@/domain/dates";
 import { panchangaRepository } from "@/db/repositories/panchanga-repository";
 import { searchRepository } from "@/db/repositories/search-repository";
@@ -10,6 +19,7 @@ const staticQueryOptions = {
   gcTime: 1000 * 60 * 30
 } as const;
 
+/** Fetch all available Panchanga locations. */
 export const useLocations = () =>
   useQuery({
     queryKey: ["locations"],
@@ -17,6 +27,7 @@ export const useLocations = () =>
     ...staticQueryOptions
   });
 
+/** Fetch metadata about the currently bundled seed data. */
 export const useDataVersion = () =>
   useQuery({
     queryKey: ["data-version"],
@@ -24,6 +35,7 @@ export const useDataVersion = () =>
     ...staticQueryOptions
   });
 
+/** Fetch one location record by id. */
 export const useLocation = (locationId: string) =>
   useQuery({
     queryKey: ["location", locationId],
@@ -32,6 +44,7 @@ export const useLocation = (locationId: string) =>
     ...staticQueryOptions
   });
 
+/** Fetch month-summary rows for a given year, month, and location. */
 export const useMonthSummary = (year: number, month: number, locationId: string, timezone: string) =>
   useQuery({
     queryKey: ["month-summary", year, month, locationId],
@@ -41,6 +54,7 @@ export const useMonthSummary = (year: number, month: number, locationId: string,
     ...staticQueryOptions
   });
 
+/** Fetch the full detail bundle for one day. */
 export const useDayDetails = (date: string, locationId: string) =>
   useQuery({
     queryKey: ["day-details", date, locationId],
@@ -49,6 +63,7 @@ export const useDayDetails = (date: string, locationId: string) =>
     ...staticQueryOptions
   });
 
+/** Fetch special tithis for the selected location and filter set. */
 export const useSpecialTithis = (locationId: string, filters: SpecialTithiFilters) =>
   useQuery({
     queryKey: ["special-tithis", locationId, filters],
@@ -58,6 +73,7 @@ export const useSpecialTithis = (locationId: string, filters: SpecialTithiFilter
     ...staticQueryOptions
   });
 
+/** Fetch muhurtha entries for the selected location and filter set. */
 export const useMuhurthas = (locationId: string, filters: MuhurthaFilters) =>
   useQuery({
     queryKey: ["muhurthas", locationId, filters],
@@ -67,6 +83,7 @@ export const useMuhurthas = (locationId: string, filters: MuhurthaFilters) =>
     ...staticQueryOptions
   });
 
+/** Run a search query against the local Panchanga database. */
 export const useSearch = (query: string, locationId: string) =>
   useQuery({
     queryKey: ["search", locationId, query],

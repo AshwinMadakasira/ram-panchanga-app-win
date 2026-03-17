@@ -1,9 +1,15 @@
+/*
+ * Database-layer teaching note:
+ * This file prepares the offline database on app startup.
+ * It creates tables, checks whether the schema or bundled data version changed, and reseeds if needed.
+ */
 import { getDatabase } from "@/db/client";
 import { bundledSeed } from "@/db/seed";
 import { appSchemaSql } from "@/db/schema";
 
 const APP_SCHEMA_VERSION = "5";
 
+/** Store or update one metadata key inside the `app_meta` table. */
 const setMetaValue = async (key: string, value: string) => {
   const db = await getDatabase();
   await db.runAsync(
@@ -12,11 +18,13 @@ const setMetaValue = async (key: string, value: string) => {
   );
 };
 
+/** Read one metadata value from the `app_meta` table. */
 const getMetaValue = async (key: string) => {
   const db = await getDatabase();
   return db.getFirstAsync<{ value: string }>("SELECT value FROM app_meta WHERE key = ?", [key]);
 };
 
+/** Drop and recreate all tables when the schema itself changes. */
 const rebuildDatabaseSchema = async () => {
   const db = await getDatabase();
   await db.execAsync("PRAGMA foreign_keys = OFF;");
@@ -35,6 +43,7 @@ const rebuildDatabaseSchema = async () => {
   await db.execAsync("PRAGMA foreign_keys = ON;");
 };
 
+/** Insert the bundled seed into the local database inside one transaction. */
 const insertSeedData = async () => {
   const db = await getDatabase();
 
@@ -210,6 +219,7 @@ const insertSeedData = async () => {
   });
 };
 
+/** Ensure the local database schema and seed data are present and current. */
 export const ensureDatabaseReady = async () => {
   const db = await getDatabase();
   await db.execAsync("PRAGMA foreign_keys = ON;");

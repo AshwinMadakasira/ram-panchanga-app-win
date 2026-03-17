@@ -1,5 +1,11 @@
+/*
+ * Component teaching note:
+ * Loading states communicate that the app is working rather than frozen.
+ * This project uses one shared loading card to keep that experience consistent.
+ */
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 
+// A shared loading component avoids each screen inventing its own spinner layout.
 import { useAppTheme } from "@/theme";
 
 type LoadingStateProps = {
@@ -7,6 +13,7 @@ type LoadingStateProps = {
   message?: string;
 };
 
+/** Show a standardized loading card with an optional title and message. */
 export const LoadingState = ({ title = "Loading", message = "Fetching Panchanga data..." }: LoadingStateProps) => {
   const theme = useAppTheme();
   const styles = createStyles(theme);
@@ -19,6 +26,7 @@ export const LoadingState = ({ title = "Loading", message = "Fetching Panchanga 
   );
 };
 
+/** Build this component's theme-aware styles. */
 const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
   StyleSheet.create({
     container: {

@@ -1,3 +1,8 @@
+/*
+ * Database-layer teaching note:
+ * This string is the schema blueprint for the local SQLite database.
+ * Tables model the main domain objects, and indexes make common lookups faster.
+ */
 export const appSchemaSql = `
 CREATE TABLE IF NOT EXISTS app_meta (
   key TEXT PRIMARY KEY,

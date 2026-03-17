@@ -1,3 +1,8 @@
+/*
+ * Type-system teaching note:
+ * This file defines the shared vocabulary of the app.
+ * Most other files either produce or consume these shapes.
+ */
 export type ThemePreference = "system" | "light" | "dark";
 export type ReminderWeekday = "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday";
 export type ReminderPermissionState = "unknown" | "granted" | "denied";

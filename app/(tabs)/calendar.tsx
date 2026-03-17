@@ -1,7 +1,14 @@
+/*
+ * Screen teaching note:
+ * This screen shows how local UI state and fetched data work together.
+ * `visibleMonth` is local state, `monthLabel` is derived state, and `useMonthSummary`
+ * pulls the matching calendar rows from the local database.
+ */
 import { router } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useEffect, useMemo, useState } from "react";
 
+// Reusable components and helpers are imported instead of duplicating layout and date logic here.
 import { MonthGrid } from "@/components/calendar/MonthGrid";
 import { EmptyState } from "@/components/common/EmptyState";
 import { ErrorState } from "@/components/common/ErrorState";
@@ -36,6 +43,7 @@ export default function CalendarScreen() {
     () => getDisplayMonth(visibleMonth.year, visibleMonth.month),
     [visibleMonth.month, visibleMonth.year]
   );
+  /** Reset the calendar back to the selected location's current month. */
   const jumpToToday = () => setVisibleMonth(getCurrentYearMonthForTimezone(activeTimezone));
 
   return (
@@ -81,6 +89,7 @@ export default function CalendarScreen() {
   );
 }
 
+/** Build the style object for this screen from the shared theme. */
 const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
   StyleSheet.create({
     header: {

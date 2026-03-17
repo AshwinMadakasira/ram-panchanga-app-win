@@ -1,5 +1,11 @@
+/*
+ * Component teaching note:
+ * This card shows the headline Panchanga state "at sunrise".
+ * The sunrise-based summary is a product decision: it gives one stable snapshot for the day.
+ */
 import { StyleSheet, Text, View } from "react-native";
 
+// This card is purely presentational; it receives an already-loaded `CalendarDay` object.
 import type { CalendarDay } from "@/types/domain";
 import { useAppTheme } from "@/theme";
 
@@ -7,6 +13,7 @@ type PanchangaSummaryCardProps = {
   day: CalendarDay;
 };
 
+/** Render one labeled row inside the summary card. */
 const SummaryRow = ({
   label,
   value,
@@ -22,6 +29,7 @@ const SummaryRow = ({
   </View>
 );
 
+/** Show the most important sunrise-based Panchanga fields for a day. */
 export const PanchangaSummaryCard = ({ day }: PanchangaSummaryCardProps) => {
   const theme = useAppTheme();
   const styles = createStyles(theme);
@@ -37,6 +45,7 @@ export const PanchangaSummaryCard = ({ day }: PanchangaSummaryCardProps) => {
   );
 };
 
+/** Build this component's theme-aware styles. */
 const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
   StyleSheet.create({
     container: {

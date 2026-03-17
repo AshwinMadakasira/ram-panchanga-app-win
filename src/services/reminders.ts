@@ -1,6 +1,13 @@
+/*
+ * Service-layer teaching note:
+ * Services hold side-effect-heavy business logic that does not belong in screens.
+ * This file deals with notification permissions, scheduling, and translating reminder settings
+ * into concrete reminder times.
+ */
 import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";
 
+// Domain helpers, labels, repositories, and types are imported because reminder scheduling touches many app layers.
 import { getTodayForTimezone } from "@/domain/dates";
 import { specialTithiCategoryLabels } from "@/domain/panchanga/labels";
 import { panchangaRepository } from "@/db/repositories/panchanga-repository";
@@ -47,8 +54,10 @@ type ReminderNotificationData =
       category: UpcomingSpecialTithiCategory;
     };
 
+/** Check whether a string matches the app's stored `HH:MM` reminder format. */
 export const isValidReminderTime = (value: string) => /^([01]\d|2[0-3]):([0-5]\d)$/.test(value);
 
+/** Parse the stored time string into numeric hour/minute parts. */
 const parseReminderTime = (value: string) => {
   if (!isValidReminderTime(value)) {
     return null;
@@ -58,6 +67,7 @@ const parseReminderTime = (value: string) => {
   return { hour, minute };
 };
 
+/** Build the real notification timestamp for an upcoming-special-tithi reminder. */
 const createSpecialTithiTriggerDate = (date: string, leadDays: number, time: string) => {
   const parsedTime = parseReminderTime(time);
   if (!parsedTime) {
@@ -68,6 +78,7 @@ const createSpecialTithiTriggerDate = (date: string, leadDays: number, time: str
   return new Date(year, month - 1, day - leadDays, parsedTime.hour, parsedTime.minute, 0, 0);
 };
 
+/** Format an ISO date into a human-friendly long date for notification text. */
 const formatSpecialTithiDate = (date: string) =>
   new Intl.DateTimeFormat("en-US", {
     month: "long",
@@ -76,11 +87,13 @@ const formatSpecialTithiDate = (date: string) =>
     timeZone: "UTC"
   }).format(new Date(`${date}T00:00:00Z`));
 
+/** Create the message body shown in a special-tithi notification. */
 const buildSpecialTithiBody = (category: UpcomingSpecialTithiCategory, date: string) =>
   `Next ${specialTithiCategoryLabels[category]} special tithi is on ${formatSpecialTithiDate(date)}.`;
 
 const getChannelId = () => (Platform.OS === "android" ? ANDROID_CHANNEL_ID : undefined);
 
+/** Set notification behavior and Android channels before scheduling anything. */
 export const configureReminderNotificationsAsync = async () => {
   if (!notificationsConfigured) {
     Notifications.setNotificationHandler({
@@ -103,6 +116,7 @@ export const configureReminderNotificationsAsync = async () => {
   }
 };
 
+/** Ask the operating system whether the app may show reminder notifications. */
 export const requestReminderPermissionsAsync = async (): Promise<ReminderPermissionState> => {
   await configureReminderNotificationsAsync();
   const current = await Notifications.getPermissionsAsync();
@@ -122,6 +136,7 @@ export const requestReminderPermissionsAsync = async (): Promise<ReminderPermiss
   return requested.granted ? "granted" : "denied";
 };
 
+/** Schedule one weekly reminder for a particular weekday and time. */
 const scheduleWeeklyReminderAsync = async (weekday: ReminderWeekday, time: string) => {
   const parsedTime = parseReminderTime(time);
   if (!parsedTime) {
@@ -147,6 +162,7 @@ const scheduleWeeklyReminderAsync = async (weekday: ReminderWeekday, time: strin
   });
 };
 
+/** Schedule advance reminders for a category of upcoming special tithis. */
 const scheduleUpcomingSpecialTithiRemindersAsync = async (
   locationId: string,
   category: UpcomingSpecialTithiCategory,
@@ -190,6 +206,7 @@ const scheduleUpcomingSpecialTithiRemindersAsync = async (
   );
 };
 
+/** Rebuild all scheduled reminders from the current settings and selected location. */
 export const syncReminderNotificationsAsync = async (reminders: ReminderSettings, location: Location) => {
   await configureReminderNotificationsAsync();
   await Notifications.cancelAllScheduledNotificationsAsync();
@@ -220,6 +237,7 @@ export const syncReminderNotificationsAsync = async (reminders: ReminderSettings
   );
 };
 
+/** Safely decode custom notification payload data back into app-specific types. */
 export const extractReminderNotificationData = (data: unknown): ReminderNotificationData | null => {
   if (!data || typeof data !== "object") {
     return null;

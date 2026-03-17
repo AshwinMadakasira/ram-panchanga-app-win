@@ -1,3 +1,11 @@
+/*
+ * Theme-system teaching note:
+ * `tokens.ts` stores raw design values, and this file turns those values into the runtime theme
+ * object shared by the React tree.
+ *
+ * Why this layer exists:
+ * changing colors, spacing, or fonts in one place is easier than hunting through every component.
+ */
 import { createContext, createElement, useContext } from "react";
 import type { PropsWithChildren } from "react";
 import { StyleSheet } from "react-native";
@@ -18,6 +26,7 @@ export type AppTheme = {
   typography: typeof typography;
 };
 
+/** Build the runtime theme object for the requested light/dark mode. */
 export const createAppTheme = (mode: AppThemeMode): AppTheme => ({
   mode,
   isDark: mode === "dark",
@@ -27,6 +36,7 @@ export const createAppTheme = (mode: AppThemeMode): AppTheme => ({
   typography
 });
 
+/** Resolve whether the app should use light or dark mode right now. */
 export const resolveThemeMode = (
   preference: ThemePreference,
   systemScheme: "light" | "dark" | null | undefined
@@ -40,6 +50,7 @@ export const resolveThemeMode = (
 const defaultTheme = createAppTheme("light");
 const ThemeContext = createContext<AppTheme>(defaultTheme);
 
+/** Provide the current theme to the React component tree. */
 export const AppThemeProvider = ({
   theme,
   children
@@ -47,8 +58,10 @@ export const AppThemeProvider = ({
   theme: AppTheme;
 }>) => createElement(ThemeContext.Provider, { value: theme }, children);
 
+/** Read the current app theme from React context. */
 export const useAppTheme = () => useContext(ThemeContext);
 
+/** Build common reusable style fragments shared by multiple screens/components. */
 export const createSharedStyles = (theme: AppTheme) =>
   StyleSheet.create({
     screen: {

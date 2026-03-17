@@ -1,7 +1,16 @@
+/*
+ * State-layer teaching note:
+ * Zustand stores app-wide user preferences outside the React component tree.
+ * This store is persisted to AsyncStorage so settings survive app restarts.
+ *
+ * It also contains migration logic, which is an important real-world skill:
+ * apps often need to read older saved data and reshape it into a newer format.
+ */
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
+// The store imports only types, not UI code, because it represents app state rather than presentation.
 import type {
   ReminderPermissionState,
   ReminderSettings,
@@ -13,6 +22,7 @@ import type {
 
 const defaultWeekdays: ReminderWeekday[] = ["monday", "tuesday", "wednesday", "thursday", "friday"];
 const defaultSpecialTithiCategories: UpcomingSpecialTithiCategory[] = ["ekadashi", "punyadina"];
+/** Migrate an older location id into the current canonical id. */
 const normalizePersistedLocationId = (locationId: string | undefined) => {
   if (!locationId || locationId === "vancouver-bc") {
     return "vancouver-pst";
@@ -21,6 +31,7 @@ const normalizePersistedLocationId = (locationId: string | undefined) => {
   return locationId;
 };
 
+/** Build the default special-tithi reminder settings. */
 const createDefaultSpecialTithiReminder = (): UpcomingSpecialTithiReminderSettings => ({
   enabled: false,
   time: "18:00",
@@ -28,6 +39,7 @@ const createDefaultSpecialTithiReminder = (): UpcomingSpecialTithiReminderSettin
   categories: defaultSpecialTithiCategories
 });
 
+/** Build the full default reminder settings object. */
 const createDefaultReminderSettings = (): ReminderSettings => ({
   daily: {
     enabled: false,
@@ -63,12 +75,14 @@ type SettingsState = {
   setHydrated: (isHydrated: boolean) => void;
 };
 
+/** Build the default top-level settings state. */
 const createDefaultSettingsState = () => ({
   locationId: "vancouver-pst",
   themePreference: "system" as ThemePreference,
   reminders: createDefaultReminderSettings()
 });
 
+/** Convert older persisted reminder shapes into the current store shape. */
 const normalizeLegacyReminders = (legacyReminders?: LegacyReminderSettings): ReminderSettings => {
   const defaults = createDefaultReminderSettings();
   if (!legacyReminders) {

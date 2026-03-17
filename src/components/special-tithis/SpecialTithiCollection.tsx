@@ -1,7 +1,13 @@
+/*
+ * Component teaching note:
+ * This component groups special tithi entries by date and then renders each date as a richer card.
+ * It is a good example of a component doing light view-model work before rendering.
+ */
 import { router } from "expo-router";
 import { memo, useMemo } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
+// Formatting and labeling helpers are imported so the component can stay focused on grouping and rendering.
 import { formatDisplayDate } from "@/domain/dates";
 import { specialTithiCategoryLabels } from "@/domain/panchanga/labels";
 import { useAppTheme } from "@/theme";
@@ -12,6 +18,7 @@ type SpecialTithiCollectionProps = {
   specialTithis: SpecialTithi[];
 };
 
+/** Pick badge colors based on special tithi category. */
 const categoryAccent = (category: SpecialTithi["category"], colors: ReturnType<typeof useAppTheme>["colors"]) => {
   switch (category) {
     case "ekadashi":
@@ -27,6 +34,7 @@ const categoryAccent = (category: SpecialTithi["category"], colors: ReturnType<t
   }
 };
 
+/** Group special tithi entries by date and render each date as a richer card section. */
 const SpecialTithiCollectionComponent = ({ specialTithis }: SpecialTithiCollectionProps) => {
   const theme = useAppTheme();
   const styles = createStyles(theme);
@@ -104,6 +112,7 @@ const SpecialTithiCollectionComponent = ({ specialTithis }: SpecialTithiCollecti
 
 export const SpecialTithiCollection = memo(SpecialTithiCollectionComponent);
 
+/** Build this component's theme-aware styles. */
 const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
   StyleSheet.create({
     container: {

@@ -1,6 +1,12 @@
+/*
+ * Screen teaching note:
+ * This fallback route is shown when a path does not match any screen.
+ * Even small apps benefit from a safe failure screen for broken links or bad deep links.
+ */
 import { Link } from "expo-router";
 import { StyleSheet, Text } from "react-native";
 
+// Shared components keep even fallback screens visually consistent with the rest of the app.
 import { EmptyState } from "@/components/common/EmptyState";
 import { ScreenContainer } from "@/components/common/ScreenContainer";
 import { useAppTheme } from "@/theme";
@@ -19,6 +25,7 @@ export default function NotFoundScreen() {
   );
 }
 
+/** Create theme-aware styles for the not-found screen. */
 const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
   StyleSheet.create({
     link: {

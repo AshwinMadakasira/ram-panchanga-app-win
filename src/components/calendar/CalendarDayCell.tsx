@@ -1,6 +1,13 @@
+/*
+ * Component teaching note:
+ * This file renders one day cell inside the month calendar grid.
+ * It is intentionally small so the bigger `MonthGrid` component can stay focused on layout math
+ * while this component focuses on one tile's presentation and click behavior.
+ */
 import { memo } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
+// Types describe the expected data shape, while hooks provide shared theme values.
 import type { MonthSummaryDay } from "@/types/domain";
 import { useAppTheme } from "@/theme";
 
@@ -9,6 +16,7 @@ type CalendarDayCellProps = {
   onPress: (date: string) => void;
 };
 
+/** Render one calendar tile. `null` days become empty spacer cells so the grid stays aligned. */
 const CalendarDayCellComponent = ({ day, onPress }: CalendarDayCellProps) => {
   const theme = useAppTheme();
   const styles = createStyles(theme);
@@ -42,6 +50,7 @@ const CalendarDayCellComponent = ({ day, onPress }: CalendarDayCellProps) => {
 
 export const CalendarDayCell = memo(CalendarDayCellComponent);
 
+/** Build this component's theme-aware styles. */
 const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
   StyleSheet.create({
     container: {

@@ -1,5 +1,10 @@
+/*
+ * Component teaching note:
+ * Empty states are an explicit design choice. Instead of blank screens, the app explains why no data is shown.
+ */
 import { StyleSheet, Text, View } from "react-native";
 
+// The only dependency here is the shared theme, which keeps the component lightweight and reusable.
 import { useAppTheme } from "@/theme";
 
 type EmptyStateProps = {
@@ -7,6 +12,7 @@ type EmptyStateProps = {
   message: string;
 };
 
+/** Show a standardized "there is no data here" message. */
 export const EmptyState = ({ title, message }: EmptyStateProps) => {
   const theme = useAppTheme();
   const styles = createStyles(theme);
@@ -18,6 +24,7 @@ export const EmptyState = ({ title, message }: EmptyStateProps) => {
   );
 };
 
+/** Build this component's theme-aware styles. */
 const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
   StyleSheet.create({
     container: {

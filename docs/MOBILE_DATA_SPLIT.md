@@ -1,26 +1,50 @@
-# Mobile/Data Split
+# Mobile / Data Repo Boundary
 
-The mobile app and the data pipeline now belong in separate repos.
+The project is intentionally split into two repos.
 
-## App repo
+## App repo: `ram-panchanga-app`
 
-This repo should contain only:
-- Expo app code
-- local SQLite bootstrap/runtime
-- bundled seed data at `data/generated/panchanga-seed.json`
+This repo owns:
 
-## Data repo
+- Expo/React Native UI code
+- local SQLite bootstrap/runtime logic
+- persisted settings and reminders
+- copied generated seed files in [data/generated](../data/generated)
 
-The separate `ram-panchanga-data` repo should contain:
-- raw Panchanga source files
-- sunrise and moon timing source files
-- manual corrections
-- importer and export scripts
+This repo does not own:
+
+- raw source spreadsheets
+- raw source SQLite extracts
+- data import scripts
+- analytics export scripts
+- ICS generation scripts
+
+## Data repo: `ram-panchanga-data`
+
+The separate data repo owns:
+
+- raw/extracted source inputs
+- correction rules
+- import pipeline scripts
 - analytics outputs
-- ICS generation
+- ICS outputs
+- generated seed bundles for each location
+
+## Current handoff artifacts
+
+The app repo expects these files from the data repo:
+
+- `panchanga-seed-vancouver-pst.json`
+- `panchanga-seed-chicago-cst.json`
+- `panchanga-seed-newyork-est.json`
+
+They are copied into:
+
+- [data/generated](../data/generated)
 
 ## Release flow
 
-1. Regenerate the seed in `ram-panchanga-data`.
-2. Copy `generated/panchanga-seed.json` into this repo at `data/generated/panchanga-seed.json`.
-3. Build and publish the mobile app.
+1. Regenerate the seed files in `ram-panchanga-data`.
+2. Copy the three location-specific seed files into this repo at [data/generated](../data/generated).
+3. Validate the app.
+4. Build and publish the mobile app.

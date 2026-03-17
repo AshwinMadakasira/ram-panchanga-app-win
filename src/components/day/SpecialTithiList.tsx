@@ -1,10 +1,18 @@
+/*
+ * Component teaching note:
+ * This list renders special tithis as tappable rows.
+ * Notice the separation of concerns: the component decides how a list item looks,
+ * while route helpers decide where a tap should navigate.
+ */
 import { router } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
+// Route helpers keep navigation targets typed, while the theme keeps styling consistent.
 import { useAppTheme } from "@/theme";
 import { dayRoute } from "@/types/navigation";
 import type { SpecialTithi } from "@/types/domain";
 
+/** Render a tappable list of special tithi entries. */
 export const SpecialTithiList = ({ specialTithis }: { specialTithis: SpecialTithi[] }) => {
   const theme = useAppTheme();
   const styles = createStyles(theme);
@@ -35,6 +43,7 @@ export const SpecialTithiList = ({ specialTithis }: { specialTithis: SpecialTith
   );
 };
 
+/** Build this component's theme-aware styles. */
 const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
   StyleSheet.create({
     container: {

@@ -1,5 +1,11 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+/*
+ * Component teaching note:
+ * This is a reusable multi-select/single-select chip row used by the settings screen.
+ */
+import { StyleSheet, View } from "react-native";
 
+// This component stays generic so multiple settings sections can reuse it.
+import { SelectableChip } from "@/components/common/SelectableChip";
 import { useAppTheme } from "@/theme";
 
 type Option = {
@@ -13,6 +19,7 @@ type SettingsChipGroupProps = {
   onToggle: (value: string) => void;
 };
 
+/** Render a wrap-around group of selectable chips. */
 export const SettingsChipGroup = ({ options, selectedValues, onToggle }: SettingsChipGroupProps) => {
   const theme = useAppTheme();
   const styles = createStyles(theme);
@@ -22,44 +29,24 @@ export const SettingsChipGroup = ({ options, selectedValues, onToggle }: Setting
       {options.map((option) => {
         const active = selectedValues.includes(option.value);
         return (
-          <Pressable
+          <SelectableChip
             key={option.value}
+            label={option.label}
+            active={active}
             onPress={() => onToggle(option.value)}
-            style={[styles.chip, active && styles.chipActive]}
-          >
-            <Text style={[styles.label, active && styles.labelActive]}>{option.label}</Text>
-          </Pressable>
+          />
         );
       })}
     </View>
   );
 };
 
+/** Build this component's theme-aware styles. */
 const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
   StyleSheet.create({
     container: {
       flexDirection: "row",
       flexWrap: "wrap",
       gap: theme.spacing.sm
-    },
-    chip: {
-      borderWidth: 1,
-      borderColor: theme.colors.border,
-      borderRadius: theme.radii.pill,
-      paddingHorizontal: 14,
-      paddingVertical: 10,
-      backgroundColor: theme.colors.card
-    },
-    chipActive: {
-      backgroundColor: theme.colors.maroon,
-      borderColor: theme.colors.maroon
-    },
-    label: {
-      color: theme.colors.ink,
-      fontWeight: "600",
-      fontFamily: theme.typography.bodyFamily
-    },
-    labelActive: {
-      color: "#fff7f0"
     }
   });

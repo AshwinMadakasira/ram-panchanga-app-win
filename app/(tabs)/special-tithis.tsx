@@ -1,6 +1,13 @@
+/*
+ * Screen teaching note:
+ * This screen focuses on a curated subset of the data rather than the full daily record.
+ * It also demonstrates filter-driven queries: the chosen category lives in React state and
+ * becomes part of the query key used by React Query.
+ */
 import { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
+// The screen reuses shared layout pieces and domain labels rather than embedding category names directly.
 import { EmptyState } from "@/components/common/EmptyState";
 import { ErrorState } from "@/components/common/ErrorState";
 import { FilterBar } from "@/components/common/FilterBar";
@@ -51,6 +58,7 @@ export default function SpecialTithisScreen() {
   );
 }
 
+/** Create theme-aware styles for the special tithis screen. */
 const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
   StyleSheet.create({
     hero: {
