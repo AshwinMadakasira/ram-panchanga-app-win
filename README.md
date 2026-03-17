@@ -7,7 +7,9 @@ It is an Expo + React Native app that:
 - renders the user interface
 - stores generated Panchanga data in local SQLite
 - works offline from bundled seed files
-- lets users browse today, the calendar, special tithis, and settings
+- lets users browse today, the calendar, special tithis, search, and settings
+- supports English and Kannada UI/localized Panchanga text
+- includes reminders for daily Panchanga plus curated special tithis
 
 It does not contain the raw import pipeline. That lives in the separate `ram-panchanga-data` repo.
 
@@ -25,6 +27,7 @@ The handoff between the two repos is:
 - generate `generated/panchanga-seed-vancouver-pst.json` in the `ram-panchanga-data` repo
 - generate `generated/panchanga-seed-chicago-cst.json` in the `ram-panchanga-data` repo
 - generate `generated/panchanga-seed-newyork-est.json` in the `ram-panchanga-data` repo
+- generate `generated/kannada-transliterations.json` in the `ram-panchanga-data` repo
 - copy them into [data/generated](data/generated)
 
 ## Repo Structure
@@ -41,8 +44,17 @@ The handoff between the two repos is:
   Persisted user settings
 - [src/theme](src/theme)
   Colors, spacing, typography, theme context
+- [src/i18n](src/i18n)
+  Shared static UI copy and generated Kannada transliteration lookup
 - [docs](docs)
   Architecture, codebase guides, release notes, teaching guides
+
+## Current UX Notes
+
+- The light theme uses the "Azure Paper" palette: cool blue surfaces with maroon/saffron accents.
+- Main tab screens use a shared in-screen header rather than the native navigation header.
+- The shared year banner (`Sri ParaAbhava Nama Samvatsara`) is rendered through `ScreenContainer`.
+- Curated special-tithi flows currently focus on `Ekadashi`, `Pournami`, and `Punyadina`.
 
 ## Install
 
@@ -80,7 +92,7 @@ For a new student or developer:
 ## Release Flow
 
 1. Regenerate seed files in the data repo.
-2. Copy the location-specific seed files into [data/generated](data/generated).
+2. Copy the location-specific seed files and `kannada-transliterations.json` into [data/generated](data/generated).
 3. Run local validation:
    `npm run typecheck`, `npm run lint`, `npm run test`
 4. Bump app version/build numbers in Expo config.

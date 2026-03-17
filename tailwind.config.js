@@ -10,17 +10,17 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        cream: "#fffdf8",
-        ivory: "#f2e8d8",
+        cream: "#eef5fd",
+        ivory: "#d8e8fb",
         saffron: "#b86628",
         maroon: "#7a2e23",
         gold: "#b9985b",
-        ink: "#2c231f",
-        muted: "#6b5a50",
-        card: "#eadcc7",
-        cardMuted: "#f0e6d7",
-        border: "#e5d8c3",
-        surfaceAccent: "#eadcc7"
+        ink: "#182533",
+        muted: "#7a2e23",
+        card: "#eef5fd",
+        cardMuted: "#bfd8f2",
+        border: "#99bce0",
+        surfaceAccent: "#bfd8f2"
       }
     }
   },

@@ -122,7 +122,7 @@ export default function DayDetailScreen() {
   }, [data, dynamic, language, primaryWindows, text.braahmiKaala, text.moon, text.morningSandhya, text.sun, text.unavailable, text.eveningSandhya]);
 
   return (
-    <ScreenContainer>
+    <ScreenContainer title={text.dayDetail} showBack>
       <DateHero
         date={date}
         subtitle={

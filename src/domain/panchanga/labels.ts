@@ -11,6 +11,7 @@ export const specialTithiCategoryLabels: Record<SpecialTithiCategory, string> = 
   festival: "Festival",
   vrata: "Vrata",
   ekadashi: "Ekadashi",
+  pournami: "Pournami",
   punyadina: "Punyadina",
   sankramana: "Sankramana"
 };
@@ -20,6 +21,7 @@ const specialTithiCategoryLabelsKannada: Record<SpecialTithiCategory, string> = 
   festival: "ಹಬ್ಬ",
   vrata: "ವ್ರತ",
   ekadashi: "ಏಕಾದಶಿ",
+  pournami: "ಪೌರ್ಣಮಿ",
   punyadina: "ಪುಣ್ಯದಿನ",
   sankramana: "ಸಂಕ್ರಮಣ"
 };

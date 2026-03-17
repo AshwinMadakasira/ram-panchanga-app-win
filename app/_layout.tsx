@@ -103,8 +103,8 @@ export default function RootLayout() {
                 headerShown: false
               }}
             />
-            <Stack.Screen name="search" options={{ title: text.search }} />
-            <Stack.Screen name="+not-found" options={{ title: text.notFound }} />
+            <Stack.Screen name="search" options={{ headerShown: false }} />
+            <Stack.Screen name="+not-found" options={{ headerShown: false }} />
           </Stack>
         </NavigationThemeProvider>
       </QueryClientProvider>

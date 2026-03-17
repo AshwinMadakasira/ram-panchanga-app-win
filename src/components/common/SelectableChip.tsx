@@ -12,20 +12,24 @@ type SelectableChipProps = {
   active: boolean;
   onPress: () => void;
   fit?: boolean;
+  multiline?: boolean;
 };
 
 /** Render one theme-aware selectable chip. */
-export const SelectableChip = ({ label, active, onPress, fit = false }: SelectableChipProps) => {
+export const SelectableChip = ({ label, active, onPress, fit = false, multiline = false }: SelectableChipProps) => {
   const theme = useAppTheme();
   const styles = createStyles(theme);
 
   return (
-    <Pressable onPress={onPress} style={[styles.chip, fit && styles.chipFit, active && styles.chipActive]}>
+    <Pressable
+      onPress={onPress}
+      style={[styles.chip, fit && styles.chipFit, multiline && styles.chipMultiline, active && styles.chipActive]}
+    >
       <Text
-        adjustsFontSizeToFit={fit}
+        adjustsFontSizeToFit={fit && !multiline}
         minimumFontScale={0.72}
-        numberOfLines={1}
-        style={[styles.label, fit && styles.labelFit, active && styles.labelActive]}
+        numberOfLines={multiline ? 2 : 1}
+        style={[styles.label, fit && styles.labelFit, multiline && styles.labelMultiline, active && styles.labelActive]}
       >
         {label}
       </Text>
@@ -50,6 +54,11 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
       minWidth: 0,
       paddingHorizontal: 8
     },
+    chipMultiline: {
+      justifyContent: "center",
+      minHeight: 60,
+      paddingVertical: 8
+    },
     chipActive: {
       backgroundColor: theme.colors.maroon,
       borderColor: theme.colors.maroon
@@ -61,6 +70,11 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
     },
     labelFit: {
       fontSize: Math.round(13 * theme.typography.compactScale),
+      textAlign: "center"
+    },
+    labelMultiline: {
+      fontSize: Math.round(12 * theme.typography.compactScale),
+      lineHeight: Math.round(15 * theme.typography.compactScale),
       textAlign: "center"
     },
     labelActive: {

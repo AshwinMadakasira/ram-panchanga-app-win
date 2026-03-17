@@ -387,8 +387,15 @@ export const panchangaRepository = {
     }
 
     if (category && category !== "all") {
-      clauses.push("st.category = ?");
-      params.push(category);
+      const specialTithiRows = await db.getAllAsync<SpecialTithiRow>(
+        `SELECT st.*, cd.date
+         FROM special_tithi st
+         JOIN calendar_day cd ON cd.id = st.calendar_day_id
+         WHERE ${clauses.join(" AND ")} AND st.category = ?
+         ORDER BY cd.date ASC, st.priority DESC, st.name ASC`,
+        [...params, category]
+      );
+      return specialTithiRows.map(mapSpecialTithi);
     }
 
     const structuredRows = await Promise.all([
@@ -424,7 +431,7 @@ export const panchangaRepository = {
     ];
 
     if (category === "all") {
-      return curatedRows.sort((left, right) => {
+      return [...curatedRows, ...structuredRows[2].filter((entry) => entry.category === "pournami").map(mapSpecialTithi)].sort((left, right) => {
         if ((left.date ?? "") !== (right.date ?? "")) {
           return (left.date ?? "").localeCompare(right.date ?? "");
         }

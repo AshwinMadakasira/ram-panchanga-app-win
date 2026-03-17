@@ -29,7 +29,7 @@ import { dayRoute } from "@/types/navigation";
 const highlightedWindowTypes = new Set(["braahmi-kaala", "morning-sandhya", "evening-sandhya"]);
 
 export default function HomeScreen() {
-  const { language, dynamic } = useAppLocalization();
+  const { language, text, dynamic } = useAppLocalization();
   const { location, locationId, isLoading: locationLoading, error: locationError } = useSelectedLocation();
   const today = useMemo(() => getTodayForTimezone(location?.timezone ?? "America/Vancouver"), [location?.timezone]);
   const { data, error, isLoading } = useDayDetails(today, locationId);
@@ -39,14 +39,14 @@ export default function HomeScreen() {
 
   if (locationError || error) {
     return (
-      <ScreenContainer>
+      <ScreenContainer title={text.today} showSearch>
         <ErrorState message={(locationError ?? error)?.message ?? (language === "kn" ? "ಇಂದಿನ ಪಂಚಾಂಗವನ್ನು ಲೋಡ್ ಮಾಡಲು ಆಗಲಿಲ್ಲ." : "Unable to load today.")} />
       </ScreenContainer>
     );
   }
 
   return (
-    <ScreenContainer>
+    <ScreenContainer title={text.today} showSearch>
       <DateHero
         date={today}
         subtitle={

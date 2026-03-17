@@ -49,7 +49,7 @@ export default function CalendarScreen() {
   const jumpToToday = () => setVisibleMonth(getCurrentYearMonthForTimezone(activeTimezone));
 
   return (
-    <ScreenContainer scroll={false}>
+    <ScreenContainer scroll={false} title={text.calendar} showSearch>
       <View style={styles.screen}>
         <View style={styles.stickyChrome}>
           <View style={styles.header}>

@@ -3,7 +3,7 @@
  * This file is the app's visual toolbox: colors, spacing, radii, and font names.
  *
  * Current design direction:
- * - warm traditional palette instead of default mobile blue/gray
+ * - cool Azure Paper palette for a calmer blue-toned light mode
  * - Neuton fonts for a more editorial feel
  * - page background slightly darker than cards so interactive surfaces stand out
  */
@@ -15,21 +15,21 @@ const kannadaHeadingFont = "NotoSerifKannada-Bold";
 const kannadaBodyFont = "NotoSerifKannada-Regular";
 
 export const lightPalette = {
-  ivory: "#f2e8d8",
-  cream: "#fffdf8",
-  card: "#eadcc7",
-  cardMuted: "#f0e6d7",
+  ivory: "#d8e8fb",
+  cream: "#eef5fd",
+  card: "#eef5fd",
+  cardMuted: "#bfd8f2",
   saffron: "#b86628",
   maroon: "#7a2e23",
   gold: "#b9985b",
-  ink: "#2c231f",
-  muted: "#6b5a50",
-  border: "#e5d8c3",
+  ink: "#182533",
+  muted: "#7a2e23",
+  border: "#99bce0",
   success: "#3f6b4f",
   warning: "#9b6b2d",
   danger: "#8f3b35",
-  shadow: "rgba(76, 44, 27, 0.08)",
-  surfaceAccent: "#eadcc7"
+  shadow: "rgba(43, 74, 112, 0.12)",
+  surfaceAccent: "#bfd8f2"
 } as const;
 
 export const darkPalette = {

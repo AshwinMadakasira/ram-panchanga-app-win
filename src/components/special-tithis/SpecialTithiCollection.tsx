@@ -25,6 +25,8 @@ const categoryAccent = (category: SpecialTithi["category"], colors: ReturnType<t
       return { backgroundColor: colors.maroon, textColor: "#fff8f2" };
     case "punyadina":
       return { backgroundColor: colors.gold, textColor: colors.ink };
+    case "pournami":
+      return { backgroundColor: colors.surfaceAccent, textColor: colors.maroon };
     case "vrata":
       return { backgroundColor: colors.saffron, textColor: "#fff8f2" };
     case "sankramana":

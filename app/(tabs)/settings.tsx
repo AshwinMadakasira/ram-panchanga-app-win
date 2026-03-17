@@ -48,7 +48,20 @@ const weekdayKannadaLabelMap: Record<ReminderWeekday, string> = {
   saturday: "ಶನಿ",
   sunday: "ಭಾನು"
 };
-const specialTithiReminderCategories: UpcomingSpecialTithiCategory[] = ["ekadashi", "punyadina"];
+const specialTithiReminderCategories: UpcomingSpecialTithiCategory[] = ["ekadashi", "pournami", "punyadina"];
+
+/** Format advance-notification labels as stacked chip text so they stay readable in one row. */
+const getLeadDayLabel = (days: number, language: AppLanguage) => {
+  if (language === "kn") {
+    return days === 0 ? "ಅದೇ\nದಿನ" : `${days} ದಿನ\nಮೊದಲು`;
+  }
+
+  if (days === 0) {
+    return "Same\nDay";
+  }
+
+  return `${days}\n${days === 1 ? "Day" : "Days"} before`;
+};
 
 export default function SettingsScreen() {
   const theme = useAppTheme();
@@ -77,7 +90,7 @@ export default function SettingsScreen() {
   };
 
   return (
-    <ScreenContainer scroll={false}>
+    <ScreenContainer scroll={false} title={text.settings} showSearch>
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         {locationError || versionError ? (
           <ErrorState message={(locationError ?? versionError)?.message ?? text.unableToLoadSettings} />
@@ -164,10 +177,11 @@ export default function SettingsScreen() {
           />
           <Text style={styles.label}>{text.notifyInAdvance}</Text>
           <SettingsChipGroup
+            multiline
             onToggle={(value) => setSpecialTithiReminderLeadDays(Number(value))}
             options={leadDayOptions.map((days) => ({
               value: String(days),
-              label: days === 0 ? text.sameDay : language === "kn" ? `${days} ದಿನ ಮೊದಲು` : `${days}d before`
+              label: getLeadDayLabel(days, language)
             }))}
             selectedValues={[String(reminders.specialTithi.leadDays)]}
           />
@@ -256,7 +270,7 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
       fontSize: Math.round(15 * theme.typography.fontScale)
     },
     body: {
-      color: theme.colors.muted,
+      color: theme.colors.ink,
       fontSize: Math.round(16 * theme.typography.fontScale),
       lineHeight: Math.round(22 * theme.typography.fontScale),
       fontFamily: theme.typography.bodyFamily

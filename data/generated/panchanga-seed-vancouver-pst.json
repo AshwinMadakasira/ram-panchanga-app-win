@@ -25205,7 +25205,7 @@
       "id": "vancouver-pst-2026-05-01-special-tithi-7-vishnu-panchaka-pournami-upavasa-abhava",
       "calendarDayId": "vancouver-pst-2026-05-01",
       "name": "Vishnu Panchaka Pournami Upavasa ABHAVA",
-      "category": "vrata",
+      "category": "pournami",
       "priority": 0,
       "description": null,
       "rawText": "Aagee Hunnime, Anadhyayana, Bouddha Pournima, Kurma Jayanthi, Sampath Gowri Vrata, Vyasa Pooja, Vishnu Panchaka Pournami Upavasa ABHAVA, Sri Lakshminarasimha Rathothsava (Shurpali, Neera Narasimhapura, Thoravi, Mutthagi, Narshya), Vaishakha Snaana Samapthi, Sri Rajendra Theertha’s punyadina (Yaragola 1444 V8), Vyathipatha Tharpana"
@@ -25790,7 +25790,7 @@
       "id": "vancouver-pst-2026-05-30-special-tithi-2-vishnu-panchaka-pournami-upavasa",
       "calendarDayId": "vancouver-pst-2026-05-30",
       "name": "Vishnu Panchaka Pournami Upavasa",
-      "category": "vrata",
+      "category": "pournami",
       "priority": 0,
       "description": null,
       "rawText": "Anadhyayana, Vishnu Panchaka Pournami Upavasa"
@@ -26393,7 +26393,7 @@
       "id": "vancouver-pst-2026-06-29-special-tithi-5-anadvaha-pournami",
       "calendarDayId": "vancouver-pst-2026-06-29",
       "name": "Anadvaha Pournami",
-      "category": "festival",
+      "category": "pournami",
       "priority": 0,
       "description": null,
       "rawText": "Anadhyayana, Vata Savithri Vrata, Indra Savarni (Bhouccha) Manvadi Sri Krishnadwaipayana Theertha’s punyadina (Kusumarthi 1669), Kara Hunnime, Anadvaha Pournami, Vishnu Panchaka Pournima Upavasa"
@@ -27050,7 +27050,7 @@
       "id": "vancouver-pst-2026-07-29-special-tithi-4-vishnu-panchaka-pournami-upavasa-abhava",
       "calendarDayId": "vancouver-pst-2026-07-29",
       "name": "Vishnu Panchaka Pournami Upavasa ABHAVA",
-      "category": "vrata",
+      "category": "pournami",
       "priority": 0,
       "description": null,
       "rawText": "Anadhyayana, Dharma Savarni (Agni) Manvadi Ishti, Smartha Shravana / Vishnu Panchaka Shravana Upavasa, Vishnu Panchaka Pournami Upavasa ABHAVA, Vyasa Pournima, Guru Pournima, Sri Sathyasankalpa Theertha’s punyadina (Mysore 1841 U29), Vittoba"
@@ -28598,7 +28598,7 @@
       "id": "vancouver-pst-2026-09-26-special-tithi-7-vishnu-panchaka-pournami-upavasa",
       "calendarDayId": "vancouver-pst-2026-09-26",
       "name": "Vishnu Panchaka Pournami Upavasa",
-      "category": "vrata",
+      "category": "pournami",
       "priority": 0,
       "description": null,
       "rawText": "Anadhyayana, Ananthana Hunnime, Kattalu Gaduvina Hunnime, Proushtapadi Pournima, Proushtapadi Shraddha, Uma Maheshvara Vrata, Vishnu Panchaka Pournami Upavasa, Sri Yadavarya’s punyadina (Munavalli 1632), Mahalaya Aarambha, Thulayam Budha 19:41"
@@ -29570,7 +29570,7 @@
       "id": "vancouver-pst-2026-10-25-special-tithi-7-vishnu-panchaka-pournami-upavasa",
       "calendarDayId": "vancouver-pst-2026-10-25",
       "name": "Vishnu Panchaka Pournami Upavasa",
-      "category": "vrata",
+      "category": "pournami",
       "priority": 0,
       "description": null,
       "rawText": "Anadhyayana, Nakshatra (Aakaasha) Deeparambha, Annabhisheka, Ashwayuji Karma, Ishti, Sheege Hunnime, Vishnu Panchaka Pournami Upavasa, Kartheeka Snaana Aarambha"
@@ -30461,7 +30461,7 @@
       "id": "vancouver-pst-2026-11-24-special-tithi-5-vishnu-panchaka-pournami-upavasa-abhava",
       "calendarDayId": "vancouver-pst-2026-11-24",
       "name": "Vishnu Panchaka Pournami Upavasa ABHAVA",
-      "category": "vrata",
+      "category": "pournami",
       "priority": 0,
       "description": null,
       "rawText": "Anadhyayana, Daksha Savarni Manvadi Nakshatra Deepa, Sri Thulasi Jayanthi, Thripurari Pournima, Vishnu Panchaka Pournami Upavasa ABHAVA, Bheeshma Panchaka Vrata Samapthi, Sri Gurunanak’s Vardhanthi (1469 - 1539) (Nankana Sahib), Kartheeka Snaana Samapthi, Vyasa Pooja, Gowri Hunnime, Sri Jayadhwaja Theertha’s punyadina (Yaragola 1448 V9), Thulayam Shukra 18:18"
@@ -31235,7 +31235,7 @@
       "id": "vancouver-pst-2026-12-23-special-tithi-5-vishnu-panchaka-pournami-upavasa",
       "calendarDayId": "vancouver-pst-2026-12-23",
       "name": "Vishnu Panchaka Pournami Upavasa",
-      "category": "vrata",
+      "category": "pournami",
       "priority": 0,
       "description": null,
       "rawText": "Anadhyayana, Prathyavarohanam Sri Dattatreya Jayanthi, Hosthalu Hunnime, Ishti, Vishnu Panchaka Pournami Upavasa, Sri Chennakesavothsava (Manur - Koppala), Sri Vidyaprasanna Theertha’s punyadina (Sosale 1969 V37), Sahasra Shankhabhisheka in Sri Uttaradi Mutt, Sri Sugunendra Theertha’s punyadina (Chittoor 1884 R30), Sri Bheemasena Rathothsava (Mothampalli)"
@@ -31883,7 +31883,7 @@
       "id": "vancouver-pst-2027-01-21-special-tithi-8-vishnu-panchaka-pournami-upavasa-abhava",
       "calendarDayId": "vancouver-pst-2027-01-21",
       "name": "Vishnu Panchaka Pournami Upavasa ABHAVA",
-      "category": "vrata",
+      "category": "pournami",
       "priority": 0,
       "description": null,
       "rawText": "Anadhyayana, Devyei Sarva Shaka Nivedanam, Palleda Habba (Badami) Kumbhaayana 12:11, Guru Pushya Yoga, Banada Hunnime, Magha Snaana Aarambha, Pushya Snaana, Vishnu Panchaka Pournami Upavasa ABHAVA, Banashankari Navarathri Utsava Samapthi (Badami), Pushyothsava"
@@ -33332,7 +33332,7 @@
       "id": "vancouver-pst-2027-03-21-special-tithi-7-vishnu-panchaka-pournami-upavasa",
       "calendarDayId": "vancouver-pst-2027-03-21",
       "name": "Vishnu Panchaka Pournami Upavasa",
-      "category": "vrata",
+      "category": "pournami",
       "priority": 0,
       "description": null,
       "rawText": "Anadhyayana, Holika Pooja, Kama Dahanam, Brahma Savarni Manvadi, Holi Hunnime, Magha Snaana Samapthi, Vishnu Panchaka Pournami Upavasa, Meshaayana 23:55"
@@ -33723,6 +33723,33 @@
       "priority": 0,
       "description": null,
       "rawText": "Plavanga Nama Samvathsara, Chaitra Shukla Paksha, Gudi Padva Samvathsararambha - Thailabhyanga, Indra Dwaja Pooja"
+    },
+    {
+      "id": "vancouver-pst-2026-04-01-derived-pournami",
+      "calendarDayId": "vancouver-pst-2026-04-01",
+      "name": "Pournami",
+      "category": "pournami",
+      "priority": 90,
+      "description": "Derived from tithi data",
+      "rawText": "Pournami 18:15"
+    },
+    {
+      "id": "vancouver-pst-2026-08-27-derived-pournami",
+      "calendarDayId": "vancouver-pst-2026-08-27",
+      "name": "Pournami",
+      "category": "pournami",
+      "priority": 90,
+      "description": "Derived from tithi data",
+      "rawText": "Pournami 20:47"
+    },
+    {
+      "id": "vancouver-pst-2027-02-20-derived-pournami",
+      "calendarDayId": "vancouver-pst-2027-02-20",
+      "name": "Pournami",
+      "category": "pournami",
+      "priority": 90,
+      "description": "Derived from tithi data",
+      "rawText": "Pournami 15:55"
     }
   ],
   "ekadashis": [

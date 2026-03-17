@@ -16,7 +16,7 @@ export default function NotFoundScreen() {
   const styles = createStyles(theme);
 
   return (
-    <ScreenContainer>
+    <ScreenContainer title="Screen not found" showBack>
       <EmptyState title="Screen not found" message="The route you opened does not exist in this build." />
       <Link href="/" asChild>
         <Text style={styles.link}>Return home</Text>

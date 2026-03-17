@@ -66,13 +66,13 @@ Generated files, lockfiles, fonts, images, and copied seed data are not the main
 ### Common UI
 
 - [src/components/common/ScreenContainer.tsx](../src/components/common/ScreenContainer.tsx)
+  Shared safe-area wrapper, year banner, and in-screen top header row
 - [src/components/common/SectionHeader.tsx](../src/components/common/SectionHeader.tsx)
 - [src/components/common/FilterBar.tsx](../src/components/common/FilterBar.tsx)
 - [src/components/common/EmptyState.tsx](../src/components/common/EmptyState.tsx)
 - [src/components/common/ErrorState.tsx](../src/components/common/ErrorState.tsx)
 - [src/components/common/LoadingState.tsx](../src/components/common/LoadingState.tsx)
 - [src/components/common/PrimaryTextLink.tsx](../src/components/common/PrimaryTextLink.tsx)
-- [src/components/common/SearchHeaderButton.tsx](../src/components/common/SearchHeaderButton.tsx)
 
 ### Day and special-tithi views
 
@@ -102,7 +102,7 @@ Generated files, lockfiles, fonts, images, and copied seed data are not the main
 - [src/domain/dates/index.ts](../src/domain/dates/index.ts)
   Date and timezone helpers
 - [src/domain/panchanga/labels.ts](../src/domain/panchanga/labels.ts)
-  Display labels for category codes
+  Display labels for category codes such as `Ekadashi`, `Pournami`, and `Punyadina`
 - [src/hooks/useAppBootstrap.ts](../src/hooks/useAppBootstrap.ts)
   Startup hook
 - [src/hooks/usePanchangaQueries.ts](../src/hooks/usePanchangaQueries.ts)
@@ -114,9 +114,9 @@ Generated files, lockfiles, fonts, images, and copied seed data are not the main
 - [src/services/reminders.ts](../src/services/reminders.ts)
   Notification scheduling logic
 - [src/store/settings-store.ts](../src/store/settings-store.ts)
-  Persisted settings store
+  Persisted settings store, including language, theme, location, and reminder preferences
 - [src/theme/tokens.ts](../src/theme/tokens.ts)
-  Design tokens
+  Design tokens, including the current Azure Paper light theme
 - [src/theme/index.ts](../src/theme/index.ts)
   Runtime theme system
 - [src/types/domain.ts](../src/types/domain.ts)

@@ -19,17 +19,17 @@ import { useSelectedLocation } from "@/hooks/useSelectedLocation";
 import { useAppLocalization } from "@/i18n";
 import type { SpecialTithiCategory } from "@/types/domain";
 
-const options = ["all", "ekadashi", "punyadina"] as const;
+const options = ["all", "ekadashi", "pournami", "punyadina"] as const;
 
 export default function SpecialTithisScreen() {
-  const { language } = useAppLocalization();
+  const { language, text } = useAppLocalization();
   const { locationId, isLoading: locationLoading, error: locationError } = useSelectedLocation();
   const [category, setCategory] = useState<SpecialTithiCategory>("all");
   const { data, error, isLoading } = useSpecialTithis(locationId, { category });
   const categoryLabels = getSpecialTithiCategoryLabels(language);
 
   return (
-    <ScreenContainer>
+    <ScreenContainer title={text.specialTithis} showSearch>
       <FilterBar options={options} value={category} labelMap={categoryLabels} onChange={setCategory} />
       {locationError || error ? <ErrorState message={(locationError ?? error)?.message ?? (language === "kn" ? "ವಿಶೇಷ ತಿಥಿಗಳನ್ನು ಲೋಡ್ ಮಾಡಲು ಆಗಲಿಲ್ಲ." : "Unable to load special tithis.")} /> : null}
       {locationLoading || isLoading ? (
@@ -43,7 +43,7 @@ export default function SpecialTithisScreen() {
           message={
             language === "kn"
               ? "ಪಂಚಾಂಗ ದತ್ತಾಂಶ ಸ್ಥಳೀಯ ಡೇಟಾಬೇಸ್‌ಗೆ ಇಂಪೋರ್ಟ್ ಆದ ನಂತರ ಏಕಾದಶಿ ಮತ್ತು ಪುಣ್ಯದಿನ ದಾಖಲೆಗಳು ಇಲ್ಲಿ ಕಾಣುತ್ತವೆ."
-              : "Ekadashi and Punyadina entries appear here after Panchanga data has been imported into the local database."
+              : "Ekadashi, Pournami, and Punyadina entries appear here after Panchanga data has been imported into the local database."
           }
         />
       ) : (

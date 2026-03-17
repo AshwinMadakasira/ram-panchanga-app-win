@@ -13,7 +13,6 @@ import { EmptyState } from "@/components/common/EmptyState";
 import { ErrorState } from "@/components/common/ErrorState";
 import { LoadingState } from "@/components/common/LoadingState";
 import { ScreenContainer } from "@/components/common/ScreenContainer";
-import { SectionHeader } from "@/components/common/SectionHeader";
 import { useSearch } from "@/hooks/usePanchangaQueries";
 import { useSelectedLocation } from "@/hooks/useSelectedLocation";
 import { useAppLocalization } from "@/i18n";
@@ -30,11 +29,7 @@ export default function SearchScreen() {
   const { data, error, isFetching } = useSearch(deferredQuery, locationId);
 
   return (
-    <ScreenContainer>
-      <SectionHeader
-        title={text.search}
-        subtitle={language === "kn" ? "ದಿನಾಂಕ, ವಿಶೇಷ ತಿಥಿ, ತಿಥಿ ಮತ್ತು ನಕ್ಷತ್ರವನ್ನು ಹುಡುಕಿ." : "Search dates, special tithis, tithi, and nakshatra."}
-      />
+    <ScreenContainer title={text.search} showBack>
       <TextInput
         autoCapitalize="none"
         autoCorrect={false}

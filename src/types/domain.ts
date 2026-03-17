@@ -57,6 +57,7 @@ export type SpecialTithiCategory =
   | "festival"
   | "vrata"
   | "ekadashi"
+  | "pournami"
   | "punyadina"
   | "sankramana"
   | "all";

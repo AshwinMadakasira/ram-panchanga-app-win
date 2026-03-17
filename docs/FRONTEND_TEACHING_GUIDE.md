@@ -32,7 +32,9 @@ The app follows a layered structure:
 - Location-aware dates: "today" must respect the selected location timezone.
 - Simple navigation: primary tasks live in tabs, secondary tasks like search live in stack routes.
 - Educational clarity: repository code reads data, hooks expose data, screens render data.
-- Warm visual language: the palette and fonts are intentionally more editorial/traditional than generic mobile defaults.
+- Editorial visual language: the app uses custom local fonts, a cool "Azure Paper" light palette, and shared screen chrome instead of generic mobile defaults.
+- Shared top chrome: `ScreenContainer` owns the year banner and top title/search or back row so screens do not duplicate that layout.
+- Curated observances: the special-tithi UI and reminders focus on `Ekadashi`, `Pournami`, and `Punyadina`.
 
 ## How to read the language structure
 

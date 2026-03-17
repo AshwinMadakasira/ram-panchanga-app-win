@@ -119,9 +119,11 @@ Responsibilities:
 
 - Offline-first: the app should remain useful without a server.
 - Predictable navigation: primary views stay in tabs; secondary tasks live in stack routes.
+- Shared screen chrome: the year banner and top title/search row are rendered by `ScreenContainer`, not repeated per screen.
 - Reusable UI: repeated card/list patterns should be extracted.
 - Beginner-readable data flow: screens do not contain SQL.
 - Location-aware correctness: "today" depends on the selected timezone.
+- Curated observances: reminder-facing special-tithi flows currently emphasize `Ekadashi`, `Pournami`, and `Punyadina`.
 
 ## Suggested code reading order
 

@@ -22,7 +22,24 @@ import type {
 } from "@/types/domain";
 
 const defaultWeekdays: ReminderWeekday[] = ["monday", "tuesday", "wednesday", "thursday", "friday"];
-const defaultSpecialTithiCategories: UpcomingSpecialTithiCategory[] = ["ekadashi", "punyadina"];
+const defaultSpecialTithiCategories: UpcomingSpecialTithiCategory[] = ["ekadashi", "pournami", "punyadina"];
+const oldDefaultSpecialTithiCategories: UpcomingSpecialTithiCategory[] = ["ekadashi", "punyadina"];
+
+/** Normalize persisted special-tithi categories and upgrade the old default set to include Pournami. */
+const normalizeSpecialTithiCategories = (categories?: UpcomingSpecialTithiCategory[]) => {
+  const knownCategories = new Set<UpcomingSpecialTithiCategory>(["ekadashi", "pournami", "punyadina"]);
+  const normalized = [...new Set((categories ?? []).filter((category) => knownCategories.has(category)))];
+
+  if (normalized.length === 0) {
+    return defaultSpecialTithiCategories;
+  }
+
+  const isOldDefaultSet =
+    normalized.length === oldDefaultSpecialTithiCategories.length &&
+    oldDefaultSpecialTithiCategories.every((category) => normalized.includes(category));
+
+  return isOldDefaultSet ? defaultSpecialTithiCategories : normalized;
+};
 /** Migrate an older location id into the current canonical id. */
 const normalizePersistedLocationId = (locationId: string | undefined) => {
   if (!locationId || locationId === "vancouver-bc") {
@@ -104,7 +121,7 @@ const normalizeLegacyReminders = (legacyReminders?: LegacyReminderSettings): Rem
         ...legacyReminders.observance,
         categories:
           legacyReminders.observance.categories && legacyReminders.observance.categories.length > 0
-            ? legacyReminders.observance.categories
+            ? normalizeSpecialTithiCategories(legacyReminders.observance.categories)
             : defaults.specialTithi.categories
       },
       permission: legacyReminders.permission ?? defaults.permission
@@ -124,7 +141,9 @@ const normalizeLegacyReminders = (legacyReminders?: LegacyReminderSettings): Rem
     specialTithi: {
       ...defaults.specialTithi,
       ...firstConfiguredReminder,
-      categories: enabledCategories.length > 0 ? enabledCategories : defaults.specialTithi.categories
+      categories: normalizeSpecialTithiCategories(
+        enabledCategories.length > 0 ? enabledCategories : defaults.specialTithi.categories
+      )
     },
     permission: legacyReminders.permission ?? defaults.permission
   };
@@ -244,7 +263,8 @@ export const useSettingsStore = create<SettingsState>()(
                 },
                 specialTithi: {
                   ...defaultReminders.specialTithi,
-                  ...typedPersistedState.reminders.specialTithi
+                  ...typedPersistedState.reminders.specialTithi,
+                  categories: normalizeSpecialTithiCategories(typedPersistedState.reminders.specialTithi.categories)
                 }
               } satisfies ReminderSettings)
             : normalizeLegacyReminders(typedPersistedState?.reminders as LegacyReminderSettings | undefined);
