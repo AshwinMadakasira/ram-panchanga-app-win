@@ -94,8 +94,7 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
     },
     debugButtonText: {
       color: theme.colors.maroon,
-      fontWeight: "700",
-      fontFamily: theme.typography.bodyFamily
+      fontFamily: theme.typography.bodyStrongFamily
     },
     debugCard: {
       backgroundColor: theme.colors.card,
@@ -108,7 +107,6 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
     debugTitle: {
       color: theme.colors.ink,
       fontSize: 15,
-      fontWeight: "700",
       fontFamily: theme.typography.headingFamily
     },
     debugText: {

@@ -36,27 +36,31 @@ export const SunCard = ({ day, timeWindows = [] }: { day: CalendarDay; timeWindo
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Sun and moon</Text>
-      <View style={styles.metricsGrid}>
-        <View style={styles.metricCard}>
-          <Text style={styles.label}>Sunrise</Text>
+      <View style={styles.celestialBlock}>
+        <Text style={styles.sectionLabel}>Sun</Text>
+        <View style={styles.row}>
+          <Text style={styles.label}>Rise</Text>
           <Text style={styles.value}>{day.sunrise || "Unavailable"}</Text>
         </View>
-        <View style={styles.metricCard}>
-          <Text style={styles.label}>Sunset</Text>
+        <View style={styles.row}>
+          <Text style={styles.label}>Set</Text>
           <Text style={styles.value}>{day.sunset || "Unavailable"}</Text>
         </View>
-        <View style={styles.metricCard}>
-          <Text style={styles.label}>Moonrise</Text>
+      </View>
+      <View style={styles.celestialBlock}>
+        <Text style={styles.sectionLabel}>Moon</Text>
+        <View style={styles.row}>
+          <Text style={styles.label}>Rise</Text>
           <Text style={styles.value}>{day.moonrise || "Unavailable"}</Text>
         </View>
-        <View style={styles.metricCard}>
-          <Text style={styles.label}>Moonset</Text>
+        <View style={styles.row}>
+          <Text style={styles.label}>Set</Text>
           <Text style={styles.value}>{day.moonset || "Unavailable"}</Text>
         </View>
       </View>
       {highlightedWindows.length > 0 ? (
         <View style={styles.windowsBlock}>
-          <Text style={styles.sectionLabel}>Daily windows</Text>
+          <Text style={styles.sectionLabel}>Sacred times</Text>
           {highlightedWindowTypes.map((type) => {
             const window = timeWindows.find((entry) => entry.type === type);
             return (
@@ -88,17 +92,11 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
       fontWeight: "700",
       fontFamily: theme.typography.headingFamily
     },
-    metricsGrid: {
-      flexDirection: "row",
-      flexWrap: "wrap",
-      gap: theme.spacing.sm
-    },
-    metricCard: {
-      width: "48%",
+    celestialBlock: {
       backgroundColor: theme.colors.cardMuted,
       borderRadius: theme.radii.sm,
       padding: theme.spacing.sm,
-      gap: 4
+      gap: theme.spacing.xs
     },
     windowsBlock: {
       marginTop: theme.spacing.xs,
@@ -110,8 +108,7 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
     sectionLabel: {
       color: theme.colors.maroon,
       fontSize: 13,
-      fontWeight: "700",
-      fontFamily: theme.typography.bodyFamily
+      fontFamily: theme.typography.bodyStrongFamily
     },
     row: {
       flexDirection: "row",
@@ -124,8 +121,7 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
     },
     value: {
       color: theme.colors.ink,
-      fontWeight: "600",
-      fontFamily: theme.typography.bodyFamily,
+      fontFamily: theme.typography.bodyStrongFamily,
       textAlign: "right",
       flexShrink: 1
     }

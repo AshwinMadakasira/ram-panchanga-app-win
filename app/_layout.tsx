@@ -75,7 +75,6 @@ export default function RootLayout() {
                 backgroundColor: theme.colors.ivory
               },
               headerTitleStyle: {
-                fontWeight: "700",
                 fontFamily: theme.typography.headingFamily
               }
             }}

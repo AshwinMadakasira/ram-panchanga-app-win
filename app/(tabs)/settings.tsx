@@ -225,13 +225,11 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
     title: {
       color: theme.colors.ink,
       fontSize: 18,
-      fontWeight: "700",
       fontFamily: theme.typography.headingFamily
     },
     label: {
       color: theme.colors.ink,
-      fontWeight: "600",
-      fontFamily: theme.typography.bodyFamily
+      fontFamily: theme.typography.bodyStrongFamily
     },
     body: {
       color: theme.colors.muted,
@@ -258,8 +256,7 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
     optionLabel: {
       color: theme.colors.ink,
       textTransform: "capitalize",
-      fontWeight: "600",
-      fontFamily: theme.typography.bodyFamily
+      fontFamily: theme.typography.bodyStrongFamily
     },
     optionLabelActive: {
       color: "#fff7f0"

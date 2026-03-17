@@ -64,15 +64,13 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
     eyebrow: {
       color: theme.colors.saffron,
       fontSize: 12,
-      fontWeight: "700",
       letterSpacing: 1.2,
       textTransform: "uppercase",
-      fontFamily: theme.typography.bodyFamily
+      fontFamily: theme.typography.bodyStrongFamily
     },
     title: {
       color: theme.colors.ink,
       fontSize: 30,
-      fontWeight: "700",
       fontFamily: theme.typography.headingFamily
     },
     subtitle: {

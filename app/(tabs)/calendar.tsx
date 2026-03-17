@@ -92,7 +92,6 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
     headerTitle: {
       color: theme.colors.ink,
       fontSize: 24,
-      fontWeight: "700",
       fontFamily: theme.typography.headingFamily
     },
     subHeader: {
@@ -122,12 +121,10 @@ const createStyles = (theme: ReturnType<typeof useAppTheme>) =>
     todayButtonText: {
       color: theme.colors.maroon,
       fontSize: 12,
-      fontWeight: "700",
-      fontFamily: theme.typography.bodyFamily
+      fontFamily: theme.typography.bodyStrongFamily
     },
     navButtonText: {
       color: theme.colors.maroon,
-      fontWeight: "700",
-      fontFamily: theme.typography.bodyFamily
+      fontFamily: theme.typography.bodyStrongFamily
     }
   });

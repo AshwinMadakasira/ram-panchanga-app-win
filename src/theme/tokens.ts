@@ -1,21 +1,10 @@
-import { Platform } from "react-native";
-
-const serifFont = Platform.select({
-  ios: "Palatino",
-  android: "serif",
-  default: "serif"
-});
-
-const sansFont = Platform.select({
-  ios: "Avenir Next",
-  android: "sans-serif",
-  default: "sans-serif"
-});
+const headingFont = "Neuton-Bold";
+const bodyFont = "Neuton-Regular";
 
 export const lightPalette = {
-  ivory: "#fbf7ef",
-  cream: "#f4ecde",
-  card: "#fffdf8",
+  ivory: "#f2e8d8",
+  cream: "#fffdf8",
+  card: "#eadcc7",
   cardMuted: "#f0e6d7",
   saffron: "#b86628",
   maroon: "#7a2e23",
@@ -27,7 +16,7 @@ export const lightPalette = {
   warning: "#9b6b2d",
   danger: "#8f3b35",
   shadow: "rgba(76, 44, 27, 0.08)",
-  surfaceAccent: "#fff7f0"
+  surfaceAccent: "#eadcc7"
 } as const;
 
 export const darkPalette = {
@@ -64,8 +53,7 @@ export const radii = {
 } as const;
 
 export const typography = {
-  headingFamily: serifFont,
-  bodyFamily: sansFont,
-  headingWeight: Platform.select({ ios: "700", android: "700", default: "700" }),
-  bodyWeight: Platform.select({ ios: "400", android: "400", default: "400" })
+  headingFamily: headingFont,
+  bodyFamily: bodyFont,
+  bodyStrongFamily: headingFont
 } as const;
