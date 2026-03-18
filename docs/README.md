@@ -1,30 +1,32 @@
-# App Docs Index
+# Docs Index
 
-This folder contains the main documentation for the frontend mobile app.
+This folder contains the technical documentation for the RAM Panchanga Windows desktop app.
 
-## Best starting points
+## Best Starting Points
 
-1. [FRONTEND_TEACHING_GUIDE.md](./FRONTEND_TEACHING_GUIDE.md)
-   Best first read for a student.
+1. [WINDOWS_DESKTOP_GUIDE.md](./WINDOWS_DESKTOP_GUIDE.md)
+   End-to-end setup, desktop architecture, packaging flow, and distribution notes.
 2. [ARCHITECTURE.md](./ARCHITECTURE.md)
-   High-level technical structure.
+   High-level structure of the desktop app and the web/native boundary.
 3. [CODEBASE_GUIDE.md](./CODEBASE_GUIDE.md)
-   What each important handwritten file does.
+   What the important handwritten files do.
 
-## Product and implementation docs
-
-- [PRODUCT_REQUIREMENTS.md](./PRODUCT_REQUIREMENTS.md)
-- [SCREEN_SPECS.md](./SCREEN_SPECS.md)
-- [BUILD_PLAN.md](./BUILD_PLAN.md)
-
-## Delivery and repo-boundary docs
+## Desktop Delivery Docs
 
 - [RELEASE_GUIDE.md](./RELEASE_GUIDE.md)
 - [MOBILE_DATA_SPLIT.md](./MOBILE_DATA_SPLIT.md)
 
-## Suggested read order for teaching
+## Product and Implementation Docs
 
-1. Teaching guide
+- [PRODUCT_REQUIREMENTS.md](./PRODUCT_REQUIREMENTS.md)
+- [SCREEN_SPECS.md](./SCREEN_SPECS.md)
+- [BUILD_PLAN.md](./BUILD_PLAN.md)
+- [FRONTEND_TEACHING_GUIDE.md](./FRONTEND_TEACHING_GUIDE.md)
+
+## Suggested Read Order
+
+1. Windows desktop guide
 2. Architecture
 3. Codebase guide
-4. Open the code files referenced by those docs
+4. Release guide
+5. Open the code files referenced by those docs
