@@ -4,7 +4,7 @@
  * This file deals with notification permissions, scheduling, and translating reminder settings
  * into concrete reminder times.
  */
-import * as Notifications from "expo-notifications";
+import type * as ExpoNotifications from "expo-notifications";
 import { Platform } from "react-native";
 
 // Domain helpers, labels, repositories, and types are imported because reminder scheduling touches many app layers.
@@ -101,10 +101,13 @@ const createDailyTriggerDate = (baseDate: Date, time: string) => {
 };
 
 type PreparedNotificationRequest = {
-  content: Notifications.NotificationContentInput;
-  trigger: Notifications.DateTriggerInput;
+  content: ExpoNotifications.NotificationContentInput;
+  trigger: ExpoNotifications.DateTriggerInput;
   date: Date;
 };
+
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const getNotificationsModule = (): typeof ExpoNotifications => require("expo-notifications");
 
 const isPreparedNotificationRequest = (
   request: PreparedNotificationRequest | null
@@ -115,6 +118,12 @@ const createCalendarDayMap = (days: CalendarDay[]) => new Map(days.map((day) => 
 
 /** Set notification behavior and Android channels before scheduling anything. */
 export const configureReminderNotificationsAsync = async () => {
+  if (Platform.OS === "web") {
+    return;
+  }
+
+  const Notifications = getNotificationsModule();
+
   if (!notificationsConfigured) {
     Notifications.setNotificationHandler({
       handleNotification: async () => ({
@@ -138,6 +147,11 @@ export const configureReminderNotificationsAsync = async () => {
 
 /** Ask the operating system whether the app may show reminder notifications. */
 export const requestReminderPermissionsAsync = async (): Promise<ReminderPermissionState> => {
+  if (Platform.OS === "web") {
+    return "denied";
+  }
+
+  const Notifications = getNotificationsModule();
   await configureReminderNotificationsAsync();
   const current = await Notifications.getPermissionsAsync();
 
@@ -169,6 +183,7 @@ const limitPreparedRequestsForPlatform = (requests: PreparedNotificationRequest[
 
 /** Schedule prepared dated notifications after applying any platform-specific pending-request cap. */
 const schedulePreparedRequestsAsync = async (requests: PreparedNotificationRequest[]) => {
+  const Notifications = getNotificationsModule();
   const limitedRequests = limitPreparedRequestsForPlatform(requests);
 
   await Promise.all(
@@ -190,6 +205,7 @@ const buildDailyReminderRequestsAsync = async (
   futureCalendarDays: CalendarDay[],
   futureCalendarDayMap: Map<string, CalendarDay>
 ) => {
+  const Notifications = getNotificationsModule();
   const now = new Date();
   const selectedJsDays = new Set(weekdays.map((weekday) => reminderWeekdayToJsDay[weekday]));
   const requests: (PreparedNotificationRequest | null)[] = await Promise.all(
@@ -228,7 +244,7 @@ const buildDailyReminderRequestsAsync = async (
           type: Notifications.SchedulableTriggerInputTypes.DATE,
           date: triggerDate,
           channelId: getChannelId()
-        } satisfies Notifications.DateTriggerInput
+        } satisfies ExpoNotifications.DateTriggerInput
       } satisfies PreparedNotificationRequest;
     })
   );
@@ -246,6 +262,7 @@ const buildUpcomingSpecialTithiReminderRequestsAsync = async (
   language: AppLanguage,
   futureCalendarDayMap: Map<string, CalendarDay>
 ) => {
+  const Notifications = getNotificationsModule();
   const specialTithis = await panchangaRepository.getUpcomingSpecialTithis(
     location.id,
     category,
@@ -285,7 +302,7 @@ const buildUpcomingSpecialTithiReminderRequestsAsync = async (
           type: Notifications.SchedulableTriggerInputTypes.DATE,
           date: triggerDate,
           channelId: getChannelId()
-        } satisfies Notifications.DateTriggerInput
+        } satisfies ExpoNotifications.DateTriggerInput
       } satisfies PreparedNotificationRequest;
     })
   );
@@ -299,6 +316,11 @@ export const syncReminderNotificationsAsync = async (
   location: Location,
   language: AppLanguage
 ) => {
+  if (Platform.OS === "web") {
+    return;
+  }
+
+  const Notifications = getNotificationsModule();
   await configureReminderNotificationsAsync();
   await Notifications.cancelAllScheduledNotificationsAsync();
 

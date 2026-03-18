@@ -10,6 +10,7 @@
     "paths": {}
   },
   "include": [
+    "tests/desktop-smoke.ts",
     "tests/run.ts",
     "src/domain/dates/index.ts",
     "data/generated/panchanga-seed-vancouver-pst.json",

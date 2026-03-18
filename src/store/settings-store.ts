@@ -7,8 +7,8 @@
  * apps often need to read older saved data and reshape it into a newer format.
  */
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { create } from "zustand";
-import { createJSONStorage, persist } from "zustand/middleware";
+import { create } from "zustand/index.js";
+import { createJSONStorage, persist } from "zustand/middleware.js";
 
 // The store imports only types, not UI code, because it represents app state rather than presentation.
 import type {

@@ -4,9 +4,10 @@
  * Its job is to connect app startup, stored reminder settings, notification permissions,
  * and navigation when a user taps a notification.
  */
-import * as Notifications from "expo-notifications";
+import type * as ExpoNotifications from "expo-notifications";
 import { useRouter } from "expo-router";
 import { useEffect } from "react";
+import { Platform } from "react-native";
 
 // This component bridges notifications, settings, selected location, and navigation.
 import { getTodayForTimezone } from "@/domain/dates";
@@ -14,6 +15,9 @@ import { useSelectedLocation } from "@/hooks/useSelectedLocation";
 import { useSettingsStore } from "@/store/settings-store";
 import { dayRoute } from "@/types/navigation";
 import { extractReminderNotificationData, requestReminderPermissionsAsync, syncReminderNotificationsAsync } from "@/services/reminders";
+
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const getNotificationsModule = (): typeof ExpoNotifications => require("expo-notifications");
 
 /** Keep reminder permissions, scheduled notifications, and notification taps in sync with app state. */
 export const ReminderCoordinator = () => {
@@ -25,6 +29,10 @@ export const ReminderCoordinator = () => {
   const { location, isLoading } = useSelectedLocation();
 
   useEffect(() => {
+    if (Platform.OS === "web") {
+      return;
+    }
+
     if (!isHydrated) {
       return;
     }
@@ -39,6 +47,10 @@ export const ReminderCoordinator = () => {
   }, [isHydrated, setReminderPermission]);
 
   useEffect(() => {
+    if (Platform.OS === "web") {
+      return;
+    }
+
     if (!isHydrated || isLoading || !location) {
       return;
     }
@@ -47,6 +59,11 @@ export const ReminderCoordinator = () => {
   }, [appLanguage, isHydrated, isLoading, location, reminders]);
 
   useEffect(() => {
+    if (Platform.OS === "web") {
+      return;
+    }
+
+    const Notifications = getNotificationsModule();
     const subscription = Notifications.addNotificationResponseReceivedListener((response) => {
       const data = extractReminderNotificationData(response.notification.request.content.data);
       if (!data) {

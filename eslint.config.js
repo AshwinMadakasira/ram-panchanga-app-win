@@ -8,6 +8,14 @@ const expoConfig = require("eslint-config-expo/flat");
 module.exports = defineConfig([
   expoConfig,
   {
-    ignores: ["node_modules/*", "dist/*", ".test-dist/*", ".expo/*", "tools/**/*"]
+    ignores: [
+      "node_modules/*",
+      "dist/*",
+      ".test-dist/*",
+      ".expo/*",
+      "src-tauri/target/**/*",
+      "src-tauri/gen/**/*",
+      "tools/**/*"
+    ]
   }
 ]);
